@@ -1409,10 +1409,11 @@ ____________________ **/
 
                                         if (urltest === true) {
                                             this.status = "schema loading";
+                                            let _this = this;
                                             let r = this.requestJson(jsnString,
                                                 function LoadSchema(e) {
                                                     console.log(e.target.response);
-                                                    this.setAttribute("schema", "true");
+                                                    _this.setAttribute("schema", "true");
                                                 }
                                             );
                                         }
