@@ -1,0 +1,17 @@
+{
+  "id": "full-example",
+  "meta": {
+    "name": "Demo App",
+    "description":  "A demo application using DashingJS's full set of custom elements."
+  },
+  "database": {
+    "name": "pio-demo-app",
+    "version":  1,
+    "stores": {
+      "personal": {},
+      "canvas": {},
+      "form": {},
+      "spreadsheet": {}
+    }
+  }
+}

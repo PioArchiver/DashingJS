@@ -1,0 +1,72 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="../../bundles/full/css/ce-styles.css" />
+    <link rel="stylesheet" href="full-example.css" />
+    <link rel="stylesheet" href="grid.css" />
+
+    <script type="text/javascript" src="../../bundles/full/x-tag-ce.js"></script>
+
+    <script type="text/javascript" src="../../bundles/full/dashing-full.js" async></script>
+    <script type="text/javascript" src="full-example.js"  async></script>
+</head>
+<body>
+    <x-extension id="demo-template" grid-template="1 2"
+                 schema="url(schema.json)"
+                 icos="icos.html">
+        <x-tabbox id="main-menu" class="main-menu" transition selected-index="0">
+            <menu>
+                <button index="0" selected>DashingJS Builder</button>
+            </menu>
+            <ul>
+                <li selected>
+                    <x-panel>
+                        <x-menu
+                                display-items='["dashingjs-builder"]'>
+                            <strong>Menu</strong>
+                        </x-menu>
+                        <x-form>
+                            <strong>DashingJS Builder</strong>
+                            <form>
+                                <label for="build_name">Name: </label><input type="text" value="build_name" />
+                                <input type="button" value="Build" />
+                            </form>
+                        </x-form>
+                    </x-panel>
+                </li>
+            </ul>
+        </x-tabbox>
+        <x-book>
+            <x-page active="true">
+                <header>
+                    <h1>DashingJS Full Version</h1>
+                    <div>
+                        <h3>Overview</h3>
+                        <p>DashingJS Full Version comes with the complete set of custom elements supported and
+                        maintained by DashingJS. It is a versatile html and javascript tool set designed for applications
+                        that need fine tuning and extensibility over time.</p>
+                    </div>
+                </header>
+                <section>
+                    <p>This is a demo example that uses the full version. This application is free to use. It's intended
+                    as a tool to get you started using DashingJS custom elements. This application contains: </p>
+                    <ol>
+                        <li>Documentation</li>
+                        <li>HTML Snippet Pad</li>
+                        <li>Javascript Snippet Pad</li>
+                    </ol>
+                </section>
+                <footer>
+                    <h3>Project Contact Information</h3>
+                    <div>
+                        <p><strong>E-Mail: </strong> <span>stevenvansant@kippikio.com</span></p>
+                        <p><strong>GitHub Issues: </strong> <a href="https://github.com/PioArchiver/DashingJS/issues"</p>
+                    </div>
+                </footer>
+            </x-page>
+        </x-book>
+    </x-extension>
+</body>
+</html>

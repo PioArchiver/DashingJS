@@ -1,0 +1,6 @@
+x-extension[grid-template] {
+    position: fixed;
+}
+x-tabbox.main-menu {
+    height: 133px; 
+}
