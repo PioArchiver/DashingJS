@@ -1349,7 +1349,6 @@ ____________________ **/
                             return _obj;
                         },
                         requestJson: function RequestJson(url, load, progress, error) {
-                            console.log("HI");
                             let _url = url.replace(/url\(/g, "");
                                 _url = _url.replace(/\)/g, "");
                             if (/\.json$/gi.test(_url)) {
@@ -1378,7 +1377,7 @@ ____________________ **/
                                     plugins: null
                                 }, "ReadyBoolean");
                              */
-                            console.log(Dashing.validator);
+
                         },
                         inserted: function InsertedXExtension() {
                             // 
