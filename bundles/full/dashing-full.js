@@ -1371,7 +1371,7 @@ ____________________ **/
                 static lifecycle() {
                     return {
                         created: function CreatedXExtension() {
-                            this.status = "creating";
+                            this.schemaStatus = "creating";
                             this.jsonSchema = [];
                             /*
                                 Dashing.conditions.ConditionDetail({
@@ -1409,19 +1409,18 @@ ____________________ **/
                                     try {
                                         let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
                                         if (urltest === true) {
-                                            this.status = "schema loading";
+                                            this.schemaStatus  = "schema loading";
                                             let _this = this;
                                             let r = this.requestJson(jsnString,
                                                 function LoadSchema(e) {
                                                     _this.setAttribute("schema", "true");
-                                                    _this.status = "loaded";
                                                     _this.jsonSchema.push(e.target.response);
+                                                    _this.status = "schema loaded";
                                                 }
                                             );
                                         }
                                         else {
                                             this.jsonSchema.push(JSON.parse(jsnString));
-
                                             this.setAttribute("schema", "true");
                                         }
 
@@ -1431,10 +1430,10 @@ ____________________ **/
                                         for (let x = 0; x < xjsn.length; x++) {
                                             this.jsonSchema.push(JSON.parse(xjsn[x].innerHTML));
                                         }
-                                        xjsn.length > 0 ? this.setAttribute("scheme", "true") : this.setAttribute("scheme", "true");
+                                        xjsn.length > 0 ? this.setAttribute("schema", "true") : this.setAttribute("schema", "false");
                                     }
                                     finally {
-                                        this.jsonSchema.push(jsn);
+                                        this.status = "schema finished";
                                     }
                                 }
                             },
