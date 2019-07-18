@@ -1433,7 +1433,7 @@ ____________________ **/
                                         xjsn.length > 0 ? this.setAttribute("schema", "true") : this.setAttribute("schema", "false");
                                     }
                                     finally {
-                                        this.status = "schema finished";
+                                        this.schemaStatus = "schema finished";
                                     }
                                 }
                             },
