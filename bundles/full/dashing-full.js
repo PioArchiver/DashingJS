@@ -1355,6 +1355,8 @@ ____________________ **/
                                 let xhr = new XMLHttpRequest();
                                     xhr.open("GET", _url);
 
+                                    xhr.responseType = "json";
+
                                     xhr.onload = load ? load : function LoadReq(e) { return true; };
                                     xhr.progress = progress ? progress : function LoadReq(e) { return true; };
                                     xhr.onerror = error ? error : function ErrorReq(e) { return true; };
@@ -1412,8 +1414,9 @@ ____________________ **/
                                             let _this = this;
                                             let r = this.requestJson(jsnString,
                                                 function LoadSchema(e) {
-                                                    console.log(e.target.response);
                                                     _this.setAttribute("schema", "true");
+                                                    _this.status = "loaded";
+                                                    _this.jsonSchema = e.target.response;
                                                 }
                                             );
                                         }
