@@ -1372,6 +1372,7 @@ ____________________ **/
                     return {
                         created: function CreatedXExtension() {
                             this.status = "creating";
+                            this.jsonSchema = [];
                             /*
                                 Dashing.conditions.ConditionDetail({
                                     active: null,
@@ -1404,11 +1405,9 @@ ____________________ **/
                         schema: {
                             connected: true,
                             set: function SetSchemes(jsnString) {
-                                let jsn = [];
                                 if (Dashing.typeOf(jsnString) === "string") {
                                     try {
                                         let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
-
                                         if (urltest === true) {
                                             this.status = "schema loading";
                                             let _this = this;
@@ -1416,12 +1415,12 @@ ____________________ **/
                                                 function LoadSchema(e) {
                                                     _this.setAttribute("schema", "true");
                                                     _this.status = "loaded";
-                                                    _this.jsonSchema = e.target.response;
+                                                    _this.jsonSchema.push(e.target.response);
                                                 }
                                             );
                                         }
                                         else {
-                                            jsn.push(JSON.parse(jsnString));
+                                            this.jsonSchema.push(JSON.parse(jsnString));
 
                                             this.setAttribute("schema", "true");
                                         }
@@ -1430,12 +1429,12 @@ ____________________ **/
                                     catch (e) {
                                         let xjsn = this.querySelectorAll("x-json");
                                         for (let x = 0; x < xjsn.length; x++) {
-                                            jsn.push(JSON.parse(xjsn[x].innerHTML));
+                                            this.jsonSchema.push(JSON.parse(xjsn[x].innerHTML));
                                         }
                                         xjsn.length > 0 ? this.setAttribute("scheme", "true") : this.setAttribute("scheme", "true");
                                     }
                                     finally {
-                                        this.jsonSchema = jsn;
+                                        this.jsonSchema.push(jsn);
                                     }
                                 }
                             },
