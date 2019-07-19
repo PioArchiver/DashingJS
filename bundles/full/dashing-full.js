@@ -1348,10 +1348,35 @@ ____________________ **/
                             let _obj = {};
                             return _obj;
                         },
+                        checkUrl: function CheckUrl(url) {
+                            let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
+                            if (urltest === true) {
+                                let _url = url.replace(/url\(/g, "");
+                                    _url = _url.replace(/\)/g, "");
+                                return _url;
+                            }
+                            else { return false; }
+                        },
+                        requestHTML: function RequestHTML(url, load, progress, error) {
+                            let _url = this.checkUrl(url);
+
+                            if (_url === true) {
+                                let xhr = new XMLHttpRequest();
+                                    xhr.open("GET", _url);
+
+                                    xhr.responseType = "document";
+
+                                    xhr.onload = load ? load : function LoadReq(e) { return true; };
+                                    xhr.progress = progress ? progress : function LoadReq(e) { return true; };
+                                    xhr.onerror = error ? error : function ErrorReq(e) { return true; };
+
+                                    xhr.send();
+                            }
+                        },
                         requestJson: function RequestJson(url, load, progress, error) {
-                            let _url = url.replace(/url\(/g, "");
-                                _url = _url.replace(/\)/g, "");
-                            if (/\.json$/gi.test(_url)) {
+                            let _url = this.checkUrl(url);
+
+                            if (_url === true) { 
                                 let xhr = new XMLHttpRequest();
                                     xhr.open("GET", _url);
 
@@ -1395,12 +1420,21 @@ ____________________ **/
                 static attrs() {
                     return {
                         icos: {
+                            connected: true,
                             set: function SetIcos(val) {
-                                let icos = xtag.createFragment(val);
-                                this.appendChild(icos.firstElementChild);
-                                this.setAttribute("icos", "true");
+                                console.log(val);
+                                if (Dashing.typeOf(val) === "string") {
+                                    let urltest = this.checkUrl(val);
+                                    if (urltest !== false) {
+
+                                    }
+                                    let icos = xtag.createFragment(val);
+                                        this.appendChild(icos.firstElementChild);
+                                        this.setAttribute("icos", "true");
+                                }
+
                             },
-                            get: function GetIcos(val) { return this.getAttribute("icos") || "NO ICOS"; }
+                            get: function GetIcos(val) { return this.getAttribute("icos") || false; }
                         },
                         schema: {
                             connected: true,
@@ -1426,13 +1460,17 @@ ____________________ **/
 
                                     }
                                     catch (e) {
+                                        this.schemaStatus = "schema error";
+                                        this.setAttribute("schema", "error")
+                                    }
+                                    finally {
                                         let xjsn = this.querySelectorAll("x-json");
                                         for (let x = 0; x < xjsn.length; x++) {
                                             this.jsonSchema.push(JSON.parse(xjsn[x].innerHTML));
                                         }
-                                        xjsn.length > 0 ? this.setAttribute("schema", "true") : this.setAttribute("schema", "false");
-                                    }
-                                    finally {
+                                        xjsn.length > 0 ?
+                                            this.setAttribute("schema", "true") :
+                                                this.setAttribute("schema", "false");
                                         this.schemaStatus = "schema finished";
                                     }
                                 }
