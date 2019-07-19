@@ -1414,14 +1414,14 @@ ____________________ **/
                         icos: {
                             connected: true,
                             set: function SetIcos(val) {
-                                console.log(val);
+                                let _this = this;
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response;
-                                                this.appendChild(icos.firstElementChild);
-                                                this.setAttribute("icos", "true");
+                                                _this.appendChild(icos.firstElementChild);
+                                                _this.setAttribute("icos", "true");
                                         } );
                                     }
                                     else {
