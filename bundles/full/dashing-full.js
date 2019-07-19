@@ -1349,7 +1349,7 @@ ____________________ **/
                             return _obj;
                         },
                         checkUrl: function CheckUrl(url) {
-                            let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
+                            let urltest = /url\([\w\-\.]+\)/gi.test(url);
                             if (urltest === true) {
                                 let _url = url.replace(/url\(/g, "");
                                     _url = _url.replace(/\)/g, "");
@@ -1398,13 +1398,7 @@ ____________________ **/
                         created: function CreatedXExtension() {
                             this.schemaStatus = "creating";
                             this.jsonSchema = [];
-                            /*
-                                Dashing.conditions.ConditionDetail({
-                                    active: null,
-                                    focused: null,
-                                    plugins: null
-                                }, "ReadyBoolean");
-                             */
+                            
 
                         },
                         inserted: function InsertedXExtension() {
