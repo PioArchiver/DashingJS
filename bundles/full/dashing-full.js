@@ -1360,7 +1360,7 @@ ____________________ **/
                         requestHTML: function RequestHTML(url, load, progress, error) {
                             let _url = this.checkUrl(url);
 
-                            if (_url === true) {
+                            if (_url !== false) {
                                 let xhr = new XMLHttpRequest();
                                     xhr.open("GET", _url);
 
@@ -1396,9 +1396,7 @@ ____________________ **/
                 static lifecycle() {
                     return {
                         created: function CreatedXExtension() {
-                            this.schemaStatus = "creating";
                             this.jsonSchema = [];
-                            
 
                         },
                         inserted: function InsertedXExtension() {
@@ -1420,11 +1418,15 @@ ____________________ **/
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
-
+                                        this.requestHTML(val, function OpenIcons(e) {
+                                            let icos = e.target.response;
+                                                this.appendChild(icos.firstElementChild);
+                                                this.setAttribute("icos", "true");
+                                        } );
                                     }
-                                    let icos = xtag.createFragment(val);
-                                        this.appendChild(icos.firstElementChild);
-                                        this.setAttribute("icos", "true");
+                                    else {
+                                        //
+                                    }
                                 }
 
                             },
@@ -1437,13 +1439,11 @@ ____________________ **/
                                     try {
                                         let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
                                         if (urltest === true) {
-                                            this.schemaStatus  = "schema loading";
                                             let _this = this;
                                             let r = this.requestJson(jsnString,
                                                 function LoadSchema(e) {
                                                     _this.setAttribute("schema", "true");
                                                     _this.jsonSchema.push(e.target.response);
-                                                    _this.status = "schema loaded";
                                                 }
                                             );
                                         }
@@ -1454,8 +1454,8 @@ ____________________ **/
 
                                     }
                                     catch (e) {
-                                        this.schemaStatus = "schema error";
-                                        this.setAttribute("schema", "error")
+                                        this.schemaStatus = "schema error"; 
+                                        this.setAttribute("schema", "error"); 
                                     }
                                     finally {
                                         let xjsn = this.querySelectorAll("x-json");
@@ -1463,9 +1463,8 @@ ____________________ **/
                                             this.jsonSchema.push(JSON.parse(xjsn[x].innerHTML));
                                         }
                                         xjsn.length > 0 ?
-                                            this.setAttribute("schema", "true") :
+                                            this.setAttribute("schema", "true") : 
                                                 this.setAttribute("schema", "false");
-                                        this.schemaStatus = "schema finished";
                                     }
                                 }
                             },
