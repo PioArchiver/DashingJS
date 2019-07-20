@@ -13,27 +13,45 @@
     <script type="text/javascript" src="full-example.js"  async></script>
 </head>
 <body>
-    <x-extension id="demo-template" grid-template="1 2"
-                 schema="url(schema.json)"
-                 icos="url(icos.html)">
+    <x-extension id="demo-template" grid-template="1 2" 
+                 schema="schema.json" icos="true" validation-mapping="true">
         <x-tabbox id="main-menu" class="main-menu" transition selected-index="0">
             <menu>
                 <button index="0" selected>DashingJS Builder</button>
+                <button index="1">Custom Element Demos</button>
             </menu>
             <ul>
                 <li selected>
-                    <x-panel>
-                        <x-menu
+                    <x-panel id="builder-panel" menu="dashingjs-builder-menu" dispaly-target="builder-display">
+                        <x-menu id="dashingjs-builder-menu"
+                                display-current="dashingjs-builder"
+                                display-target="builder-display"
                                 display-items='["dashingjs-builder"]'>
                             <strong>Menu</strong>
                         </x-menu>
-                        <x-form>
-                            <strong>DashingJS Builder</strong>
-                            <form>
-                                <label for="build_name">Name: </label><input type="text" value="build_name" />
-                                <input type="button" value="Build" />
-                            </form>
-                        </x-form>
+                        <div id="builder-display">
+                            <x-form id="dashingjs-builder" resource-selection="builder" form-view="Form-Sheet-View">
+                                <strong>DashingJS Builder</strong>
+                                <form name="dashingjs-build">
+                                    <label for="build_name">Name: </label><input type="text" id="build_name" name="build_name" placeholder="Package name" />
+                                    <input type="button" name="submit_build" value="Build" />
+                                </form>
+                                <x-json src="dashingjs-build.json" validation-map="true">{}</x-json>
+                            </x-form>
+                        </div>
+                    </x-panel>
+                </li>
+                <li>
+                    <x-panel id="demo-panel" menu="demo-panel-menu">
+                        <x-menu id="demo-panel-menu"
+                                display-current="x-extension-demo"
+                                display-target="demo-display"
+                                display-items='["x-extension-demo", "x-panel-demo", "x-canvas-demo", "x-form-demo", "x-table-demo"]'></x-menu>
+                        <div id="demo-display">
+                            <textarea id="x-extension-demo">
+                                x-extension
+                            </textarea>
+                        </div>
                     </x-panel>
                 </li>
             </ul>
@@ -62,7 +80,7 @@
                     <h3>Project Contact Information</h3>
                     <div>
                         <p><strong>E-Mail: </strong> <span>stevenvansant@kippikio.com</span></p>
-                        <p><strong>GitHub Issues: </strong> <a href="https://github.com/PioArchiver/DashingJS/issues"</p>
+                        <p><strong>GitHub Issues: </strong> <a href="https://github.com/PioArchiver/DashingJS/issues">GitHub Issues</a></p>
                     </div>
                 </footer>
             </x-page>

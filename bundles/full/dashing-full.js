@@ -77,6 +77,14 @@ ____________________ **/
             while (i--) array[i] = clone(src[i]);
             return array;
         };
+    function QueryArray(arr, val) {
+        if (xtag.typeOf(val) === "string") {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] === val) { return i; }
+            }
+            return false;
+        }
+    }
 
     // Command cell regular expressions
     const testLiteralCmd = /\w+\{[\w\,]+\}\;/g,
@@ -393,37 +401,45 @@ ____________________ **/
                 this.openModelLinks(); 
             } 
         }
-
-        static XHR(ref, options) {
+        request(ref, options) {
             let _xhr = new XMLHttpRequest(),
                 _id = ref.match(/[\w\-]+(?=\.\w+$)/g)[0];
 
-            _xhr.open("GET", ref, true);
             Dashing.requests ? true : Dashing.requests = {};
             Dashing.responses ? true : Dashing.responses = {};
-            Dashing.requests[_id] = _xhr;
-            Dashing.responses[_id] = false;
 
-            _xhr.onload = options.onload ? function LoadRef(e) {
-                Dashing.responses[_id] = e.target.responses;
-                options.onload(e);
-            } : function LOADREF(e) {
-                Dashing.responses[_id] = e.target.responses;
-            };
+            if (Dashing.requests[_id]) {
+                return Dashing.responses[_id] ? Dashing.respones[_id] : false;
+            }
+            else {
+                _xhr.open("GET", ref, true);
 
-            _xhr.onprogress = options.onprogress ? options.onprogress : false;
+                _xhr.responseType = options.type ? options.type : "text";
 
-            _xhr.onerror = options.onerror ? function ERRORREF(e) {
-                Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
-                options.onerror(e);
-            } : function ERRORREF(e) {
-                Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
-            };
+                _xhr.onload = options.onload ? function LoadRef(e) {
+                    Dashing.responses[_id] = e.target.responses;
+                    options.onload(e);
+                } : function LOADREF(e) {
+                    Dashing.responses[_id] = e.target.responses;
+                };
 
-            _xhr.send();
-            return _id;
+                _xhr.onprogress = options.onprogress ? options.onprogress : false;
+
+                _xhr.onerror = options.onerror ? function ERRORREF(e) {
+                    Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
+                    options.onerror(e);
+                } : function ERRORREF(e) {
+                    Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
+                };
+
+                _xhr.send();
+
+                Dashing.requests[_id] = _xhr;
+                Dashing.responses[_id] = false;
+
+                return _id;
+            }
         }
-
         getLinkHrefs(links) {
             let _urlarray = [];
             for (let i = 0; i < links.length; i++) {
@@ -1242,11 +1258,13 @@ ____________________ **/
             "x-table",
             "x-header",
             "x-footer",
+            "x-menu",
             "x-shiftbox",
             "x-tabbox",
             "x-modal",
             "x-message",
-            "x-link"
+            "x-link",
+            "x-json"
         ],
         onStart: function StartFullDemo(root) {
             // 
@@ -1289,10 +1307,10 @@ ____________________ **/
                             get: function GetHref() { return this.getAttribute("href"); },
                             set: function SetHref(val) {
                                 let opts = {};
-                                opts.onerror = this.error || noop;
-                                opts.onload = this.load || noop;
-                                opts.onprogress = this.progress || noop;
-                                Dashing.model.XHR(val, opts) || noop;
+                                    opts.onerror = this.error || noop;
+                                    opts.onload = this.load || noop;
+                                    opts.onprogress = this.progress || noop;
+                                Dashing.model.request(val, opts) || noop;
                             }
                         }
                     };
@@ -1356,11 +1374,12 @@ ____________________ **/
                                 return _url;
                             }
                             else { return false; }
-                        },
+                        }, 
                         requestHTML: function RequestHTML(url, load, progress, error) {
                             let _url = this.checkUrl(url);
 
                             if (_url !== false) {
+                                Dashing.model.request(_url, { type: "document" });
                                 let xhr = new XMLHttpRequest();
                                     xhr.open("GET", _url);
 
@@ -1388,7 +1407,75 @@ ____________________ **/
 
                                     xhr.send();
                             }
-                        }
+                        },
+                        queryJson: function QueryPromise(key, data) {
+                            return new Promise(function QPromise(resolve, reject) {
+                                if (Dashing.typeOf(data) === "object") {
+                                    if (keyId === "#") {
+                                        objterm = "#" + data[key].id;
+                                    }
+                                    else if (keyId === ".") {
+                                        objterm = "." + data[key].class;
+                                    }
+                                    else if (keyId === "-") {
+                                        objterm = "-" + data[key].name;
+                                    }
+                                    else if (/^\w+/gi.test(key) === true) {
+                                        objterm = keyId;
+                                    }
+
+                                    if (objterm === key) {
+                                        return data[i];
+                                    }
+                                    return data[key] || false;
+                                }
+                                else if (Dashing.typeOf(data) === "array") {
+                                    for (let i = 0; i < data.length; i++) {
+                                        if (Dashing.typeOf(data[i]) === "object") {
+                                            this.queryJson(key, data[i]);
+                                        }
+                                        else if (Dashing.typeOf(data[i] === "string")) {
+                                            if (data[i] === key) {
+                                                return data[i];
+                                            }
+                                        }
+                                        else if (Dashing.typeOf(data[i] === "array")) {
+                                            return this.jueryJson(key, data[i]);
+                                        }
+                                    }
+                                }
+                                else if (Dashing.typeOf(data) === "nodelist") {
+                                    let objId = null;
+                                    for (let i = 0; i < data.length; i++) {
+                                        let j = JSON.parse(data[i].innerHTML);
+                                        let keyId = key[0],
+                                            objterm = null;
+
+                                        if (keyId === "#") {
+                                            objterm = "#" + j.id;
+                                        }
+                                        else if (keyId === ".") {
+                                            objterm = "." + j.class;
+                                        }
+                                        else if (keyId === "-") {
+                                            objterm = "-" + j.name;
+                                        }
+                                        else if (/^\w+/gi.test(keyId) === true) {
+                                            objterm = j[key];
+                                        }
+                                        if (objterm === key) {
+                                            return j;
+                                        }
+                                    }
+                                }
+                                else {
+                                    return false;
+                                }
+                                return null;
+                            });
+
+                        },
+                        queryArray: QueryArray,
                     };
                 }
 
@@ -1425,7 +1512,7 @@ ____________________ **/
                                         } );
                                     }
                                     else {
-                                        //
+                                        // An error that returns "No icon set found"
                                     }
                                 }
 
@@ -1447,14 +1534,13 @@ ____________________ **/
                                                 }
                                             );
                                         }
-                                        else {
+                                        else if (Dashing.typeOf(jsnString) === ""){
                                             this.jsonSchema.push(JSON.parse(jsnString));
                                             this.setAttribute("schema", "true");
                                         }
 
                                     }
                                     catch (e) {
-                                        this.schemaStatus = "schema error"; 
                                         this.setAttribute("schema", "error"); 
                                     }
                                     finally {
@@ -1770,6 +1856,96 @@ ____________________ **/
 
             };
 
+            // x-menu is compatible with template strings.
+            elems.xMenu = class xMenu extends HTMLElement {
+                constructor() {
+                    super();
+                    this.display = null;
+                    this.content = null;
+                    this.templateItems = null;
+                    this.currentIndex = 0;
+                }
+                static methods() {
+                    return {
+                        createTabButton: function CreateTabButton(_id) {
+                            let _title = _id.replace("-", " "),
+                                _tabbtn = document.createElement("button");
+                            _tabbtn.setAttribute("panel-content", _id);
+                            _tabbtn.innerHTML = _title.replace(/^[a-z]|\s[a-z]/ig, function (stg) { return stg.toUpperCase(); });
+                            this.insertAdjacentElement("beforeend", _tabbtn);
+                        },
+                        "x-extension-demo": function XExtensionDemo() {
+                            return `<textarea>
+                                <x-extension></x-extension>
+                            </textarea>`;
+                        },
+                        "x-panel-demo": function XExtensionDemo() {
+                            return `<textarea>
+                                <x-panel></x-panel>
+                            </textarea>`;
+                        }
+                    };
+                }
+                static attrs() {
+                    return {
+                        "display-target": {
+                            connected: true,
+                            get: function GetActiveDisplay() {
+                                return this.getAttribute("display-target");
+                            },
+                            set: function SetActiveDisplay(val) {
+                                if (document.getElementById(val)) { 
+                                    this.display = document.getElementById(val);
+                                }
+                            }
+                        },
+                        "display-items": {
+                            connected: true,
+                            get: function GetDisplayItems() {
+                                return this.getAttribute("display-items");
+                            },
+                            set: function SetDisplayItems(val) {
+                                this.setAttribute("display-items", val);
+                                try { this.templateItems = JSON.parse(val); }
+                                catch (e) { throw e; }
+                                finally {
+                                    if (xtag.typeOf(this.templateItems) === "array") {
+                                        for (let i = 0; i < this.templateItems.length; i++) {
+                                            let _tempKey = this.templateItems[i];
+                                                this.createTabButton(_tempKey);
+                                            if (!this[_tempKey]) {
+                                                let _doc = document.querySelector(`#${_tempKey}`);
+
+                                                this[_tempKey] = function () {
+                                                    return _doc.outerHTML;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "display-current": {
+                            connected: true,
+                            get: function GetCurrentDisplay() {
+                                return this.getAttribute("display-current") || false;
+                            },
+                            set: function SetCurrentDisplay(val) {
+                                this.setAttribute("display-current", val);
+                                if (val !== this.current) {
+                                    this.current = val;
+                                    this.templateItems[this.currentIndex] === val ? true :
+                                        this.currentIndex = QueryArray(this.templateItems, val);
+                                    this.display.innerHTML = this[val]({
+                                        hasvalidationMap: true
+                                    });
+                                }
+                            }
+                        }
+                    };
+                }
+            };
+
             elems.xShiftbox = class extends HTMLElement {
                 static mixins() { return ["typed"]; }
 
@@ -1963,13 +2139,14 @@ ____________________ **/
                             });
                             tab.setAttribute('selected', '');
                             let index = xtag.toArray(tab.parentNode.children).indexOf(tab);
-                            if (index != this.selectedIndex) { this.selectedIndex = index; }
+                            if (index !== this.selectedIndex) { this.selectedIndex = index; }
+                            
                             if (!rules[index]) {
                                 rules[index] = 1;
                                 let transform = 'transform: translateX(' + (index * -100) + '%);';
-                                sheet.insertRule('x-tabbox[selected-index="' + index + '"] > ul > li:nth-of-type(' + (index + 1) + '){ opacity: 1; z-index: 1; ' + xtag.prefix.css + transform + transform + '}', sheet.cssRules.length);
+                                sheet.insertRule('x-tabbox[selected-index="' + index + '"] > ul > li:nth-of-type(' + (index + 1) + '){ opacity: 1; z-index: 1; ' + xtag.prefix.css  + '}', sheet.cssRules.length);
                             }
-
+                            
                             let panel = xtag.queryChildren(this, 'ul > li')[e.detail.index];
                             if (panel) { panel.setAttribute('selected', ''); }
                             if (fireSelected) {
@@ -1993,7 +2170,9 @@ ____________________ **/
                                 });
                             }
                         },
-                        'tap:delegate(x-tabbox > menu > *)': function TapSelectEvent(e) { xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } }); },
+                        'tap:delegate(x-tabbox > menu > *)': function TapSelectEvent(e) {
+                            xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
+                        },
                         'keydown:delegate(x-tabbox > menu > *):keypass(13, 32)': function KeySelectEvent(e) { xtag.fireEvent(this, "selectEvent", {}); }
                     };
                 }
@@ -2521,6 +2700,47 @@ ____________________ **/
 
             };
 
+            elems.xJson = class xJson extends HTMLElement {
+                connectedCallback() {
+                    this.makeJson();
+                }
+                static methods() {
+                    return {
+                        // The makeJson function is referenced in xForm.
+                        makeJson: function MakeJson(node) {
+                            try {
+                                let r = null,
+                                    stg = node ? node.innerHTML.replace(/\\/g, "") : this.innerHTML.replace(/\\/g, "");
+                                r = JSON.parse(stg);
+                                return r;
+                            }
+                            catch (e) {
+                                throw e;
+                            }
+                        },
+                        queryJson: function UpdateValidationMap(data) {
+                            let p = this.parentNode;
+                        }
+                    };
+                }
+                static attrs() {
+                    return {
+                        "validation-map": {
+                            connected: true,
+                            get: function GetValidationMap() { return this.hasAttribute("validation-map"); },
+                            set: function SetValidationMap(value) {
+                                this.validationMapping = value === true ? true : (this.removeAttribute("validation-map"), false);
+                                if (this.parentNode.jsonArray) {
+                                    this.parentNode.jsonArray ?
+                                        this.parentNode.jsonArray.push(this.Json ? this.Json :
+                                            JSON.parse(this.innerHTML)) : (this.parentNode.jsonArray = [], this.parentNode.push(this.Json ? this.Json : JSON.parse(this.innerHTML)));
+                                }
+                            }
+                        }
+                    };
+                }
+            };
+
             elems.xMessage = class xMessage extends HTMLElement {
                 static lifecycle() {
                     return {
@@ -2608,28 +2828,6 @@ ____________________ **/
                         }
                         frag.id = i.toString() + this.nodeName.toLowerCase() + "PioSelectables";
                         return frag;
-                    },
-                    writeAttributes: function WriteAttributes(attrs) {
-                        /**/
-                    },
-                    uiSwitch: function UiSwitch(name, opts) {
-                        let xbk = Dashing.rootElement.querySelector("x-book[application-start-page]"),
-                            xpg = xbk.querySelector(xbk.getAttribute("application-start-page"));
-                        switch (name) {
-                            case "start-page":
-                                Dashing.writer.draw({ name: "_blank", target: xpg },
-                                    {
-                                        parent: {
-                                            // 
-                                        },
-                                        child: {
-                                            // 
-                                        }
-                                    }, undefined, {
-
-                                    });
-                                return name;
-                        }
                     }
                 };
             }
@@ -2659,187 +2857,21 @@ ____________________ **/
         'add(mixin=typed)': class Typed {
             static methods() {
                 return {
-                    webapp: function DashioWebApp(e) {
-                        let pbk = this.getAttribute("plugin-book") || false;
-                        this.extensions = {
-                            book: this.querySelector(`#${pbk}`),
-                            plugins: { keys: [] }
-                        };
-                    },
-                    container: function AppContainer(e) {
-                        // Enhancement needed
-                    },
-                    viewport: function AppViewport(e) {
-                        // Enhancement needed
-                    },
-                    startup: function StartUp(e) {
-                        this.focus = this.focus;
-                        this.insertOverlay ? this.insertOverlay(e.target) : null;
-                        this.databaseTable = this.databaseTable;
-                    },
-                    "plugins": function DashioPluginsType(e) {
-                        this._plugins = { length: 0 };
-                        let pgs = this.querySelectorAll("x-page[type='plugin']"),
-                            ext = Dashing.rootElement.extensions.plugins;
-                        for (let i = 0; i < pgs.length; i++) {
-                            ext[pgs[i].id] = {
-                                title: pgs[i].pluginTitle,
-                                ready: false,
-                                node: pgs[i]
-                            };
-                            ext.keys.push(pgs[i].id);
-                        }
-                    },
-                    plugin: function DashioPluginsType(e) {
-                        this.pluginTitle = this.pluginTitle;
-                        this.pluginHeader = true;
-                        this.pluginFooter = true;
-                        this.pageWorkspace = this.pageWorkspace;
-                        this.pageSidebar = this.pageSidebar;
-
-                        Dashing.rootElement.extensions.plugins[this.id].title = this.pluginTitle;
-                        Dashing.rootElement.extensions.plugins[this.id].sidebar = this.sidebar;
-                        Dashing.rootElement.extensions.plugins[this.id].footer = this.pluginFooter;
-                        Dashing.rootElement.extensions.plugins[this.id].header = this.pluginHeader;
-
-                        Dashing.rootElement.extensions.plugins[this.id].workspace = {
-                            id: this.pageWorkspace || xtag.uid(),
-                            node: document.querySelector(`#${this.pageWorkspace}`)
-                        };
-
-                    },
-                    prompt: function Prompt(ev) {
-                        let _APP_DOMRoot = Dashing.rootElement,
-                            transactionPreference = _APP_DOMRoot.userRequestServices("prompt", this, {
-                                onConfirm: function dbconfirmation(e) {
-                                    e.target.querySelector("form").submit();
-                                },
-                                onCancel: function dbcancellation(e) {
-                                    console.log("cancelling");
-                                    console.log(e.target);
-                                    console.log(e.detail);
-                                }
-                            });
-
-                    },
-                    json: function JsonTableType(e) {
-                        console.info("Info: Type enhancement needed for " + this.nodeName.toLowerCase() + "[type='json'].");
-                    },
-                    display: function Display(e) {
-                        console.info("Info: Type enhancement needed for " + this.nodeName.toLowerCase() + "[type='display'].");
-                    },
-                    cell: function CellsTableType() {
-                        this.dataBook = true;
-                        this.databook.setAttribute("grid-rows", "2 1");
-
-                        // Store Plugin Node
-                        let _pnode = null;
-                        if (this.parentNode.nodeName === "X-PAGE") {
-                            _pnode = this.parentNode;
-                        }
-                        else if (this.parentNode.parentNode.nodeName === "X-PAGE") {
-                            _pnode = this.parentNode.parentNode;
-                        }
-
-                        let frag = Dashing.writer.draw({
-                            name: "table-cell",
-                            target: this
-                        }, {
-                                parent: {
-                                    table: this
-                                }
-                            }, undefined, {
-                                creator: function CreateTableCell(node, data) {
-                                    let tcfm = document.createElement("button");
-                                    tcfm.type = "button";
-                                    tcfm.setAttribute("value", "Save Line");
-                                    tcfm.innerHTML = "Save Line";
-                                    node.firstElementChild.appendChild(tcfm);
-                                },
-                                events: {
-                                    'click:delegate(button[value="Save Line"])': function SaveLine(e) {
-                                        let dbup = Dashing.pioDB.open("PioDashed");
-                                    },
-                                    submitCell: function (e) {
-                                        let _this = e.detail.target;
-                                        let _val = _this.readCellValue(_this.commandCell),
-                                            parseddata = ccs.parseCCSLine(_this.commandCell.value);
-
-                                        if (_val === undefined || _val === "") { return false; }
-                                        else if (typeof _val === "object") {
-                                            let stg = `Literals: ${(_val.literals || []).length}, 
-                                               Arrays: ${(_val.arrays || []).length}, 
-                                               Strings: ${(_val.strings || []).length}, 
-                                               Numbers: ${(_val.numbers || []).length}`;
-
-                                            let _msg = _this.writeTableMessage(stg);
-                                            this.message = _msg;
-
-                                            let _val_ = ccs.compileCCSLine(_val, parseddata),
-                                                _stack = ccs.executeCCSStack.apply(_pnode, [_val_]),
-                                                totalcmds = (_val.literals || []).length + (_val.arrays || []).length + (_val.strings || []).length + (_val.numbers || []).length;
+                    default: function DefaultContainer(e) {
+                        let detail = e.detail;
 
 
-                                            _this.cellResponse([
-                                                `Total Commands: ${totalcmds}`,
-                                                `Ready: ${_stack}`
-                                            ]);
-
-                                        }
-                                        else if (typeof _val === "string") {
-                                            let msg = _this.writeTableMessage(_val);
-                                            _this.message = msg;
-                                            _this.cellResponse([`Error: Couldn't generate data template. Please check the log messages.`]);
-                                        }
-
-                                    },
-                                    'mousedown:delegate(button[value="Confirm"])': function (e) { xtag.fireEvent(this, "submitCell", { detail: { target: this.parentNode.parentNode.parentNode } }); },
-                                    'keydown:keypass(13)': function (e) {
-                                        e.preventDefault();
-                                        xtag.fireEvent(this, "submitCell", { detail: { target: this } });
-                                    }
-                                }
-                            });
-
-                        this.tableForm = this.querySelector("form");
-                        this.commandCell = this.tableForm.querySelector("input[type='text']");
-                        this.tableComfirm = this.tableForm.querySelector("input[value='Confirm']");
-                        this.messages = { length: 0 };
-
-                        this.allowPagination = this.tForm;
-                        this.multilineEnabled = this.pagination;
-                        this.pagination.setAttribute("menu-position", "top");
-                    },
-                    selection: function ModalSelectionPrompt() {
-                        this.insertBefore(this.writeOptions(JSON.parse(this.getAttribute("data-options")) || []), this.querySelector("button"));
-                        this.submitEvent = true;
-                    },
-                    webpage: function webapp(ev) { console.info("Info: Type enhancement needed for " + this.nodeName.toLowerCase() + "[type='webpage']."); },
-                    drawing: function drawing(e) { this.drawing = {}; },
-                    "indexed-database": function (e) { console.info("Info: Type enhancement needed for " + this.nodeName.toLowerCase() + "[type='indexed-database']."); },
-                    "modal-book": function modalBook(e, _this) {
-                        _this = e.target;
-                        if (_this.parentNode.nodeName !== "X-MODAL") { throw "Error [Type Schema]: X-BOOK[TYPE='modal-book'] requires its parent node to be X-MODAL"; }
-
-                        _this.xtag.plugin = {};
-                        _this.xtag.plugin.errorPage = _this.querySelector("x-page[response-type='error']");
-                        _this.xtag.plugin.loadPage = _this.parentNode.querySelector('x-page[response-type="load"]');
-                        _this.xtag.plugin.progressPage = _this.querySelector("x-page[response-type='progressing']");
-                    },
-                    "modal-page": function modalPage(e) {
-                        if (e.target.parentNode.nodeName !== "X-BOOK") {
-                            console.log("Error [Type Schema]: X-PAGE[TYPE='modal-page'] requires its parent node to be X-BOOK");
-                            return false;
-                        }
-                        this.xbook = this.parentnode;
+                        console.log(detail);
                     }
                 };
             }
             static attrs() {
                 return {
-                    conditions: {
-                        set: function SetConditions(cond) {
+                    type: {
+                        connected: true,
+                        set: function SetType(val) {
                             // Enhancement for type condition callback events
+                            
                         }
                     }
                 };
@@ -2850,68 +2882,28 @@ ____________________ **/
                 return {
                     "default": function DefaultJsonSchema(e) {
                         return true;
-                    },
-                    "single-column": function singleColumn(e) {
-                        let gt = this.gridTemplate === false ? "1" : this.gridTemplate,
-                            themeid = this.id ? this.id : xtag.uid();
-                        this.id = themeid;
-                        this.themed["single-column" + this.id] = {
-                            name: "single-column",
-                            isGridTheme: e.detail.isGridTheme,
-                            gridRows: Number(gt.match(/\d+$/g)[0]),
-                            gridColumns: Number(gt.match(/^\d+/g)[0])
-                        };
-                        return true;
-                    },
-                    "body-panel": function BodyPanel(e) {
-                        let rws = this.getAttribute("grid-rows"),
-                            cms = this.getAttribute("grid-columns");
-
-                        if (rws === null) { /**/ }
-                        else if (cms === null) { /**/ }
-
-
-                        return true;
-
-                    },
-                    "book-grid": function (e) {
-                        Dashing.theme["book-grid_" + this.id || xtag.uid()] = {
-                            name: "book-grid",
-                            isGridTheme: e.detail.isGridTheme,
-                            gridRows: Number(this.gridTemplate.match(/\d+$/g)[0]),
-                            gridColumns: Number(this.gridTemplate.match(/^\d+/g)[0])
-                        };
-                    },
-                    "dashboard-panels": function DashboardPanels(e) {
-                        console.info("Info: Theme needed for " + this.nodeName.toLowerCase() + "[theme='dashobard-panels'].");
-                    },
-                    "default-Cells": function DefaultCells() {
-                        console.info("Info: Theme needed for " + this.nodeName.toLowerCase() + "[theme='default-Cells'].");
-                    },
-                    "modal-manager": function ModalManager(e) {
-                        // Enhance this
-                    },
-                    "plugin-book": function PluginBook(e) {
-                        console.info("Info: Theme needed for " + this.nodeName.toLowerCase() + "[theme='plugin-book'].");
-                        return true;
-                    },
-                    "db-responses": function DBResponses(e) {
-
-                    },
-                    "template-builder": function TemplateBuilder(e) { }
+                    }
                 };
             }
             static attrs() {
                 return {
+                    theme: {
+                        connected: true,
+                        get: function GetTheme() { return this.getAttribute("theme"); },
+                        set: function SetTheme(val) {
+                            //
+                        }
+                    },
                     gridTemplate: {
                         get: function () {
                             return this.getAttribute("grid-template");
                         },
                         set: function (val) {
-                            cnosole.log(this.xtag);
                             this.setAttribute("grid-template", val);
                         }
-                    }
+                    },
+                    columnSpan: {},
+                    rowSpan: {}
                 };
             }
         },
