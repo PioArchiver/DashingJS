@@ -1398,7 +1398,8 @@ ____________________ **/
                             }
                         },
                         queryJson: function QueryJsonPromise(key, data) {
-                            let _this = this;
+                            let _this = this,
+                                keyId = key[0];
                             return new Promise(function QPromise(resolve, reject) {
                                 if (Dashing.typeOf(data) === "object") {
                                     if (keyId === "#") {
