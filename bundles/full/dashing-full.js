@@ -1521,6 +1521,8 @@ ____________________ **/
                                                     _this.jsonSchema.push(e.target.response); 
                                                 }
                                             );
+                                            r.then(function (val) { console.log(val); });
+                                            r.catch(function (val) { console.log(val); })
                                         }
                                         else if (Dashing.typeOf(jsnString) === "string"
                                             && /^#[\w\-]+/gi.test(jsnString)) {
