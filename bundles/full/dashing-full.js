@@ -1415,7 +1415,7 @@ ____________________ **/
                                     }
 
                                     if (objterm === key) {
-                                        return return resolve(data[i]);
+                                        return resolve(data[i]);
                                     }
                                     return resolve(data[key] || false);
                                 }
