@@ -1388,8 +1388,7 @@ ____________________ **/
                         },
                         requestJson: function RequestJson(url, load, progress, error) {
                             let _url = this.checkUrl(url); 
-                            console.log(_url);
-                            if (_url === true) {
+                            if (_url !== false) {
                                 Dashing.model.request(_url, {
                                     type: "json",
                                     onload: load,
