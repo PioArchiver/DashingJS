@@ -1403,22 +1403,22 @@ ____________________ **/
                             return new Promise(function QPromise(resolve, reject) {
                                 if (Dashing.typeOf(data) === "object") {
                                     if (keyId === "#") {
-                                        objterm = "#" + data[key].id;
+                                        objterm = "#" + data.id;
                                     }
                                     else if (keyId === ".") {
-                                        objterm = "." + data[key].class;
+                                        objterm = "." + data.class;
                                     }
                                     else if (keyId === "-") {
-                                        objterm = "-" + data[key].name;
+                                        objterm = "-" + data.name;
                                     }
                                     else if (/^\w+/gi.test(key) === true) {
                                         objterm = keyId;
                                     }
 
                                     if (objterm === key) {
-                                        return resolve(data[i]);
+                                        return resolve(data);
                                     }
-                                    return resolve(data[key] || false);
+                                    return reject(data);
                                 }
                                 else if (Dashing.typeOf(data) === "array") {
                                     for (let i = 0; i < data.length; i++) {
@@ -1436,7 +1436,7 @@ ____________________ **/
                                     }
                                 }
                                 else if (Dashing.typeOf(data) === "nodelist") {
-                                    let objId = null;
+                                    let keyId = null;
                                     for (let i = 0; i < data.length; i++) {
                                         let j = JSON.parse(data[i].innerHTML);
                                         let keyId = key[0],
