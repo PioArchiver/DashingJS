@@ -1514,10 +1514,9 @@ ____________________ **/
                                         if (urltest === true) {
                                             let _this = this;
                                             let r = this.requestJson(jsnString,
-                                                function LoadSchema(e) {
-                                                    _this.setAttribute("schema", "true");
-                                                    _this.jsonSchema.push(e.target.response);
-                                                    console.log(_this.jsonSchema);
+                                                function LoadSchema(e) { 
+                                                    _this.setAttribute("schema", "true"); 
+                                                    _this.jsonSchema.push(e.target.response); 
                                                 }
                                             );
                                         }
