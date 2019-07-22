@@ -7,7 +7,9 @@ let Dashing = null;
 window.addEventListener("load", function LoadExample() {
     Dashing = document.querySelector("x-extension");
 
-    console.log(Dashing.queryJson("#full-example", Dashing.jsonSchema));
+    let jschema = Dashing.queryJson("#full-example", Dashing.jsonSchema);
+
+    console.log(jschema);
 });
 
 
