@@ -1397,7 +1397,7 @@ ____________________ **/
                                 });
                             }
                         },
-                        queryJson: function QueryPromise(key, data) {
+                        queryJson: function QueryJsonPromise(key, data) {
                             return new Promise(function QPromise(resolve, reject) {
                                 if (Dashing.typeOf(data) === "object") {
                                     if (keyId === "#") {
@@ -1416,20 +1416,20 @@ ____________________ **/
                                     if (objterm === key) {
                                         return data[i];
                                     }
-                                    return data[key] || false;
+                                    return resolve(data[key] || false);
                                 }
                                 else if (Dashing.typeOf(data) === "array") {
                                     for (let i = 0; i < data.length; i++) {
-                                        if (Dashing.typeOf(data[i]) === "object") {
+                                        if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
                                             this.queryJson(key, data[i]);
                                         }
                                         else if (Dashing.typeOf(data[i] === "string")) {
                                             if (data[i] === key) {
-                                                return data[i];
+                                                return resolve(data[i]);
                                             }
                                         }
                                         else if (Dashing.typeOf(data[i] === "array")) {
-                                            return this.jueryJson(key, data[i]);
+                                            return this.queryJson(key, data[i]);
                                         }
                                     }
                                 }
@@ -1458,13 +1458,13 @@ ____________________ **/
                                     }
                                 }
                                 else {
-                                    return false;
+                                    reject();
                                 }
                                 return null;
                             });
 
                         },
-                        queryArray: QueryArray,
+                        queryArray: QueryArray
                     };
                 }
 
