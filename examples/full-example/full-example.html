@@ -14,7 +14,7 @@
 </head>
 <body>
     <x-extension id="demo-template" grid-template="1 2" 
-                 schema="schema.json" icos="true" validation-mapping="true">
+                 schema="url(schema.json)" icos="url(icos.html)" validation-mapping="true">
         <x-tabbox id="main-menu" class="main-menu" transition selected-index="0">
             <menu>
                 <button index="0" selected>DashingJS Builder</button>
@@ -56,6 +56,9 @@
                 </li>
             </ul>
         </x-tabbox>
+        <!-- 
+            
+            -->
         <x-book>
             <x-page active="true">
                 <header>

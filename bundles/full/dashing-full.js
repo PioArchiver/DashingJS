@@ -377,7 +377,7 @@ ____________________ **/
     })();
 
     let _setprog = 0;
-    function noop() { return false; }
+    function noop(n) { return n || false; }
     class Model {
         constructor(_links, readyModelCallback) {
             if (!_links && !readyModelCallback) {
@@ -1057,9 +1057,9 @@ ____________________ **/
             for (let i = 0; i < keys.length; i++) { r[keys[i]] = obj[keys[i]]; }
             return r;
         }
-        fnQuery(query, fn) {
+        fnQuery(query, fn, nullFn) {
             let qy = document.querySelector(query);
-            return fn(qy);
+            return qy ? fn(qy) : (nullFn || noop)(qy);
         }
         createAccessor(selector) {
             return {
@@ -1377,35 +1377,24 @@ ____________________ **/
                         }, 
                         requestHTML: function RequestHTML(url, load, progress, error) {
                             let _url = this.checkUrl(url);
-
                             if (_url !== false) {
-                                Dashing.model.request(_url, { type: "document" });
-                                let xhr = new XMLHttpRequest();
-                                    xhr.open("GET", _url);
-
-                                    xhr.responseType = "document";
-
-                                    xhr.onload = load ? load : function LoadReq(e) { return true; };
-                                    xhr.progress = progress ? progress : function LoadReq(e) { return true; };
-                                    xhr.onerror = error ? error : function ErrorReq(e) { return true; };
-
-                                    xhr.send();
+                                Dashing.model.request(_url, {
+                                    type: "document",
+                                    onload: load,
+                                    onerror: error,
+                                    onprogress: progress
+                                });
                             }
                         },
                         requestJson: function RequestJson(url, load, progress, error) {
-                            let _url = this.checkUrl(url);
-
-                            if (_url === true) { 
-                                let xhr = new XMLHttpRequest();
-                                    xhr.open("GET", _url);
-
-                                    xhr.responseType = "json";
-
-                                    xhr.onload = load ? load : function LoadReq(e) { return true; };
-                                    xhr.progress = progress ? progress : function LoadReq(e) { return true; };
-                                    xhr.onerror = error ? error : function ErrorReq(e) { return true; };
-
-                                    xhr.send();
+                            let _url = this.checkUrl(url); 
+                            if (_url === true) {
+                                Dashing.model.request(_url, {
+                                    type: "json",
+                                    onload: load,
+                                    onerror: error,
+                                    onprogress: progress
+                                });
                             }
                         },
                         queryJson: function QueryPromise(key, data) {
@@ -1509,10 +1498,7 @@ ____________________ **/
                                             let icos = e.target.response;
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
-                                        } );
-                                    }
-                                    else {
-                                        // An error that returns "No icon set found"
+                                        });
                                     }
                                 }
 
@@ -1531,10 +1517,12 @@ ____________________ **/
                                                 function LoadSchema(e) {
                                                     _this.setAttribute("schema", "true");
                                                     _this.jsonSchema.push(e.target.response);
+                                                    console.log(_this.jsonSchema);
                                                 }
                                             );
                                         }
-                                        else if (Dashing.typeOf(jsnString) === ""){
+                                        else if (Dashing.typeOf(jsnString) === "string"
+                                            && /^#[\w\-]+/gi.test(jsnString)) {
                                             this.jsonSchema.push(JSON.parse(jsnString));
                                             this.setAttribute("schema", "true");
                                         }
@@ -1570,9 +1558,7 @@ ____________________ **/
             };
 
             elems.xBook = class xBook extends HTMLElement {
-                static mixins() {
-                    return ["dashed", "typed", "themed"];
-                }
+                static mixins() { return ["dashed", "typed", "themed"]; }
 
                 static lifecycle() {
                     return {
@@ -1589,12 +1575,64 @@ ____________________ **/
                     };
                 }
 
+                static methods() {
+                    return {
+                        createTabButtons: function CreateBookTabButtons() {
+                            let ti = this.querySelectorAll("x-page");
+
+                                // 
+                        }
+                    };
+                }
+
                 static attrs() {
                     return {
                         page: {
-                            set: function (val) { this.setAttribute("page", val); },
+                            set: function (val) { val ? this.setAttribute("page", val) : false; },
                             get: function () { return this.getAttribute("page"); }
+                        },
+                        bookControls: {
+                            connected: true,
+                            get: function GetBookControls() {
+                                return this.getAttribute("book-controls") || false;
+                            },
+                            set: function SetBookControls(val) {
+                                if (xtag.typeOf(val) === "string") {
+                                    Dashing.fnQuery(`#${val}`, function BookControlsFn(resizer) {
+                                        // 
+                                    }, function BookControlsNullFn() {
+                                            //
+                                        });
+                                }
+                            }
+                        },
+                        bookResizer: {
+                            connected: true,
+                            get: function GetBookResizer() {
+                                return this.getAttribute("book-resizer") || false;
+                            },
+                            set: function SetBookResizer(val) {
+                                if (Dashing.typeOf(val) === "string") {
+                                    Dashing.fnQuery(`#${val}`, function BookResizerFn(resizer) {
+                                        // 
+                                    }, function BookResizerNullfn(resizer) {
+                                            //
+                                        });
+                                }
+                            }
+                        },
+                        tabbedBook: {
+                            connected: true,
+                            get: function GetTabbedBook() {
+                                return this.getAttribute("tabbed-book") || false;
+                            },
+                            set: function SetTabbedBook(val) {
+                                if (Dashing.typeOf(val) === "string") {
+                                    Dashing.fnQuery(`#${val}`);
+                                }
+                            }
                         }
+
                     };
                 }
 
