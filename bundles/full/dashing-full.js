@@ -1398,6 +1398,7 @@ ____________________ **/
                             }
                         },
                         queryJson: function QueryJsonPromise(key, data) {
+                            let _this = this;
                             return new Promise(function QPromise(resolve, reject) {
                                 if (Dashing.typeOf(data) === "object") {
                                     if (keyId === "#") {
@@ -1414,7 +1415,7 @@ ____________________ **/
                                     }
 
                                     if (objterm === key) {
-                                        return data[i];
+                                        return return resolve(data[i]);
                                     }
                                     return resolve(data[key] || false);
                                 }
@@ -1429,7 +1430,7 @@ ____________________ **/
                                             }
                                         }
                                         else if (Dashing.typeOf(data[i] === "array")) {
-                                            return this.queryJson(key, data[i]);
+                                            return _this.queryJson(key, data[i]);
                                         }
                                     }
                                 }
@@ -1458,7 +1459,7 @@ ____________________ **/
                                     }
                                 }
                                 else {
-                                    reject();
+                                    return reject(key);
                                 }
                                 return null;
                             });
