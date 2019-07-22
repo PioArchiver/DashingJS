@@ -1422,7 +1422,7 @@ ____________________ **/
                                 else if (Dashing.typeOf(data) === "array") {
                                     for (let i = 0; i < data.length; i++) {
                                         if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                                            this.queryJson(key, data[i]);
+                                            _this.queryJson(key, data[i]);
                                         }
                                         else if (Dashing.typeOf(data[i] === "string")) {
                                             if (data[i] === key) {
