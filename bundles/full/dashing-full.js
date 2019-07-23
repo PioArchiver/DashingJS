@@ -1418,6 +1418,7 @@ ____________________ **/
                                         }
 
                                         if (objterm === search) {
+                                            console.log(resolve.prototype);
                                             resolve(data); 
                                         }
                                         else {
