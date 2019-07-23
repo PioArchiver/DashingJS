@@ -8,8 +8,8 @@ window.addEventListener("load", function LoadExample() {
     Dashing = document.querySelector("x-extension");
 
     let jschema = Dashing.queryJson("#full-example", Dashing.jsonSchema);
-    jschema.then(function JSchema() {
-
+    jschema.then(function JSchema(val) {
+        console.log(val);
     });
         
 
