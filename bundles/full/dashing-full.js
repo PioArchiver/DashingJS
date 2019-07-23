@@ -1403,8 +1403,8 @@ ____________________ **/
                             return new Promise(function QPromise(resolve, reject) {
                                 setTimeout(function () {
                                     if (Dashing.typeOf(data) === "object") {
-                                        console.log(data);
                                         if (token === "#") {
+                                            console.log(data);
                                             objterm = data.id;
                                         }
                                         else if (token === ".") {
@@ -1418,6 +1418,7 @@ ____________________ **/
                                         }
 
                                         if (objterm === search) {
+                                            console.log(resolve);
                                             resolve(data);
                                         }
                                         else {
