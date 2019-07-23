@@ -1512,37 +1512,31 @@ ____________________ **/
                             connected: true,
                             set: function SetSchemes(jsnString) {
                                 if (Dashing.typeOf(jsnString) === "string") {
-                                    try {
-                                        let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
-                                        if (urltest === true) {
-                                            let _this = this;
-                                            let r = this.requestJson(jsnString,
-                                                function LoadSchema(e) { 
-                                                    _this.setAttribute("schema", "true"); 
-                                                    _this.jsonSchema.push(e.target.response); 
-                                                }
-                                            );
-                                            r.then(function (val) { console.log(val); });
-                                            r.catch(function (val) { console.log(val); })
-                                        }
-                                        else if (Dashing.typeOf(jsnString) === "string"
-                                            && /^#[\w\-]+/gi.test(jsnString)) {
-                                            this.jsonSchema.push(JSON.parse(jsnString));
-                                            this.setAttribute("schema", "true");
-                                        }
-
-                                    }
-                                    catch (e) {
-                                        this.setAttribute("schema", "error"); 
-                                    }
-                                    finally {
-                                        let xjsn = this.querySelectorAll("x-json");
-                                        for (let x = 0; x < xjsn.length; x++) {
-                                            this.jsonSchema.push(JSON.parse(xjsn[x].innerHTML));
-                                        }
-                                        xjsn.length > 0 ?
-                                            this.setAttribute("schema", "true") : 
+                                    let urltest = /url\([\w\-\.]+\)/gi.test(jsnString);
+                                    if (urltest === true) {
+                                        let _this = this;
+                                        let r = this.requestJson(jsnString,
+                                            function LoadSchema(e) { 
+                                                _this.setAttribute("schema", "true"); 
+                                                _this.jsonSchema.push(e.target.response); 
+                                            }
+                                        );
+                                        r.then(function (val) { console.log(val); });
+                                        r.catch(function (val) { console.log(val); });
+                                        r.finally(function (val) {
+                                            let xjsn = this.querySelectorAll("x-json");
+                                            for (let x = 0; x < xjsn.length; x++) {
+                                                this.jsonSchema.push(JSON.parse(xjsn[x].innerHTML));
+                                            }
+                                            xjsn.length > 0 ?
+                                                this.setAttribute("schema", "true") :
                                                 this.setAttribute("schema", "false");
+                                        });
+                                    }
+                                    else if (Dashing.typeOf(jsnString) === "string"
+                                        && /^#[\w\-]+/gi.test(jsnString)) {
+                                        this.jsonSchema.push(JSON.parse(jsnString));
+                                        this.setAttribute("schema", "true");
                                     }
                                 }
                             },
