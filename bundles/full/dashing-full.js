@@ -1403,6 +1403,7 @@ ____________________ **/
                             return new Promise(function QPromise(resolve, reject) {
                                 setTimeout(function () {
                                     if (Dashing.typeOf(data) === "object") {
+                                        console.log(data);
                                         if (token === "#") {
                                             objterm = data.id;
                                         }
@@ -1417,12 +1418,14 @@ ____________________ **/
                                         }
 
                                         if (objterm === search) {
-                                            return resolve(data);
+                                            resolve(data);
                                         }
-                                        return reject(data);
+                                        else {
+                                            reject(data);
+                                        }
                                     }
                                     else if (Dashing.typeOf(data) === "array") {
-
+                                        console.log(data);
                                         for (let i = 0; i < data.length; i++) {
                                             if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
                                                 _this.queryJson(search, data[i], token);
