@@ -1401,7 +1401,6 @@ ____________________ **/
                             let _this = this,
                                 objterm = null;
                             return new Promise(function QPromise(resolve, reject) {
-                                console.log(data);
                                 if (Dashing.typeOf(data) === "object") {
                                     if (token === "#") {
                                         objterm = data.id;
@@ -1422,13 +1421,14 @@ ____________________ **/
                                     return reject(data);
                                 }
                                 else if (Dashing.typeOf(data) === "array") {
+                                    if (data.length <= 0) { _this.queryJson(search, data, token); }
                                     for (let i = 0; i < data.length; i++) {
                                         if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
                                             _this.queryJson(search, data[i], token);
                                         }
                                         else if (Dashing.typeOf(data[i] === "string")) {
                                             if (data[i] === key) {
-                                                resolve(data[i]);
+                                                return resolve(data[i]);
                                             }
                                         }
                                     }
