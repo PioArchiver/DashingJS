@@ -10,11 +10,10 @@ window.addEventListener("load", function LoadExample() {
     let jschema = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
     jschema.then(function (val) {
         console.log(val);
+        return val;
     });
     jschema.catch(function (val) { console.log(val); });
-        
 
-    console.log(jschema);
 });
 
 
