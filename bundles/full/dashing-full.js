@@ -1428,11 +1428,8 @@ ____________________ **/
                                         }
                                         else if (Dashing.typeOf(data[i] === "string")) {
                                             if (data[i] === key) {
-                                                return resolve(data[i]);
+                                                resolve(data[i]);
                                             }
-                                        }
-                                        else if (Dashing.typeOf(data[i] === "array")) {
-                                            return _this.queryJson(key, data[i]);
                                         }
                                     }
                                 }
@@ -1456,12 +1453,13 @@ ____________________ **/
                                         }
 
                                         if (objterm === key) {
-                                            return j;
+                                            resolve(j);
                                         }
                                     }
                                 }
                                 else {
-                                    return reject(key);
+                                    console.log(data);
+                                    reject(key);
                                 }
                                 return null;
                             });

@@ -11,7 +11,7 @@ window.addEventListener("load", function LoadExample() {
     jschema.then(function (val) {
         console.log(val);
     });
-    jschema.catch(function (val) { console.log("error"); });
+    jschema.catch(function (val) { console.log(val); });
         
 
     console.log(jschema);
