@@ -1397,27 +1397,27 @@ ____________________ **/
                                 });
                             }
                         },
-                        queryJson: function QueryJsonPromise(key, data) {
+                        queryJson: function QueryJsonPromise(search, data, token) {
                             let _this = this,
-                                keyId = key[0],
                                 objterm = null;
                             return new Promise(function QPromise(resolve, reject) {
+                                console.log(data);
                                 if (Dashing.typeOf(data) === "object") {
-                                    if (keyId === "#") {
-                                        objterm = "#" + data.id;
+                                    if (token === "#") {
+                                        objterm = data.id;
                                     }
-                                    else if (keyId === ".") {
-                                        objterm = "." + data.class;
+                                    else if (token === ".") {
+                                        objterm = data.class;
                                     }
-                                    else if (keyId === "-") {
-                                        objterm = "-" + data.name;
+                                    else if (token === "-") {
+                                        objterm = data.name;
                                     }
-                                    else if (/^\w+/gi.test(key) === true) {
-                                        objterm = keyId;
+                                    else if (Dashing.typeOf(token) === "string") {
+                                        objterm = data[token];
                                     }
 
-                                    if (objterm === key) {
-                                        return resolve(data);
+                                    if (objterm === search) {
+                                        return resolve(data); 
                                     }
                                     return reject(data);
                                 }
@@ -1437,24 +1437,24 @@ ____________________ **/
                                     }
                                 }
                                 else if (Dashing.typeOf(data) === "nodelist") {
-                                    let keyId = null;
+                                    let token = null;
                                     for (let i = 0; i < data.length; i++) {
                                         let j = JSON.parse(data[i].innerHTML);
-                                        let keyId = key[0],
                                             objterm = null;
 
-                                        if (keyId === "#") {
-                                            objterm = "#" + j.id;
+                                        if (token === "#") {
+                                            objterm = j.id;
                                         }
-                                        else if (keyId === ".") {
-                                            objterm = "." + j.class;
+                                        else if (token === ".") {
+                                            objterm = j.class;
                                         }
-                                        else if (keyId === "-") {
-                                            objterm = "-" + j.name;
+                                        else if (token === "-") {
+                                            objterm = j.name;
                                         }
-                                        else if (/^\w+/gi.test(keyId) === true) {
+                                        else if (Dashing.typeOf(token) === "string") {
                                             objterm = j[key];
                                         }
+
                                         if (objterm === key) {
                                             return j;
                                         }
