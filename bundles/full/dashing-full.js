@@ -1421,7 +1421,7 @@ ____________________ **/
                                     return reject(data);
                                 }
                                 else if (Dashing.typeOf(data) === "array") {
-                                    if (data.length <= 0) { _this.queryJson(search, data, token); }
+                                    
                                     for (let i = 0; i < data.length; i++) {
                                         if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
                                             _this.queryJson(search, data[i], token);
