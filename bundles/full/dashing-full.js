@@ -1402,8 +1402,7 @@ ____________________ **/
                                 objterm = null;
                             if (recurse === true) {
                                 if (Dashing.typeOf(data) === "object") {
-                                    if (token === "#") {
-                                        console.log(data);
+                                    if (token === "#") { 
                                         objterm = data.id;
                                     }
                                     else if (token === ".") {
@@ -1519,7 +1518,6 @@ ____________________ **/
                                         }
                                     }
                                     else {
-                                        console.log(data);
                                         reject(key);
                                     }
                                 }, 333);
