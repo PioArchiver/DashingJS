@@ -1397,9 +1397,77 @@ ____________________ **/
                                 });
                             }
                         },
-                        queryJson: function QueryJsonPromise(search, data, token) {
+                        queryJson: function QueryJsonPromise(search, data, token, recurse) {
                             let _this = this,
                                 objterm = null;
+                            if (recurse === true) {
+                                if (Dashing.typeOf(data) === "object") {
+                                    if (token === "#") {
+                                        console.log(data);
+                                        objterm = data.id;
+                                    }
+                                    else if (token === ".") {
+                                        objterm = data.class;
+                                    }
+                                    else if (token === "-") {
+                                        objterm = data.name;
+                                    }
+                                    else if (Dashing.typeOf(token) === "string") {
+                                        objterm = data[token];
+                                    }
+
+                                    if (objterm === search) {
+                                        console.log(resolve);
+                                        resolve(data);
+                                    }
+                                    else {
+                                        reject(data);
+                                    }
+                                }
+                                else if (Dashing.typeOf(data) === "array") {
+                                    console.log(data);
+                                    for (let i = 0; i < data.length; i++) {
+                                        if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
+                                            _this.queryJson(search, data[i], token, true);
+                                        }
+                                        else if (Dashing.typeOf(data[i] === "string")) {
+                                            if (data[i] === key) {
+                                                return resolve(data[i]);
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (Dashing.typeOf(data) === "nodelist") {
+                                    let token = null;
+                                    for (let i = 0; i < data.length; i++) {
+                                        let j = JSON.parse(data[i].innerHTML);
+                                        objterm = null;
+
+                                        if (token === "#") {
+                                            objterm = j.id;
+                                        }
+                                        else if (token === ".") {
+                                            objterm = j.class;
+                                        }
+                                        else if (token === "-") {
+                                            objterm = j.name;
+                                        }
+                                        else if (Dashing.typeOf(token) === "string") {
+                                            objterm = j[key];
+                                        }
+
+                                        if (objterm === key) {
+                                            resolve(j);
+                                        }
+                                    }
+                                }
+                                else {
+                                    console.log(data);
+                                    reject(key);
+                                }
+
+                            }
+
                             return new Promise(function QPromise(resolve, reject) {
                                 setTimeout(function () {
                                     if (Dashing.typeOf(data) === "object") {
@@ -1429,7 +1497,7 @@ ____________________ **/
                                         console.log(data);
                                         for (let i = 0; i < data.length; i++) {
                                             if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                                                _this.queryJson(search, data[i], token);
+                                                _this.queryJson(search, data[i], token, true);
                                             }
                                             else if (Dashing.typeOf(data[i] === "string")) {
                                                 if (data[i] === key) {
