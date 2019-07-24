@@ -13,6 +13,7 @@ window.addEventListener("load", function LoadExample() {
         return val;
     });
     promise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
+    console.log(promise);
 
 });
 
