@@ -1417,7 +1417,6 @@ ____________________ **/
                                     }
 
                                     if (objterm === search) {
-                                        console.log(resolve);
                                         return data;
                                     }
                                     else {
