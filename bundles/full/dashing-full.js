@@ -1418,21 +1418,22 @@ ____________________ **/
 
                                     if (objterm === search) {
                                         console.log(resolve);
-                                        resolve(data);
+                                        return data;
                                     }
                                     else {
-                                        reject(data);
+                                        return false;
                                     }
                                 }
                                 else if (Dashing.typeOf(data) === "array") {
                                     console.log(data);
                                     for (let i = 0; i < data.length; i++) {
                                         if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                                            _this.queryJson(search, data[i], token, true);
+                                            let r = _this.queryJson(search, data[i], token, true);
+                                            return r;
                                         }
                                         else if (Dashing.typeOf(data[i] === "string")) {
                                             if (data[i] === key) {
-                                                return resolve(data[i]);
+                                                return data[i];
                                             }
                                         }
                                     }
@@ -1457,13 +1458,13 @@ ____________________ **/
                                         }
 
                                         if (objterm === key) {
-                                            resolve(j);
+                                            return j;
                                         }
                                     }
                                 }
                                 else {
                                     console.log(data);
-                                    reject(key);
+                                    return key;
                                 }
 
                             }
@@ -1497,7 +1498,8 @@ ____________________ **/
                                         console.log(data);
                                         for (let i = 0; i < data.length; i++) {
                                             if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                                                _this.queryJson(search, data[i], token, true);
+                                                let r = _this.queryJson(search, data[i], token, true);
+                                                resolve(r);
                                             }
                                             else if (Dashing.typeOf(data[i] === "string")) {
                                                 if (data[i] === key) {
