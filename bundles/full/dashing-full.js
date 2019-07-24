@@ -1494,7 +1494,6 @@ ____________________ **/
                                         }
                                     }
                                     else if (Dashing.typeOf(data) === "array") {
-                                        console.log(data);
                                         for (let i = 0; i < data.length; i++) {
                                             if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
                                                 let r = _this.queryJson(search, data[i], token, true);
@@ -1511,24 +1510,12 @@ ____________________ **/
                                         let token = null;
                                         for (let i = 0; i < data.length; i++) {
                                             let j = JSON.parse(data[i].innerHTML);
-                                            objterm = null;
-
-                                            if (token === "#") {
-                                                objterm = j.id;
-                                            }
-                                            else if (token === ".") {
-                                                objterm = j.class;
-                                            }
-                                            else if (token === "-") {
-                                                objterm = j.name;
-                                            }
-                                            else if (Dashing.typeOf(token) === "string") {
-                                                objterm = j[key];
-                                            }
-
-                                            if (objterm === key) {
-                                                resolve(j);
-                                            }
+                                                objterm = null;
+                                            if (token === "#") { objterm = j.id; }
+                                            else if (token === ".") { objterm = j.class; }
+                                            else if (token === "-") { objterm = j.name; }
+                                            else if (Dashing.typeOf(token) === "string") { objterm = j[key]; }
+                                            if (objterm === key) { resolve(j); }
                                         }
                                     }
                                     else {
