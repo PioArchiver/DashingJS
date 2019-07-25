@@ -1765,7 +1765,6 @@ ____________________ **/
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode,
                                 _this = this.parentNode.parentNode;
-                            console.log(this.xMenu);
                             if (_menu.displayCurrent !== _panel) {
                                 // Display's new content for the panel
                                 // Need to validate data for print before we set the current display.
@@ -2126,7 +2125,6 @@ ____________________ **/
 
             };
 
-            // x-menu is compatible with template strings.
             elems.xMenu = class xMenu extends HTMLElement {
                 constructor() {
                     super();
@@ -2204,6 +2202,7 @@ ____________________ **/
                                 this.setAttribute("display-current", val);
                                 if (val !== this.current) {
                                     this.current = val;
+                                    console.log(val);
                                     this.templateItems[this.currentIndex] === val ? true :
                                         this.currentIndex = QueryArray(this.templateItems, val);
                                     this.display.innerHTML = this[val]({
