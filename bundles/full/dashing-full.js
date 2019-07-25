@@ -74,72 +74,7 @@ ____________________ **/
             }
             return false;
         }
-    }
-    function QueryType(search, data, token) {
-        let objterm = null;
-        if (Dashing.typeOf(data) === "object") {
-            if (token === "#") {
-                objterm = data.id;
-            }
-            else if (token === ".") {
-                objterm = data.class;
-            }
-            else if (token === "-") {
-                objterm = data.name;
-            }
-            else if (Dashing.typeOf(token) === "string") {
-                objterm = data[token];
-            }
-
-            if (objterm === search) {
-                return data;
-            }
-            else {
-                return false;
-            }
-        }
-        else if (Dashing.typeOf(data) === "array") {
-            for (let i = 0; i < data.length; i++) {
-                if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                    let r = QueryType.call(this, [search, data[i], token]);
-                    return r;
-                }
-                else if (Dashing.typeOf(data[i] === "string")) {
-                    if (data[i] === key) {
-                        return data[i];
-                    }
-                }
-            }
-        }
-        else if (Dashing.typeOf(data) === "nodelist") {
-            let token = null;
-            for (let i = 0; i < data.length; i++) {
-                let j = JSON.parse(data[i].innerHTML);
-                objterm = null;
-
-                if (token === "#") {
-                    objterm = j.id;
-                }
-                else if (token === ".") {
-                    objterm = j.class;
-                }
-                else if (token === "-") {
-                    objterm = j.name;
-                }
-                else if (Dashing.typeOf(token) === "string") {
-                    objterm = j[key];
-                }
-
-                if (objterm === search) {
-                    return j;
-                }
-            }
-        }
-        else {
-            console.log(data);
-            return search;
-        }
-    }
+    } 
 
     // Command cell regular expressions
     const testLiteralCmd = /\w+\{[\w\,]+\}\;/g,
@@ -1116,7 +1051,7 @@ ____________________ **/
         }
         fnQuery(query, fn, nullFn) {
             let qy = document.querySelector(query);
-            return qy ? fn(qy) : (nullFn || noop)();
+            return qy ? fn(qy) : (nullFn || noop)(qy);
         }
         createAccessor(selector) {
             return {
@@ -1455,11 +1390,128 @@ ____________________ **/
                             }
                         },
                         queryJson: function QueryJsonPromise(search, data, token, recurse) {
-                            let _this = this;
+                            let _this = this,
+                                objterm = null;
+                            if (recurse === true) {
+                                if (Dashing.typeOf(data) === "object") {
+                                    if (token === "#") { 
+                                        objterm = data.id;
+                                    }
+                                    else if (token === ".") {
+                                        objterm = data.class;
+                                    }
+                                    else if (token === "-") {
+                                        objterm = data.name;
+                                    }
+                                    else if (Dashing.typeOf(token) === "string") {
+                                        objterm = data[token];
+                                    }
+
+                                    if (objterm === search) {
+                                        return data;
+                                    }
+                                    else {
+                                        return false;
+                                    }
+                                }
+                                else if (Dashing.typeOf(data) === "array") {
+                                    console.log(data);
+                                    for (let i = 0; i < data.length; i++) {
+                                        if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
+                                            let r = _this.queryJson(search, data[i], token, true);
+                                            return r;
+                                        }
+                                        else if (Dashing.typeOf(data[i] === "string")) {
+                                            if (data[i] === key) {
+                                                return data[i];
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (Dashing.typeOf(data) === "nodelist") {
+                                    let token = null;
+                                    for (let i = 0; i < data.length; i++) {
+                                        let j = JSON.parse(data[i].innerHTML);
+                                        objterm = null;
+
+                                        if (token === "#") {
+                                            objterm = j.id;
+                                        }
+                                        else if (token === ".") {
+                                            objterm = j.class;
+                                        }
+                                        else if (token === "-") {
+                                            objterm = j.name;
+                                        }
+                                        else if (Dashing.typeOf(token) === "string") {
+                                            objterm = j[key];
+                                        }
+
+                                        if (objterm === key) {
+                                            return j;
+                                        }
+                                    }
+                                }
+                                else {
+                                    console.log(data);
+                                    return key;
+                                }
+
+                            }
 
                             return new Promise(function QPromise(resolve, reject) {
                                 setTimeout(function () {
-                                    QueryType.call(_this, search, data, token);
+                                    if (Dashing.typeOf(data) === "object") {
+                                        if (token === "#") {
+                                            console.log(data);
+                                            objterm = data.id;
+                                        }
+                                        else if (token === ".") {
+                                            objterm = data.class;
+                                        }
+                                        else if (token === "-") {
+                                            objterm = data.name;
+                                        }
+                                        else if (Dashing.typeOf(token) === "string") {
+                                            objterm = data[token];
+                                        }
+
+                                        if (objterm === search) {
+                                            console.log(resolve);
+                                            resolve(data); 
+                                        }
+                                        else {
+                                            reject(data);
+                                        }
+                                    }
+                                    else if (Dashing.typeOf(data) === "array") {
+                                        for (let i = 0; i < data.length; i++) {
+                                            if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
+                                                let r = _this.queryJson(search, data[i], token, true);
+                                                resolve(r);
+                                            }
+                                            else if (Dashing.typeOf(data[i] === "string")) {
+                                                if (data[i] === key) {
+                                                    return resolve(data[i]);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else if (Dashing.typeOf(data) === "nodelist") {
+                                        let token = null;
+                                        for (let i = 0; i < data.length; i++) {
+                                            let j = JSON.parse(data[i].innerHTML);
+                                                objterm = null;
+                                            if (token === "#") { objterm = j.id; }
+                                            else if (token === ".") { objterm = j.class; }
+                                            else if (token === "-") { objterm = j.name; }
+                                            else if (Dashing.typeOf(token) === "string") { objterm = j[key]; }
+                                            if (objterm === key) { resolve(j); }
+                                        }
+                                    }
+                                    else {
+                                        reject(key);
+                                    }
                                 }, 333);
                             });
 
