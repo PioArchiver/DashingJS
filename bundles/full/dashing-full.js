@@ -130,14 +130,14 @@ ____________________ **/
                     objterm = j[key];
                 }
 
-                if (objterm === key) {
+                if (objterm === search) {
                     return j;
                 }
             }
         }
         else {
             console.log(data);
-            return key;
+            return search;
         }
     }
 
