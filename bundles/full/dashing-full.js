@@ -1459,7 +1459,7 @@ ____________________ **/
 
                             return new Promise(function QPromise(resolve, reject) {
                                 setTimeout(function () {
-                                    QueryType.call(_this, [search, data, token]);
+                                    QueryType.call(_this, search, data, token);
                                 }, 333);
                             });
 
