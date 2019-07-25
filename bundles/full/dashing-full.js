@@ -1244,8 +1244,10 @@ ____________________ **/
 
     Dashing = new dashboard({
         namespaces: [
+            "x-json", 
             "x-extension",
             "x-book",
+            "x-panel",
             "x-page",
             "x-table",
             "x-header",
@@ -1255,8 +1257,7 @@ ____________________ **/
             "x-tabbox",
             "x-modal",
             "x-message",
-            "x-link",
-            "x-json"
+            "x-link"
         ],
         onStart: function StartFullDemo(root) {
             // 
@@ -1603,6 +1604,185 @@ ____________________ **/
                     return {
                         config: function Config(e) {
                             // 
+                        }
+                    };
+                }
+            };
+
+            elems.xPanel = class xPanel extends HTMLElement {
+                connectedCallback() {
+                    this.cached = this.cached ? this.cached : {};
+                    this.createCaches(this.xMenu.templateItems);
+                }
+                static methods() {
+                    return {
+                        getEditorJson: function GetEditorJson() {
+                            let _textEditor = this.xContent.firstElementChild.querySelector("textarea"),
+                                _jsn = null;
+                            try { _jsn = JSON.parse(_textEditor.value); }
+                            catch (e) { _jsn = JSON.parse('{"id": "Error"}'); }
+                            return _jsn;
+                        },
+                        isConentCached: function IsConentCached(content) {
+                            // In Work
+                        },
+                        createCaches: function CreateCaches(_items) {
+                            if (xtag.typeOf(_items) === "array") {
+                                for (let i = 0; i < _items.length; i++) {
+                                    this.cached[_items[i]] = this.xContent.firstElementChild.Json || {};
+                                    // Need to cached validated data from what
+                                    // the panel's content is currently displaying.
+                                }
+                            }
+                        }
+                    };
+                }
+                static attributes() {
+                    return {
+                        content: {
+                            active: true,
+                            connected: true,
+                            get: function GetPanelContent() {
+                                return this.getAttribute("content") || false;
+                            },
+                            set: function SetPanelContent(val) {
+                                if (xtag.typeOf(val) === "string") {
+                                    this.setAttribute("content", val);
+                                    this.xContent = this.querySelector(`#${val}`);
+                                }
+                            }
+                        }, 
+                        menu: {
+                            active: true,
+                            connected: true,
+                            get: function GetPanelMenu() {
+                                return this.getAttribute("menu") || false;
+                            },
+                            set: function SetPanelMenu(val) {
+                                if (xtag.typeOf(val) === "string") {
+                                    this.setAttribute("menu", val);
+                                    this.xMenu = this.querySelector(`#${val}`);
+                                }
+                            }
+                        }, 
+                        minimized: {
+                            active: true,
+                            connected: true,
+                            get: function GetMinimized() { return this.hasAttribute("minimized"); },
+                            set: function SetMinimized(val) {
+                                if (val === true || val === "true") {
+                                    this.setAttribute("minimized", "true");
+                                    this.removeAttribute("style");
+                                    this.xMenu.display.style.display = "none";
+                                    this.removeAttribute("normalized");
+                                    this.removeAttribute("maximized");
+                                    this.isMinimized = true;
+                                }
+                                else {
+                                    this.isMinimized = true;
+                                    this.isMaximized = false;
+                                    this.isNormalized = false;
+                                }
+                            }
+                        }, 
+                        normalized: {
+                            active: true,
+                            connected: true,
+                            get: function GetEnlarged() { return this.hasAttribute("enlarged"); },
+                            set: function SetEnlarged(val) {
+                                if (val === true || val === "true") {
+                                    this.setAttribute("normalized", "true");
+                                    this.xMenu.display.removeAttribute("style");
+                                    this.removeAttribute("style");
+                                    this.removeAttribute("minimized");
+                                    this.removeAttribute("maximized");
+                                    this.isNomralized = true;
+                                }
+                                else {
+                                    this.isMinimized = false;
+                                    this.isMaximized = false;
+                                    this.isNormalized = true;
+                                }
+                            }
+                        }, 
+                        maximized: {
+                            active: true,
+                            connected: true,
+                            get: function GetMaximized() { return this.hasAttribute("maximized"); },
+                            set: function SetMaximized(val) {
+                                if (val === true || val === "true") {
+                                    this.setAttribute("maximized", "true");
+                                    this.removeAttribute("minimized");
+                                    this.removeAttribute("normalized");
+                                    this.setAttribute("style", "position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100000; background-color: white;");
+                                    this.xMenu.display.removeAttribute("style");
+                                    this.isMaximized = false;
+                                }
+                                else {
+                                    this.isMinimized = false;
+                                    this.isMaximized = true;
+                                    this.isNormalized = false;
+                                }
+                            }
+                        }, 
+                        "resize-options": {
+                            active: true,
+                            connected: true,
+                            get: function GetPanelResizer() {
+                                return this.getAttribute("resizer-options") || false;
+                            },
+                            set: function SetPanelResizer(val) {
+                                if (xtag.typeOf(val) === "string" && this.querySelector(`#${val}`)) {
+                                    this.setAttribute("resize-options", val);
+                                    this.resizerBar = true;
+                                    let _container = this.querySelector(`#${val}`),
+                                        _panelresizer = xtag.createFragment(`<div panel-resizer="true">
+                                            <button icon="minimize"></button>
+                                            <button icon='normal'></button>
+                                            <button icon='maximize'></button>
+                                        </div>`);
+                                    _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
+                                }
+                                else if (xtag.typeOf(val) === "string" && this.querySelector(`#${val}`) === null) {
+                                    this.setAttribute("resize-options", val);
+                                    this.resizerBar = true;
+                                    let _container = document.createElement(`div`);
+                                    _container.setAttribute('panel-resizer="true"');
+                                    _container.innerHTML = `
+                                                <button icon="minimize"></button>
+                                                <button icon='normal'></button>
+                                                <button icon='maximize'></button>
+                                            </div>`;
+                                    this.insertAdjacentElement("beforeend", _container);
+                                }
+                            }
+                        }
+                    };
+                }
+                static events() {
+                    return {
+                        "click:delegate(x-menu > button[panel-content])": function ChangePanelContent(e) {
+                            let _panel = this.getAttribute("panel-content"),
+                                _menu = this.parentNode,
+                                _this = this.parentNode.parentNode;
+                            if (_menu.displayCurrent !== _panel) {
+                                // Display's new content for the panel
+                                // Need to validate data for print before we set the current display.
+                                _menu.displayCurrent = _panel;
+                            }
+                        },
+                        "click:delegate(x-menu > div[panel-resizer] > button[icon])": function ResizePanel(e) {
+                            switch (this.getAttribute("icon")) {
+                                case "minimize":
+                                    this.parentNode.parentNode.parentNode.minimized = true;
+                                    break;
+                                case "normal":
+                                    this.parentNode.parentNode.parentNode.normalized = true;
+                                    break;
+                                case "maximize":
+                                    this.parentNode.parentNode.parentNode.maximized = true;
+                                    break;
+                            }
                         }
                     };
                 }
