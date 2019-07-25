@@ -2200,9 +2200,9 @@ ____________________ **/
                             },
                             set: function SetCurrentDisplay(val) {
                                 this.setAttribute("display-current", val);
+                                console.log(val);
                                 if (val !== this.current) {
                                     this.current = val;
-                                    console.log(val);
                                     this.templateItems[this.currentIndex] === val ? true :
                                         this.currentIndex = QueryArray(this.templateItems, val);
                                     this.display.innerHTML = this[val]({
