@@ -16,18 +16,6 @@
 ____________________ **/
 
 (function DashioFull() {
-    // Check Globals
-    if (!window.xtag) {
-        window.xtag = {
-            mixins: {},
-            pseudos: {},
-            addEvent: function AddEvent(node, type, fn) {
-                console.log(node);
-                node.addEventListener(type, fn);
-            }
-
-        };
-    }
 
     /** ____________________
      * @note Methods and variables for tabbox
@@ -77,12 +65,79 @@ ____________________ **/
             while (i--) array[i] = clone(src[i]);
             return array;
         };
+
+    // Helper Functions
     function QueryArray(arr, val) {
         if (xtag.typeOf(val) === "string") {
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i] === val) { return i; }
             }
             return false;
+        }
+    }
+    function QueryType(search, data, token) {
+        let objterm = null;
+        if (Dashing.typeOf(data) === "object") {
+            if (token === "#") {
+                objterm = data.id;
+            }
+            else if (token === ".") {
+                objterm = data.class;
+            }
+            else if (token === "-") {
+                objterm = data.name;
+            }
+            else if (Dashing.typeOf(token) === "string") {
+                objterm = data[token];
+            }
+
+            if (objterm === search) {
+                return data;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (Dashing.typeOf(data) === "array") {
+            for (let i = 0; i < data.length; i++) {
+                if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
+                    let r = QueryType.call(this, [search, data[i], token]);
+                    return r;
+                }
+                else if (Dashing.typeOf(data[i] === "string")) {
+                    if (data[i] === key) {
+                        return data[i];
+                    }
+                }
+            }
+        }
+        else if (Dashing.typeOf(data) === "nodelist") {
+            let token = null;
+            for (let i = 0; i < data.length; i++) {
+                let j = JSON.parse(data[i].innerHTML);
+                objterm = null;
+
+                if (token === "#") {
+                    objterm = j.id;
+                }
+                else if (token === ".") {
+                    objterm = j.class;
+                }
+                else if (token === "-") {
+                    objterm = j.name;
+                }
+                else if (Dashing.typeOf(token) === "string") {
+                    objterm = j[key];
+                }
+
+                if (objterm === key) {
+                    return j;
+                }
+            }
+        }
+        else {
+            console.log(data);
+            return key;
         }
     }
 
@@ -870,7 +925,9 @@ ____________________ **/
                 }
             }
         }
-        on(node, type, callback) { }
+        on(node, type, callback) {
+            // CustomEvents/Events
+        }
         typeOf(data) { return typeOf(data); }
         add(data) {
             switch (data.type) {
@@ -1059,7 +1116,7 @@ ____________________ **/
         }
         fnQuery(query, fn, nullFn) {
             let qy = document.querySelector(query);
-            return qy ? fn(qy) : (nullFn || noop)(qy);
+            return qy ? fn(qy) : (nullFn || noop)();
         }
         createAccessor(selector) {
             return {
@@ -1398,128 +1455,11 @@ ____________________ **/
                             }
                         },
                         queryJson: function QueryJsonPromise(search, data, token, recurse) {
-                            let _this = this,
-                                objterm = null;
-                            if (recurse === true) {
-                                if (Dashing.typeOf(data) === "object") {
-                                    if (token === "#") { 
-                                        objterm = data.id;
-                                    }
-                                    else if (token === ".") {
-                                        objterm = data.class;
-                                    }
-                                    else if (token === "-") {
-                                        objterm = data.name;
-                                    }
-                                    else if (Dashing.typeOf(token) === "string") {
-                                        objterm = data[token];
-                                    }
-
-                                    if (objterm === search) {
-                                        return data;
-                                    }
-                                    else {
-                                        return false;
-                                    }
-                                }
-                                else if (Dashing.typeOf(data) === "array") {
-                                    console.log(data);
-                                    for (let i = 0; i < data.length; i++) {
-                                        if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                                            let r = _this.queryJson(search, data[i], token, true);
-                                            return r;
-                                        }
-                                        else if (Dashing.typeOf(data[i] === "string")) {
-                                            if (data[i] === key) {
-                                                return data[i];
-                                            }
-                                        }
-                                    }
-                                }
-                                else if (Dashing.typeOf(data) === "nodelist") {
-                                    let token = null;
-                                    for (let i = 0; i < data.length; i++) {
-                                        let j = JSON.parse(data[i].innerHTML);
-                                        objterm = null;
-
-                                        if (token === "#") {
-                                            objterm = j.id;
-                                        }
-                                        else if (token === ".") {
-                                            objterm = j.class;
-                                        }
-                                        else if (token === "-") {
-                                            objterm = j.name;
-                                        }
-                                        else if (Dashing.typeOf(token) === "string") {
-                                            objterm = j[key];
-                                        }
-
-                                        if (objterm === key) {
-                                            return j;
-                                        }
-                                    }
-                                }
-                                else {
-                                    console.log(data);
-                                    return key;
-                                }
-
-                            }
+                            let _this = this;
 
                             return new Promise(function QPromise(resolve, reject) {
                                 setTimeout(function () {
-                                    if (Dashing.typeOf(data) === "object") {
-                                        if (token === "#") {
-                                            console.log(data);
-                                            objterm = data.id;
-                                        }
-                                        else if (token === ".") {
-                                            objterm = data.class;
-                                        }
-                                        else if (token === "-") {
-                                            objterm = data.name;
-                                        }
-                                        else if (Dashing.typeOf(token) === "string") {
-                                            objterm = data[token];
-                                        }
-
-                                        if (objterm === search) {
-                                            console.log(resolve);
-                                            resolve(data); 
-                                        }
-                                        else {
-                                            reject(data);
-                                        }
-                                    }
-                                    else if (Dashing.typeOf(data) === "array") {
-                                        for (let i = 0; i < data.length; i++) {
-                                            if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
-                                                let r = _this.queryJson(search, data[i], token, true);
-                                                resolve(r);
-                                            }
-                                            else if (Dashing.typeOf(data[i] === "string")) {
-                                                if (data[i] === key) {
-                                                    return resolve(data[i]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else if (Dashing.typeOf(data) === "nodelist") {
-                                        let token = null;
-                                        for (let i = 0; i < data.length; i++) {
-                                            let j = JSON.parse(data[i].innerHTML);
-                                                objterm = null;
-                                            if (token === "#") { objterm = j.id; }
-                                            else if (token === ".") { objterm = j.class; }
-                                            else if (token === "-") { objterm = j.name; }
-                                            else if (Dashing.typeOf(token) === "string") { objterm = j[key]; }
-                                            if (objterm === key) { resolve(j); }
-                                        }
-                                    }
-                                    else {
-                                        reject(key);
-                                    }
+                                    QueryType.call(_this, [search, data, token]);
                                 }, 333);
                             });
 
