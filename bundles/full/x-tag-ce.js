@@ -114,12 +114,10 @@
     // Attributes
     function setElemAttr(elem, key, obj) {
         let k = key.replace(/\-[a-z]/g, function (stg) { return stg[1].toUpperCase(); });
-        obj.configurable = false;
-        obj.enumerable = true;
         Object.defineProperty(elem.prototype, k, {
             configurable: false,
             enumerable: true,
-            get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key); },
+            get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key) || "test"; },
             set: obj.set ? obj.set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
             });
         return k;

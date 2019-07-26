@@ -2182,8 +2182,7 @@ ____________________ **/
                                 return this.getAttribute("display-items");
                             },
                             set: function SetDisplayItems(val) {
-                                this.setAttribute("display-items", val);
-                                console.log(this);
+                                this.setAttribute("display-items", val); 
                                 try { this.templateItems = JSON.parse(val); }
                                 catch (e) { throw e; }
                                 finally {
