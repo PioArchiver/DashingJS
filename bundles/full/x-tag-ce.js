@@ -113,18 +113,18 @@
 
     // Attributes
     function setElemAttr(elem, key, obj) {
-        let k = key.replace(/\-[a-z]/g, function (stg) { return stg[1].toUpperCase(); });
+        let k = key.replace(/\-[a-z]/g, function (stg) { return stg[1].toUpperCase(); }); 
         Object.defineProperty(elem.prototype, k, {
             configurable: false,
+            writable: false,
             enumerable: true,
-            get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key) || "test"; },
+            get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key) || false; },
             set: obj.set ? obj.set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
-            });
+        });
         return k;
     }
 
 /* Mixins */
-
     // writeMixin(proto, mix)
     function writeMixin(proto, mix) {
         let _proto = proto.prototype;
@@ -342,33 +342,29 @@
             let _hasAttributes = _this.attrs === undefined ? {} : _this.attrs(),
                 ckeys = Object.keys(_hasAttributes),
                 k = [];
-            for (let i = 0; i < ckeys.length; i++) { 
-                let _k = setElemAttr(_this, ckeys[i], _hasAttributes[ckeys[i]]);
-                k.push(_k);
-            }
 
             let _methods = _this.methods === undefined ? {} : _this.methods();
-
-            // Create the HTML Element Prototype Mixin
-            class XTagElement extends _this {
+            // Create the HTML Element Prototype Mixin 
+            class XTagElement extends _this { 
                 constructor() {
                     super();
                     let hasEvents = _this.events === undefined ? false : _this.events();
                     xtag.addEvents(this, hasEvents);
+                    for (let i = 0; i < ckeys.length; i++) {
+                        let _k = setElemAttr(this, ckeys[i], _hasAttributes[ckeys[i]]);
+                        k.push(_k);
+                    }
                     (lifecycle.created || noop).apply(this);
 
-                }
-
-                connectedCallback() {
-                    (lifecycle.inserted || noop).apply(this);
-                    for (let i = 0; i < k.length; i++) {
+                } 
+                connectedCallback() { 
+                    (lifecycle.inserted || noop).apply(this); 
+                    for (let i = 0; i < k.length; i++) { 
                         if (_hasAttributes[ckeys[i]].connected === true) {
-                            console.log(this[k[i]]);
-                            console.log(k[i]);
-                            this[k[i]] = this[k[i]];
-                        }
-                    }
-                }
+                            this[k[i]] = this[k[i]]; 
+                        } 
+                    } 
+                } 
 
                 // Dashing is for the Dashing Components Build Package
                 disconnectedCallback(Dashing) {
