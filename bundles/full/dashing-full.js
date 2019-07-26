@@ -1763,8 +1763,7 @@ ____________________ **/
                     return {
                         "click:delegate(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
-                                _menu = this.parentNode;
-
+                                _menu = this.parentNode; 
                             if (_menu.displayCurrent !== _panel) {
                                 // Display's new content for the panel
                                 // Need to validate data for print before we set the current display.
