@@ -360,6 +360,7 @@
                     (lifecycle.inserted || noop).apply(this); 
                     for (let i = 0; i < k.length; i++) { 
                         if (this[k[i]].connected === true) { 
+                            console.log(this[k[i]]);
                             this[k[i]] = this[k[i]]; 
                         } 
                     } 
