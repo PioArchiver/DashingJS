@@ -340,7 +340,12 @@
 
             // Get the methods and attrs 
             let _hasAttributes = _this.attrs === undefined ? {} : _this.attrs(),
-                ckeys = Object.keys(_hasAttributes);
+                ckeys = Object.keys(_hasAttributes),
+                k = [];
+            for (let i = 0; i < ckeys.length; i++) {
+                let _k = setElemAttr(_this, ckeys[i], _hasAttributes[ckeys[i]]);
+                k.push(_k);
+            }
 
             let _methods = _this.methods === undefined ? {} : _this.methods();
 
@@ -356,11 +361,9 @@
 
                 connectedCallback() {
                     (lifecycle.inserted || noop).apply(this);
-                    for (let i = 0; i < ckeys.length; i++) {
-                        let _k = setElemAttr(this, ckeys[i], _hasAttributes[ckeys[i]]);
+                    for (let i = 0; i < k.length; i++) {
                         if (_hasAttributes[ckeys[i]].connected === true) {
-                            console.log(_k);
-                            this[_k] = this[_k];
+                            this[k] = this[k];
                         }
                     }
                 }
