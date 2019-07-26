@@ -116,7 +116,6 @@
         let k = key.replace(/\-[a-z]/g, function (stg) { return stg[1].toUpperCase(); }); 
         Object.defineProperty(elem.prototype, k, {
             configurable: false,
-            writable: false,
             enumerable: true,
             get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key) || false; },
             set: obj.set ? obj.set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
