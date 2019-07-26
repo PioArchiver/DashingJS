@@ -117,6 +117,8 @@
         obj.configurable = false;
         obj.enumerable = true;
         Object.defineProperty(elem.prototype, k, {
+            configurable: false,
+            enumerable: true,
             get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key); },
             set: obj.set ? obj.set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
             });
@@ -363,7 +365,6 @@
                     (lifecycle.inserted || noop).apply(this);
                     for (let i = 0; i < k.length; i++) {
                         if (_hasAttributes[ckeys[i]].connected === true) {
-                            console.log(this[k[i]]);
                             this[k[i]] = this[k[i]];
                         }
                     }
