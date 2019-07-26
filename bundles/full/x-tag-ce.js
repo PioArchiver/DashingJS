@@ -366,6 +366,7 @@
                     for (let i = 0; i < k.length; i++) {
                         if (_hasAttributes[ckeys[i]].connected === true) {
                             console.log(this[k[i]]);
+                            console.log(k[i]);
                             this[k[i]] = this[k[i]];
                         }
                     }
