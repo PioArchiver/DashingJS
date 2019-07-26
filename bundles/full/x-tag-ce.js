@@ -113,7 +113,7 @@
 
     // Attributes
     function setElemAttr(elem, key, obj) {
-        let k = /\-[a-z]/g.replace(key, function (stg) { return stg[1].toUpperCase(); });
+        let k = key.replace(/\-[a-z]/g, function (stg) { return stg[1].toUpperCase(); });
         obj[k].configurable = false;
         obj[k].enumerable = true;
         obj[k].connected = obj[k].connected ? obj[k].connected : false; 
