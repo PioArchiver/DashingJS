@@ -1764,7 +1764,7 @@ ____________________ **/
                         "click:delegate(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode;
-                            console.log(_menu.panelContent);
+                            console.log(_panel);
                             console.log(_menu.displayCurrent);
                             if (_menu.displayCurrent !== _panel) {
                                 // Display's new content for the panel

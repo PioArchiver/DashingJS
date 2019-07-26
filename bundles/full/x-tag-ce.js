@@ -356,6 +356,7 @@
                     (lifecycle.inserted || noop).apply(this);
                     for (let i = 0; i < ckeys.length; i++) {
                         if (_hasAttributes[ckeys[i]].connected === true) {
+                            console.log(ckeys[i]);
                             this[ckeys[i]] = this[ckeys[i]];
                         }
                     }
