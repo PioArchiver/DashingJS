@@ -2339,7 +2339,7 @@ ____________________ **/
                                 }
                             }
                         },
-                        collapseButton: {
+                        'collapse-button': {
                             set: function SetAllowCollapse(opts) {
                                 // 
                             },
@@ -2347,7 +2347,7 @@ ____________________ **/
                                 //
                             }
                         },
-                        closePaneButton: {
+                        'close-pane-button': {
                             set: function SetAllowCollapse(opts) {
                                 let cbtn = document.createElement("button");
                                 cbtn.type = "button";
@@ -2465,17 +2465,17 @@ ____________________ **/
 
                 static attrs() {
                     return {
-                        tabElements: {
+                        'tab-lements': {
                             get: function TabElements() {
                                 return xtag.queryChildren(this, 'menu > *');
                             }
                         },
-                        panelElements: {
+                        'panel-elements': {
                             get: function PanelElements() {
                                 return xtag.queryChildren(this, 'ul');
                             }
                         },
-                        selectedIndex: {
+                        'selected-index': {
                             set: function (val) {
                                 this.setAttribute("selected-index", val);
                             },
@@ -2483,8 +2483,8 @@ ____________________ **/
                                 return this.getAttribute("selected-index");
                             }
                         },
-                        selectedTab: (function () { return Dashing.createAccessor("menu > [selected]"); })(),
-                        selectedPanel: (function () { return Dashing.createAccessor("menu > [selected]"); })()
+                        'selected-tab': (function () { return Dashing.createAccessor("menu > [selected]"); })(),
+                        'selected-panel': (function () { return Dashing.createAccessor("menu > [selected]"); })()
                     };
                 }
 
@@ -2599,7 +2599,7 @@ ____________________ **/
                                 //
                             }
                         },
-                        databaseActive: {
+                        'database-active': {
                             set: function SetActiveDB(val) {
                                 Dashing.writer.draw({ name: "_blank", target: this }, {
                                     parent: {
@@ -2613,7 +2613,7 @@ ____________________ **/
                             },
                             get: function GetActiveDB() { return this.getAttribute("database-active"); }
                         },
-                        allowMenu: {
+                        'allow-menu': {
                             set: function SetMenu(val) {
                                 this.table.menu = Dashing.writer.draw({ name: "_blank", target: this }, {
                                     parent: {
@@ -2631,7 +2631,7 @@ ____________________ **/
                             },
                             get: function GetMenu() { return this.getAttribute("allow-menu"); }
                         },
-                        allowPagination: {
+                        'allow-pagination': {
                             set: function SetPagination(_target) {
                                 if (/Element\]$/i.test((_target || this).toString()) === false) { console.error(`Pagination controls parameter requires an element node target: ${this.nodeName.toLowerCase()}.${this.id}.${this.clasName}`); }
                                 this.pagination = Dashing.writer.draw({ name: "_blank", target: _target || this }, {
@@ -2649,7 +2649,7 @@ ____________________ **/
                             },
                             get: function () { return this.getAttribute("allow-pagination"); }
                         },
-                        allowRefresh: {
+                        'allow-refresh': {
                             set: function SetRefresh(_tar) {
                                 this.table.refresh = Dashing.writer.draw({ name: "_blank", target: _tar }, {
                                     parent: {
@@ -2668,15 +2668,15 @@ ____________________ **/
                                 return this.getAttribute("allow-refresh");
                             }
                         },
-                        tableForm: {
+                        'table-form': {
                             get: function GetTableForm() { return this.tForm; },
                             set: function SetTableForm(fm) { this.tForm = fm; }
                         },
-                        commandCell: {
+                        'command-cell': {
                             get: function GetCommandCell() { return this.cmdCell; },
                             set: function SetCommandCell(_cell) { this.cmdCell = _cell; }
                         },
-                        tableConfirm: {
+                        'table-confirm': {
                             get: function GetTableConfirm() {
                                 return this.hasAttribute("table-confirm");
                             },
@@ -2694,7 +2694,7 @@ ____________________ **/
                                     });
                             }
                         },
-                        cellValue: {
+                        'cell-value': {
                             set: function SetCellValue(val) {
                                 this.cValue = val;
                             },
@@ -2702,7 +2702,7 @@ ____________________ **/
                                 return this.readCellValue(this.cValue);
                             }
                         },
-                        message: {
+                        'message': {
                             get: function GetMessage() {
                                 return function GetMessage(index) {
                                     return this.messages[index] || false;
@@ -2713,14 +2713,14 @@ ____________________ **/
                                 this.messages.length += 1;
                             }
                         },
-                        multilineEnabled: {
+                        'multiline-enabled': {
                             set: function SetMultilineEnabled(target) {
                                 let frag = xtag.createFragment(`<button type="button"><h3>+</h3></button>`);
                                 target.appendChild(frag);
                                 this.multiline = frag;
                             }
                         },
-                        dataBook: {
+                        'data-book': {
                             get: function getDatabook() { return this.getAttribute("data-book") || false; },
                             set: function setDatabook(val) {
                                 if (val === true) {
@@ -2882,7 +2882,7 @@ ____________________ **/
 
                 static attrs() {
                     return {
-                        messagesAllowed: {
+                        'messages-allowed': {
                             get: function GetMsgsAllowed() { return this.getAttribute("messages-allowed"); },
                             set: function SetMsgsAllowed(val) {
                                 this.setAttribute("messages-allowed", val);
@@ -2905,14 +2905,14 @@ ____________________ **/
                             },
                             get: function GetFocus() { return this.getAttribute("focus"); }
                         },
-                        responseTarget: {
+                        'response-target': {
                             set: function (val) {
                                 this.setAttribute("response-target", val);
                                 this.display = document.getElementById(val);
                             },
                             get: function () { return this.getAttribute("response-target"); }
                         },
-                        databaseTable: {
+                        'database-table': {
                             get: function GetDBTable() { return this.getAttribute("database-table") || false; },
                             set: function SetDBTable(val) {
                                 if (val === "true") { this.hasDBTable = true; }
@@ -2923,14 +2923,14 @@ ____________________ **/
                                 else { console.error(`Error: Setter option not available for, ${this.nodeName.toLowerCase()}#${this.id}.${this.className}`); }
                             }
                         },
-                        formStartup: {
+                        'form-startup': {
                             get: function GetStartupForm() { return this.getAttribute("form-startup") || false; },
                             set: function SetStartupForm(val) {
                                 this.setAttribute("form-startup", val);
                                 this.mform = document.getElementById(val);
                             }
                         },
-                        buttonToggle: {
+                        'button-toggle': {
                             get: function GetButtonCreate() {
                                 return this.getAttribute("button-toggle") || false;
                             },
@@ -2939,7 +2939,7 @@ ____________________ **/
                                 this.Toggle = document.getElementById(val);
                             }
                         },
-                        buttonCreate: {
+                        'button-create': {
                             get: function GetButtonCreate() {
                                 return this.getAttribute("button-create") || false;
                             },
@@ -2948,7 +2948,7 @@ ____________________ **/
                                 this.Create = document.getElementById(val);
                             }
                         },
-                        buttonConfirm: {
+                        'button-confirm': {
                             set: function SetSubmitEvent(val) {
                                 this.Confirm = document.getElementById(val);
                                 if (this.Confirm === undefined) {
@@ -2964,11 +2964,11 @@ ____________________ **/
                             },
                             get: function GetSubmitEvent() { return this.getAttribute("button-confirm"); }
                         },
-                        escapeHide: {
+                        'escape-hide': {
                             get: function () { return this.hasAttribute("escape-hide"); },
                             set: function (val) { this.setAttribute("escape-hide", val); }
                         },
-                        clickHide: {
+                        'click-hide': {
                             get: function ClickHide() { return this.hasAttribute("click-hide"); },
                             set: function ClickHide(val) { this.setAttribute("click-hide", "true"); }
                         }
@@ -3047,7 +3047,7 @@ ____________________ **/
                                 this.setAttribute("status", val);
                             }
                         },
-                        messageDisplay: {
+                        'message-display': {
                             get: function GetMessageDisplay() { return this.getAttribute("message-display"); },
                             set: function SetMessageDsiplay(val) {
                                 this.display = document.getElementById(val);
