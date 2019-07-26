@@ -113,12 +113,15 @@
 
     // Attributes
     function setElemAttr(elem, key, obj) {
-        obj[key].configurable = false;
-        obj[key].enumerable = true;
-        obj[key].active = obj[key].active ? obj[key].active : false;
-        obj[key].connected = obj[key].connected ? obj[key].connected : false; 
-        Object.defineProperty(elem.prototype, key, obj[key]);
-        return true;
+        let k = /\-[a-z]/g.replace(key, function (stg) { return stg[1].toUpperCase(); });
+        obj[k].configurable = false;
+        obj[k].enumerable = true;
+        obj[k].connected = obj[k].connected ? obj[k].connected : false; 
+        Object.defineProperty(elem.prototype, key, {
+            get: obj[k].get ? obj[k].get : function GetAttrDefault() { return this.getAttribute(key); },
+            set: obj[k].set ? obj[k].set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
+            });
+        return k;
     }
 
 /* Mixins */
@@ -355,8 +358,9 @@
                 connectedCallback() {
                     (lifecycle.inserted || noop).apply(this);
                     for (let i = 0; i < ckeys.length; i++) {
+                        let _k = setElemAttr(this, ckeys[i], _hasAttributes[ckeys[i]]);
                         if (_hasAttributes[ckeys[i]].connected === true) {
-                            this[ckeys[i]] = this[ckeys[i]];
+                            this[_k] = this[_k];
                         }
                     }
                 }

@@ -1764,12 +1764,11 @@ ____________________ **/
                         "click:delegate(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode;
-                            console.log(_panel);
-                            console.log(_menu.displayCurrent);
-                            if (_menu["display-current"] !== _panel) {
+
+                            if (_menu.displayCurrent !== _panel) {
                                 // Display's new content for the panel
                                 // Need to validate data for print before we set the current display.
-                                _menu["display-current"] = _panel;
+                                _menu.displayCurrent = _panel;
                             }
                         },
                         "click:delegate(x-menu > div[panel-resizer] > button[icon])": function ResizePanel(e) {
