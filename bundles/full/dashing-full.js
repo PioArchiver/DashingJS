@@ -1763,8 +1763,8 @@ ____________________ **/
                     return {
                         "click:delegate(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
-                                _menu = this.parentNode,
-                                _this = this.parentNode.parentNode;
+                                _menu = this.parentNode;
+                            console.log(_menu.panelContent);
                             console.log(_menu.displayCurrent);
                             if (_menu.displayCurrent !== _panel) {
                                 // Display's new content for the panel
@@ -2147,10 +2147,20 @@ ____________________ **/
                             return `<textarea>
                                 <x-extension></x-extension>
                             </textarea>`;
-                        },
-                        "x-panel-demo": function XExtensionDemo() {
+                        }, 
+                        "x-panel-demo": function XPanelDemo() {
                             return `<textarea>
                                 <x-panel></x-panel>
+                            </textarea>`;
+                        }, 
+                        "x-form-demo": function XFormDemo() {
+                            return `<textarea>
+                                <x-form></x-form>
+                            </textarea>`;
+                        }, 
+                        "x-canvas-demo": function XCanvasDemo() {
+                            return `<textarea>
+                                <x-canvas></x-canvas>
                             </textarea>`;
                         }
                     };
@@ -2206,9 +2216,7 @@ ____________________ **/
                                     this.current = val;
                                     this.templateItems[this.currentIndex] === val ? true :
                                         this.currentIndex = QueryArray(this.templateItems, val);
-                                    this.display.innerHTML = this[val]({
-                                        hasvalidationMap: true
-                                    });
+                                    this.display.innerHTML = this[val]();
                                 }
                             }
                         }

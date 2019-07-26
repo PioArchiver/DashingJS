@@ -354,10 +354,9 @@
 
                 connectedCallback() {
                     (lifecycle.inserted || noop).apply(this);
-                    let _k = Object.keys(_hasAttributes);
-                    for (let i = 0; i < _k.length; i++) {
-                        if (_hasAttributes[_k[i]].connected === true) {
-                            this[_k[i]] = this[_k[i]];
+                    for (let i = 0; i < ckeys.length; i++) {
+                        if (_hasAttributes[ckeys[i]].connected === true) {
+                            this[ckeys[i]] = this[ckeys[i]];
                         }
                     }
                 }
