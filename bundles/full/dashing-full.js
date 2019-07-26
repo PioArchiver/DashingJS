@@ -1822,7 +1822,7 @@ ____________________ **/
                             set: function (val) { val ? this.setAttribute("page", val) : false; },
                             get: function () { return this.getAttribute("page"); }
                         },
-                        bookControls: {
+                        "book-controls": {
                             connected: true,
                             get: function GetBookControls() {
                                 return this.getAttribute("book-controls") || false;
@@ -1837,7 +1837,7 @@ ____________________ **/
                                 }
                             }
                         },
-                        bookResizer: {
+                        "book-resizer": {
                             connected: true,
                             get: function GetBookResizer() {
                                 return this.getAttribute("book-resizer") || false;
@@ -1852,7 +1852,7 @@ ____________________ **/
                                 }
                             }
                         },
-                        tabbedBook: {
+                        "tabbed-book": {
                             connected: true,
                             get: function GetTabbedBook() {
                                 return this.getAttribute("tabbed-book") || false;
