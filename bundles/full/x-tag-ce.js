@@ -358,8 +358,8 @@
                     (lifecycle.inserted || noop).apply(this);
                     for (let i = 0; i < ckeys.length; i++) {
                         let _k = setElemAttr(this, ckeys[i], _hasAttributes[ckeys[i]]);
-                        console.log(_k);
                         if (_hasAttributes[ckeys[i]].connected === true) {
+                            console.log(_k);
                             this[_k] = this[_k];
                         }
                     }
