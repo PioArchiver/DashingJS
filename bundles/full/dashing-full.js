@@ -1766,10 +1766,10 @@ ____________________ **/
                                 _menu = this.parentNode;
                             console.log(_panel);
                             console.log(_menu.displayCurrent);
-                            if (_menu.displayCurrent !== _panel) {
+                            if (_menu["display-current"] !== _panel) {
                                 // Display's new content for the panel
                                 // Need to validate data for print before we set the current display.
-                                _menu.displayCurrent = _panel;
+                                _menu["display-current"] = _panel;
                             }
                         },
                         "click:delegate(x-menu > div[panel-resizer] > button[icon])": function ResizePanel(e) {
