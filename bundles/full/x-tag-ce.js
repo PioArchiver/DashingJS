@@ -344,8 +344,7 @@
             let _hasAttributes = _this.attrs === undefined ? {} : _this.attrs(),
                 ckeys = Object.keys(_hasAttributes),
                 k = [];
-            for (let i = 0; i < ckeys.length; i++) {
-                console.log(_hasAttributes[ckeys[i]]);
+            for (let i = 0; i < ckeys.length; i++) { 
                 let _k = setElemAttr(_this, ckeys[i], _hasAttributes[ckeys[i]]);
                 k.push(_k);
             }
@@ -366,6 +365,8 @@
                     (lifecycle.inserted || noop).apply(this);
                     for (let i = 0; i < k.length; i++) {
                         if (_hasAttributes[ckeys[i]].connected === true) {
+                            console.log(ckeys[i]);
+                            console.log(k[i]);
                             this[k[i]] = this[k[i]];
                         }
                     }
