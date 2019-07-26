@@ -117,6 +117,7 @@
         Object.defineProperty(elem.prototype, k, {
             configurable: false,
             enumerable: true,
+            connected: obj.connected ? obj.connected : false,
             get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key) || false; },
             set: obj.set ? obj.set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
         });
@@ -358,9 +359,7 @@
                 connectedCallback() { 
                     (lifecycle.inserted || noop).apply(this); 
                     for (let i = 0; i < k.length; i++) { 
-                        console.log(_hasAttributes[ckeys[i]]);
-                        console.log(ckeys[i]);
-                        if (_hasAttributes[ckeys[i]].connected === true) { 
+                        if (this[k[i]].connected === true) { 
                             this[k[i]] = this[k[i]]; 
                         } 
                     } 
