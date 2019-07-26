@@ -345,6 +345,7 @@
                 ckeys = Object.keys(_hasAttributes),
                 k = [];
             for (let i = 0; i < ckeys.length; i++) {
+                console.log(_hasAttributes[ckeys[i]]);
                 let _k = setElemAttr(_this, ckeys[i], _hasAttributes[ckeys[i]]);
                 k.push(_k);
             }
