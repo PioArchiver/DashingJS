@@ -353,13 +353,13 @@
                         let _k = setElemAttr(this, ckeys[i], _hasAttributes[ckeys[i]]);
                         k.push(_k);
                     }
-                    (lifecycle.created || noop).apply(this);
-
+                    (lifecycle.created || noop).apply(this); 
                 } 
                 connectedCallback() { 
                     (lifecycle.inserted || noop).apply(this); 
                     for (let i = 0; i < k.length; i++) { 
-                        if (_hasAttributes[ckeys[i]].connected === true) {
+                        console.log(_hasAttributes[ckeys[i]]);
+                        if (_hasAttributes[ckeys[i]].connected === true) { 
                             this[k[i]] = this[k[i]]; 
                         } 
                     } 
