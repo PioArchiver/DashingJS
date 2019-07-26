@@ -114,12 +114,11 @@
     // Attributes
     function setElemAttr(elem, key, obj) {
         let k = key.replace(/\-[a-z]/g, function (stg) { return stg[1].toUpperCase(); });
-        obj[k].configurable = false;
-        obj[k].enumerable = true;
-        obj[k].connected = obj[k].connected ? obj[k].connected : false; 
-        Object.defineProperty(elem.prototype, key, {
-            get: obj[k].get ? obj[k].get : function GetAttrDefault() { return this.getAttribute(key); },
-            set: obj[k].set ? obj[k].set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
+        obj.configurable = false;
+        obj.enumerable = true;
+        Object.defineProperty(elem.prototype, k, {
+            get: obj.get ? obj.get : function GetAttrDefault() { return this.getAttribute(key); },
+            set: obj.set ? obj.set : function SetAttrDefault(val) { typeof val === "string" ? this.setAttribute(key, val) : false; }
             });
         return k;
     }
