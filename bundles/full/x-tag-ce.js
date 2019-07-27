@@ -359,7 +359,7 @@
                 connectedCallback() { 
                     (lifecycle.inserted || noop).apply(this); 
                     for (let i = 0; i < k.length; i++) {
-                        console.log(this[k[i]]);
+                        console.log(this[k[i]].connected);
                         if (this[k[i]].connected === true) { 
                             console.log(this[k[i]]);
                             this[k[i]] = this[k[i]]; 
