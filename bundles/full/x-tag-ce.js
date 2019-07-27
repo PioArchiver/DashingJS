@@ -350,10 +350,6 @@
                     super();
                     let hasEvents = _this.events === undefined ? false : _this.events();
                     xtag.addEvents(this, hasEvents);
-                    for (let i = 0; i < ckeys.length; i++) {
-                        let _k = setElemAttr(this, ckeys[i], _hasAttributes[ckeys[i]]);
-                        k.push(_k);
-                    }
                     (lifecycle.created || noop).apply(this); 
                 } 
                 connectedCallback() { 
