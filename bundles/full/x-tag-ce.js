@@ -358,7 +358,7 @@
                         console.log(_hasAttributes[ckeys[i]]);
                         if (_hasAttributes[ckeys[i]].connected && _hasAttributes[ckeys[i]].connected === true) { 
                             console.log(this[ckeys[i]]);
-                            this[ckeys[i]] = this[ckeys[i]]; 
+                            this[k[i]] = this[k[i]]; 
                         } 
                     } 
                 } 
@@ -402,7 +402,7 @@
             for (let i = 0; i < ckeys.length; i++) {
                 let key = ckeys[i];
                     _hasAttributes !== false ?
-                        setElemAttr(XTagElement, key, _hasAttributes[key]) : XTagElement;
+                        k.push(setElemAttr(XTagElement, key, _hasAttributes[key])) : XTagElement;
             }
 
             return window.customElements.define(_name, XTagElement);
