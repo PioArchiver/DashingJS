@@ -354,11 +354,11 @@
                 } 
                 connectedCallback() { 
                     (lifecycle.inserted || noop).apply(this); 
-                    for (let i = 0; i < k.length; i++) {
-                        console.log(this[k[i]].connected);
-                        if (this[k[i]].connected === true) { 
-                            console.log(this[k[i]]);
-                            this[k[i]] = this[k[i]]; 
+                    for (let i = 0; i < ckeys.length; i++) {
+                        console.log(this[ckeys[i]].connected);
+                        if (this[ckeys[i]].connected === true) { 
+                            console.log(this[ckeys[i]]);
+                            this[ckeys[i]] = this[ckeys[i]]; 
                         } 
                     } 
                 } 
@@ -402,7 +402,7 @@
             for (let i = 0; i < ckeys.length; i++) {
                 let key = ckeys[i];
                     _hasAttributes !== false ?
-                        setElemAttr(XTagElement, key, _hasAttributes) : XTagElement;
+                        setElemAttr(XTagElement, key, _hasAttributes[key]) : XTagElement;
             }
 
             return window.customElements.define(_name, XTagElement);

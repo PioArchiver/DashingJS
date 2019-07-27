@@ -2364,7 +2364,6 @@ ____________________ **/
                         'selected-panel': (function () { return Dashing.createAccessor("menu > [selected]"); })()
                     };
                 }
-
             };
 
             elems.xTable = class xTable extends HTMLElement {
