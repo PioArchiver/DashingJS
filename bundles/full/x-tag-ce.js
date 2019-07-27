@@ -355,9 +355,7 @@
                 connectedCallback() { 
                     (lifecycle.inserted || noop).apply(this); 
                     for (let i = 0; i < ckeys.length; i++) {
-                        console.log(_hasAttributes[ckeys[i]]);
                         if (_hasAttributes[ckeys[i]].connected && _hasAttributes[ckeys[i]].connected === true) { 
-                            console.log(this[ckeys[i]]);
                             this[k[i]] = this[k[i]]; 
                         } 
                     } 
