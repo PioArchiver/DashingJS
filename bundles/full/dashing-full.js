@@ -1406,7 +1406,7 @@ ____________________ **/
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response;
-                                                _this.appendChild(icos.firstElementChild);
+                                                _this.appendChild(icos.firstElementChild.body);
                                                 _this.setAttribute("icos", "true");
                                         });
                                     }
@@ -1693,8 +1693,7 @@ ____________________ **/
                             get: function GetPanelResizer() {
                                 return this.getAttribute("resizer-options") || false;
                             },
-                            set: function SetPanelResizer(val) {
-                                console.log(val);
+                            set: function SetPanelResizer(val) { 
                                 if (xtag.typeOf(val) === "string" && this.querySelector(`#${val}`)) {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
