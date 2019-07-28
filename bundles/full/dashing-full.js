@@ -1688,7 +1688,7 @@ ____________________ **/
                                 }
                             }
                         }, 
-                        "resize-options": {
+                        "resizer-options": {
                             connected: true,
                             get: function GetPanelResizer() {
                                 return this.getAttribute("resizer-options") || false;
@@ -1706,7 +1706,7 @@ ____________________ **/
                                         </div>`);
                                     _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
                                 }
-                                else if (xtag.typeOf(val) === "true") {
+                                else if (val === "true") {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
