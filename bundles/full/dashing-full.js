@@ -1710,12 +1710,10 @@ ____________________ **/
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
-                                    _container.setAttribute('panel-resizer="true"');
-                                    _container.innerHTML = `
-                                                <button icon="minimize"></button>
+                                    _container.setAttribute("panel-resizer", val);
+                                    _container.innerHTML = `<button icon="minimize"></button>
                                                 <button icon='normal'></button>
-                                                <button icon='maximize'></button>
-                                            </div>`;
+                                                <button icon='maximize'></button>`;
                                     this.insertAdjacentElement("beforeend", _container);
                                 }
                             }
