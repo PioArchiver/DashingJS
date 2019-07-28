@@ -1466,15 +1466,119 @@ ____________________ **/
                 }
             };
 
+            elems.xMenu = class xMenu extends HTMLElement {
+                static lifecycle() {
+                    return {
+                        created: function CreatedXMenu() {
+                            this.display = null;
+                            this.content = null;
+                            this.templateItems = null;
+                            this.currentIndex = 0;
+                        }
+                    };
+                }
+                static methods() {
+                    return {
+                        createTabButton: function CreateTabButton(_id) {
+                            let _title = _id.replace("-", " "),
+                                _tabbtn = document.createElement("button");
+                            _tabbtn.setAttribute("panel-content", _id);
+                            _tabbtn.innerHTML = _title.replace(/^[a-z]|\s[a-z]/ig, function (stg) { return stg.toUpperCase(); });
+                            this.insertAdjacentElement("beforeend", _tabbtn);
+                        },
+                        "x-extension-demo": function XExtensionDemo() {
+                            return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
+                            <button>Preview</button></x-form>`;
+                        },
+                        "x-panel-demo": function XPanelDemo() {
+                            return `<x-form><form><textarea><x-panel></x-panel></textarea></form>
+                            <button>Preview</button></x-form>`;
+                        },
+                        "x-form-demo": function XFormDemo() {
+                            return `<x-form><form><textarea><x-form></x-form></textarea></form>
+                            <button>Preview</button></x-form>`;
+                        },
+                        "x-table-demo": function XFormDemo() {
+                            return `<x-form><form><textarea><x-table></x-table></textarea></form>
+                            <button>Preview</button><x-form>`;
+                        },
+                        "x-canvas-demo": function XCanvasDemo() {
+                            return `<x-form><form><textarea><x-canvas></x-canvas></textarea></form>
+                            <button>Preview</button><x-form>`;
+                        },
+                        "x-menu-demo": function XMenuDemo() {
+                            return `<x-form><form><textarea><x-menu></x-menu></textarea></form>
+                            <button>Preview</button><x-form>`;
+                        }
+                    };
+                }
+                static attrs() {
+                    return {
+                        "display-target": {
+                            connected: true,
+                            get: function GetActiveDisplay() {
+                                return this.getAttribute("display-target");
+                            },
+                            set: function SetActiveDisplay(val) {
+                                if (document.getElementById(val)) {
+                                    this.display = document.getElementById(val);
+                                }
+                            }
+                        },
+                        "display-items": {
+                            connected: true,
+                            get: function GetDisplayItems() {
+                                return this.getAttribute("display-items");
+                            },
+                            set: function SetDisplayItems(val) {
+                                this.setAttribute("display-items", val);
+                                try { this.templateItems = JSON.parse(val); }
+                                catch (e) { throw e; }
+                                finally {
+                                    if (xtag.typeOf(this.templateItems) === "array") {
+                                        for (let i = 0; i < this.templateItems.length; i++) {
+                                            let _tempKey = this.templateItems[i];
+                                            this.createTabButton(_tempKey);
+                                            if (!this[_tempKey]) {
+                                                let _doc = document.querySelector(`#${_tempKey}`);
+
+                                                this[_tempKey] = function () {
+                                                    return _doc.outerHTML;
+                                                };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "display-current": {
+                            connected: true,
+                            get: function GetCurrentDisplay() {
+                                return this.getAttribute("display-current") || false;
+                            },
+                            set: function SetCurrentDisplay(val) {
+                                this.setAttribute("display-current", val);
+                                if (val !== this.current) {
+                                    this.current = val;
+                                    this.templateItems[this.currentIndex] === val ? true :
+                                        this.currentIndex = QueryArray(this.templateItems, val);
+                                    this.display.innerHTML = this[val] ? this[val]() : "<div>Resource Not Found.</div>";
+                                }
+                            }
+                        }
+                    };
+                }
+            };
+
             elems.xPanel = class xPanel extends HTMLElement {
                 static lifecycle() {
                     return {
-                        inserted: function Inserted() {
+                        inserted: function InsertedXPanel() {
                             this.cached = this.cached ? this.cached : {};
                             this.createCaches(this.xMenu.templateItems);
                             console.log(this);
                         }
-                    }
+                    };
                 }
                 static methods() {
                     return {
@@ -1979,107 +2083,6 @@ ____________________ **/
                 static mixins() { return ["dashed", "typed", "themed"]; }
 
 
-            };
-
-            elems.xMenu = class xMenu extends HTMLElement {
-                constructor() {
-                    super();
-                    this.display = null;
-                    this.content = null;
-                    this.templateItems = null;
-                    this.currentIndex = 0;
-                }
-                static methods() {
-                    return {
-                        createTabButton: function CreateTabButton(_id) {
-                            let _title = _id.replace("-", " "),
-                                _tabbtn = document.createElement("button");
-                            _tabbtn.setAttribute("panel-content", _id);
-                            _tabbtn.innerHTML = _title.replace(/^[a-z]|\s[a-z]/ig, function (stg) { return stg.toUpperCase(); });
-                            this.insertAdjacentElement("beforeend", _tabbtn);
-                        },
-                        "x-extension-demo": function XExtensionDemo() {
-                            return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
-                            <button>Preview</button></x-form>`;
-                        }, 
-                        "x-panel-demo": function XPanelDemo() {
-                            return `<x-form><form><textarea><x-panel></x-panel></textarea></form>
-                            <button>Preview</button></x-form>`;
-                        }, 
-                        "x-form-demo": function XFormDemo() {
-                            return `<x-form><form><textarea><x-form></x-form></textarea></form>
-                            <button>Preview</button></x-form>`;
-                        },
-                        "x-table-demo": function XFormDemo() {
-                            return `<x-form><form><textarea><x-table></x-table></textarea></form>
-                            <button>Preview</button><x-form>`;
-                        },
-                        "x-canvas-demo": function XCanvasDemo() {
-                            return `<x-form><form><textarea><x-canvas></x-canvas></textarea></form>
-                            <button>Preview</button><x-form>`;
-                        },
-                        "x-menu-demo": function XMenuDemo() {
-                            return `<x-form><form><textarea><x-menu></x-menu></textarea></form>
-                            <button>Preview</button><x-form>`;
-                        }
-                    };
-                }
-                static attrs() {
-                    return {
-                        "display-target": {
-                            connected: true,
-                            get: function GetActiveDisplay() {
-                                return this.getAttribute("display-target");
-                            },
-                            set: function SetActiveDisplay(val) {
-                                if (document.getElementById(val)) { 
-                                    this.display = document.getElementById(val);
-                                }
-                            }
-                        },
-                        "display-items": {
-                            connected: true,
-                            get: function GetDisplayItems() {
-                                return this.getAttribute("display-items");
-                            },
-                            set: function SetDisplayItems(val) {
-                                this.setAttribute("display-items", val); 
-                                try { this.templateItems = JSON.parse(val); }
-                                catch (e) { throw e; }
-                                finally {
-                                    if (xtag.typeOf(this.templateItems) === "array") {
-                                        for (let i = 0; i < this.templateItems.length; i++) {
-                                            let _tempKey = this.templateItems[i];
-                                                this.createTabButton(_tempKey);
-                                            if (!this[_tempKey]) {
-                                                let _doc = document.querySelector(`#${_tempKey}`);
-
-                                                this[_tempKey] = function () {
-                                                    return _doc.outerHTML;
-                                                };
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "display-current": {
-                            connected: true,
-                            get: function GetCurrentDisplay() {
-                                return this.getAttribute("display-current") || false;
-                            },
-                            set: function SetCurrentDisplay(val) {
-                                this.setAttribute("display-current", val);
-                                if (val !== this.current) {
-                                    this.current = val;
-                                    this.templateItems[this.currentIndex] === val ? true :
-                                        this.currentIndex = QueryArray(this.templateItems, val);
-                                    this.display.innerHTML = this[val] ? this[val]() : "<div>Resource Not Found.</div>";
-                                }
-                            }
-                        }
-                    };
-                }
             };
 
             elems.xShiftbox = class extends HTMLElement {
