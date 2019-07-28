@@ -2020,24 +2020,24 @@ ____________________ **/
                             this.insertAdjacentElement("beforeend", _tabbtn);
                         },
                         "x-extension-demo": function XExtensionDemo() {
-                            return `<textarea>
-                                <x-extension></x-extension>
-                            </textarea>`;
+                            return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
+                            <button>Preview</button></x-form>`;
                         }, 
                         "x-panel-demo": function XPanelDemo() {
-                            return `<textarea>
-                                <x-panel></x-panel>
-                            </textarea>`;
+                            return `<x-form><form><textarea><x-panel></x-panel></textarea></form>
+                            <button>Preview</button></x-form>`;
                         }, 
                         "x-form-demo": function XFormDemo() {
-                            return `<textarea>
-                                <x-form></x-form>
-                            </textarea>`;
-                        }, 
+                            return `<x-form><form><textarea><x-form></x-form></textarea></form>
+                            <button>Preview</button></x-form>`;
+                        },
+                        "x-table-demo": function XFormDemo() {
+                            return `<x-form><form><textarea><x-table></x-table></textarea></form>
+                            <button>Preview</button><x-form>`;
+                        },  
                         "x-canvas-demo": function XCanvasDemo() {
-                            return `<textarea>
-                                <x-canvas></x-canvas>
-                            </textarea>`;
+                            return `<x-form><form><textarea><x-canvas></x-canvas></textarea></form>
+                            <button>Preview</button><x-form>`;
                         }
                     };
                 }
