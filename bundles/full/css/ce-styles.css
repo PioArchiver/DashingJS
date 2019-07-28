@@ -236,7 +236,25 @@ x-book {
     display: block;
 }
 
-
+/** *****
+ * @name x-panel 
+ * **
+ * **
+ ***** **/
+x-panel { 
+    position: relative;
+    display: block;
+}
+    x-panel div[panel-resizer] {
+        position: relative;
+        display: flex;
+    }
+    x-panel div[panel-resizer] > button[icon="minimize"],
+    x-panel div[panel-resizer] > button[icon="normal"],
+    x-panel div[panel-resizer] > button[icon="maximize"] {
+        width: 25px;
+        height: 25px;
+    }
 /** ***** 
  * @name x-page
  * **
@@ -655,7 +673,6 @@ x-shiftbox {
         -o-transform: translate(0,0);
         transform: translate(0,0)
     }
-
     x-shiftbox > section {
         display: block;
         position: absolute;
@@ -675,7 +692,6 @@ x-shiftbox {
         transition-property: margin,transform;
         z-index: 2
     }
-
     x-shiftbox[open] > section, x-shiftbox[shift="right"][open] > section {
         -webkit-transform: translate(100%,0);
         -moz-transform: translate(100%,0);
@@ -684,7 +700,6 @@ x-shiftbox {
         transform: translate(100%,0);
         margin-left: -35px
     }
-
     x-shiftbox[shift="up"][open] > section {
         -webkit-transform: translate(0,-100%);
         -moz-transform: translate(0,-100%);
@@ -694,7 +709,6 @@ x-shiftbox {
         margin-top: 35px;
         margin-left: 0
     }
-
     x-shiftbox[shift="down"][open] > section {
         -webkit-transform: translate(0,100%);
         -moz-transform: translate(0,100%);
@@ -704,7 +718,6 @@ x-shiftbox {
         margin-top: -35px;
         margin-left: 0
     }
-
     x-shiftbox[shift="left"][open] > section {
         -webkit-transform: translate(-100%,0);
         -moz-transform: translate(-100%,0);
@@ -713,8 +726,10 @@ x-shiftbox {
         transform: translate(-100%,0);
         margin-left: 35px
     }
-
-    x-shiftbox[shift="upleft"][open] > section, x-shiftbox[shift="upright"][open] > section, x-shiftbox[shift="downleft"][open] > section, x-shiftbox[shift="downright"][open] > section {
+    x-shiftbox[shift="upleft"][open] > section,
+    x-shiftbox[shift="upright"][open] > section, 
+    x-shiftbox[shift="downleft"][open] > section, 
+    x-shiftbox[shift="downright"][open] > section {
         margin-left: 0;
         -webkit-transform: translate(0,0);
         -moz-transform: translate(0,0);
@@ -739,11 +754,25 @@ x-shiftbox {
         margin: -35px 0 0 -35px
     }
 
-    x-shiftbox[open][shift="right"] > aside[shift="right"], x-shiftbox[open][shift="left"] > aside[shift="left"], x-shiftbox[open][shift="up"] > aside[shift="up"], x-shiftbox[open][shift="down"] > aside[shift="down"], x-shiftbox[open][shift="upleft"] > aside[shift="upleft"], x-shiftbox[open][shift="upright"] > aside[shift="upright"], x-shiftbox[open][shift="downleft"] > aside[shift="downleft"], x-shiftbox[open][shift="downright"] > aside[shift="downright"] {
+    x-shiftbox[open][shift="right"] > aside[shift="right"], 
+    x-shiftbox[open][shift="left"] > aside[shift="left"], 
+    x-shiftbox[open][shift="up"] > aside[shift="up"], 
+    x-shiftbox[open][shift="down"] > aside[shift="down"], 
+    x-shiftbox[open][shift="upleft"] > aside[shift="upleft"], 
+    x-shiftbox[open][shift="upright"] > aside[shift="upright"], 
+    x-shiftbox[open][shift="downleft"] > aside[shift="downleft"], 
+    x-shiftbox[open][shift="downright"] > aside[shift="downright"] {
         z-index: 1
     }
 
-    x-shiftbox[transitioning][shift="right"] > aside[shift="right"], x-shiftbox[transitioning][shift="left"] > aside[shift="left"], x-shiftbox[transitioning][shift="up"] > aside[shift="up"], x-shiftbox[transitioning][shift="down"] > aside[shift="down"], x-shiftbox[transitioning][shift="upleft"] > aside[shift="upleft"], x-shiftbox[transitioning][shift="upright"] > aside[shift="upright"], x-shiftbox[transitioning][shift="downleft"] > aside[shift="downleft"], x-shiftbox[transitioning][shift="downright"] > aside[shift="downright"] {
+    x-shiftbox[transitioning][shift="right"] > aside[shift="right"], 
+    x-shiftbox[transitioning][shift="left"] > aside[shift="left"], 
+    x-shiftbox[transitioning][shift="up"] > aside[shift="up"], 
+    x-shiftbox[transitioning][shift="down"] > aside[shift="down"], 
+    x-shiftbox[transitioning][shift="upleft"] > aside[shift="upleft"], 
+    x-shiftbox[transitioning][shift="upright"] > aside[shift="upright"], 
+    x-shiftbox[transitioning][shift="downleft"] > aside[shift="downleft"], 
+    x-shiftbox[transitioning][shift="downright"] > aside[shift="downright"] {
         z-index: 1
     }
 
@@ -759,17 +788,3 @@ x-shiftbox {
     z-index: 100
 }
 
-/* x-list */
-x-list {
-    position: relative;
-    display: grid;
-    height: 120px;
-    grid-template-columns: auto auto;
-    grid-template-rows: 30px 30px 30px 30px;
-    overflow: hidden;
-}
-
-    x-list > * {
-        border-bottom: dotted 1px lightskyblue;
-        border-left: dotted 1px deepskyblue;
-    }
