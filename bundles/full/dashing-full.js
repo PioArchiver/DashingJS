@@ -1467,10 +1467,14 @@ ____________________ **/
             };
 
             elems.xPanel = class xPanel extends HTMLElement {
-                connectedCallback() {
-                    this.cached = this.cached ? this.cached : {};
-                    this.createCaches(this.xMenu.templateItems);
-                    console.log(this);
+                static lifecycle() {
+                    return {
+                        inserted: function Inserted() {
+                            this.cached = this.cached ? this.cached : {};
+                            this.createCaches(this.xMenu.templateItems);
+                            console.log(this);
+                        }
+                    }
                 }
                 static methods() {
                     return {
@@ -1495,7 +1499,7 @@ ____________________ **/
                         }
                     };
                 }
-                static attributes() {
+                static attrs() {
                     return {
                         content: {
                             connected: true,
