@@ -1480,7 +1480,9 @@ ____________________ **/
                 static methods() {
                     return {
                         createTabButton: function CreateTabButton(_id) {
-                            let _title = _id.replace("-", " "),
+                            let _title = _id.replace(/\-\w/ig, , function (stg) { return stg.toUpperCase(); }),
+                                _title = _title.replace(/\-/, " "),
+                                _title = _title.replace(/\s\w/, function (stg) { return stg.toUpperCase(); }),
                                 _tabbtn = document.createElement("button");
                             _tabbtn.setAttribute("panel-content", _id);
                             _tabbtn.innerHTML = _title.replace(/^[a-z]|\s[a-z]/ig, function (stg) { return stg.toUpperCase(); });
