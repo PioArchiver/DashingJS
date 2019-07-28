@@ -1573,10 +1573,12 @@ ____________________ **/
             elems.xPanel = class xPanel extends HTMLElement {
                 static lifecycle() {
                     return {
+                        created: function createdXPanel() {
+                            this.menu = this.menu;
+                        },
                         inserted: function InsertedXPanel() {
                             this.cached = this.cached ? this.cached : {};
                             this.createCaches(this.xMenu.templateItems);
-                            console.log(this);
                         }
                     };
                 }
@@ -1618,7 +1620,7 @@ ____________________ **/
                             }
                         }, 
                         menu: {
-                            connected: true,
+                            connected: false,
                             get: function GetPanelMenu() {
                                 return this.getAttribute("menu") || false;
                             },
