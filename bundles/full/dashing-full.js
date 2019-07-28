@@ -1588,6 +1588,7 @@ ____________________ **/
                                 return this.getAttribute("resizer-options") || false;
                             },
                             set: function SetPanelResizer(val) {
+                                console.log(val);
                                 if (xtag.typeOf(val) === "string" && this.querySelector(`#${val}`)) {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
