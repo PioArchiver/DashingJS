@@ -1406,7 +1406,7 @@ ____________________ **/
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response;
-                                                _this.appendChild(icos.firstElementChild.body);
+                                                _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
                                         });
                                     }
