@@ -914,7 +914,7 @@ ____________________ **/
                         xhr.open("GET", data.url, true); 
 
                         xhr.onload = data.load || function XhrModelLoadSuccess() { return true; };
-                        xhr.onprogress = data.progress || function XhrProgress(e) { return true; }
+                        xhr.onprogress = data.progress || function XhrProgress(e) { return true; };
                         xhr.onerror = data.error || function XhrModelError(e) { console[("error" || "log")]("XhrModel Error: " + e); };
 
                         xhr.send();
@@ -922,16 +922,8 @@ ____________________ **/
                     return xhr.response;
             }
         }
-        update(data) {
-            // 
-        }
         build(nm, def) {
-            let mxn = def.mixin,
-                lc = def.lifecycle,
-                acc = def.accessors,
-                e = def.events,
-                _proto_ = def.prototype,
-                comps = function elems() { }
+            let comps = function elems() { }
             // loop through namespaces
             for (let i = 0; i < (nm || []).length; i++) {
                 // Parse name space to camel case
@@ -1071,17 +1063,6 @@ ____________________ **/
                 height: elem.getBoundingClientRect().height
             };
         }
-        set celements(val) {
-            if (val === true) { /* */ }
-            else {
-                /* */
-            }
-        }
-        get celements() {
-            return {
-                on: xtag.addEvent
-            };
-        }
         set platform(Platform) {
             // Enhancement: create a theme class with getters and setters for platform and other properties
             this.themed ? true : this.themed = {};
@@ -1104,7 +1085,6 @@ ____________________ **/
                 },
                 draw: function draw(type, attrs, frags, hasTypeCallback) {
                     let _frag = this.templated[type.name](attrs.parent, attrs.child).firstElementChild;
-
                     // check for hasTypeCallback parameter callback must be named [not anonymouse] [Needs Implementation] 
                     if (typeof hasTypeCallback === "object") { this[type.name] = hasTypeCallback; }
                     frags ? _frag.appendChild(frags) : null;
@@ -1114,7 +1094,6 @@ ____________________ **/
                     type.target.appendChild(_frag);
                     if (this[type.name] && typeof this[type.name].events === "object") { Dashing.on(type.target, this[type.name].events); }
                     return _frag;
-
                 }
             };
         }
@@ -1604,7 +1583,6 @@ ____________________ **/
                             }
                         }, 
                         "resize-options": {
-                            active: true,
                             connected: true,
                             get: function GetPanelResizer() {
                                 return this.getAttribute("resizer-options") || false;
@@ -1621,7 +1599,7 @@ ____________________ **/
                                         </div>`);
                                     _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
                                 }
-                                else if (xtag.typeOf(val) === "string" && this.querySelector(`#${val}`) === null) {
+                                else if (xtag.typeOf(val) === "true") {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
@@ -2034,9 +2012,13 @@ ____________________ **/
                         "x-table-demo": function XFormDemo() {
                             return `<x-form><form><textarea><x-table></x-table></textarea></form>
                             <button>Preview</button><x-form>`;
-                        },  
+                        },
                         "x-canvas-demo": function XCanvasDemo() {
                             return `<x-form><form><textarea><x-canvas></x-canvas></textarea></form>
+                            <button>Preview</button><x-form>`;
+                        },
+                        "x-menu-demo": function XMenuDemo() {
+                            return `<x-form><form><textarea><x-menu></x-menu></textarea></form>
                             <button>Preview</button><x-form>`;
                         }
                     };
@@ -2087,12 +2069,11 @@ ____________________ **/
                             },
                             set: function SetCurrentDisplay(val) {
                                 this.setAttribute("display-current", val);
-                                console.log(val);
                                 if (val !== this.current) {
                                     this.current = val;
                                     this.templateItems[this.currentIndex] === val ? true :
                                         this.currentIndex = QueryArray(this.templateItems, val);
-                                    this.display.innerHTML = this[val]();
+                                    this.display.innerHTML = this[val] ? this[val]() : "<div>Resource Not Found.</div>";
                                 }
                             }
                         }
@@ -2932,6 +2913,7 @@ ____________________ **/
 
             return elems;
         },
+        // User Interaction property
         platformPrompt: true,
         celements: true,
         'add(mixin=dashed)': class Dashed {
