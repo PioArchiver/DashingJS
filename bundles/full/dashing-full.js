@@ -2226,20 +2226,15 @@ ____________________ **/
                         },
                         'close-pane-button': {
                             set: function SetAllowCollapse(opts) {
-                                let cbtn = document.createElement("button");
-                                cbtn.type = "button";
-                                cbtn.innerHTML = opts.title;
-                                cbtn.className = opts.class;
-
-                                if (opts.attrs) {
-                                    //
+                                if (xtag.typeOf(opts) !== "object") {
+                                    let cbtn = document.createElement("button");
+                                        cbtn.type = "button";
+                                        cbtn.innerHTML = opts.title;
+                                        cbtn.className = opts.class;
+                                    opts.target.appendChild(cbtn);
                                 }
-
-                                opts.target.appendChild(cbtn);
                             },
-                            get: function GetAllowCollapse() {
-                                return this.hasAttribute("close-pane-button");
-                            }
+                            get: function GetAllowCollapse() { return this.hasAttribute("close-pane-button"); }
                         },
                         'tapclose': {
                             set: function SetTapclose(bool) {
