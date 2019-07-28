@@ -1470,6 +1470,7 @@ ____________________ **/
                 connectedCallback() {
                     this.cached = this.cached ? this.cached : {};
                     this.createCaches(this.xMenu.templateItems);
+                    console.log(this);
                 }
                 static methods() {
                     return {
@@ -1497,7 +1498,6 @@ ____________________ **/
                 static attributes() {
                     return {
                         content: {
-                            active: true,
                             connected: true,
                             get: function GetPanelContent() {
                                 return this.getAttribute("content") || false;
@@ -1510,7 +1510,6 @@ ____________________ **/
                             }
                         }, 
                         menu: {
-                            active: true,
                             connected: true,
                             get: function GetPanelMenu() {
                                 return this.getAttribute("menu") || false;
@@ -1523,7 +1522,6 @@ ____________________ **/
                             }
                         }, 
                         minimized: {
-                            active: true,
                             connected: true,
                             get: function GetMinimized() { return this.hasAttribute("minimized"); },
                             set: function SetMinimized(val) {
@@ -1543,7 +1541,6 @@ ____________________ **/
                             }
                         }, 
                         normalized: {
-                            active: true,
                             connected: true,
                             get: function GetEnlarged() { return this.hasAttribute("enlarged"); },
                             set: function SetEnlarged(val) {
@@ -1563,7 +1560,6 @@ ____________________ **/
                             }
                         }, 
                         maximized: {
-                            active: true,
                             connected: true,
                             get: function GetMaximized() { return this.hasAttribute("maximized"); },
                             set: function SetMaximized(val) {
