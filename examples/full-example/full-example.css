@@ -10,3 +10,7 @@ x-panel > x-menu {
     display: flex;
     flex-direction: row;
 }
+x-panel > x-menu > div[resizer-options] {
+    position: absolute;
+    right: 0px;
+}
