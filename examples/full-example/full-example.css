@@ -14,6 +14,9 @@ x-panel > x-menu > div[panel-resizer] {
     position: absolute;
     right: 0px;
 }
+#main-menu {
+    min-height: 133px;
+}
 #main-menu li {
     width: 100%;
 }
