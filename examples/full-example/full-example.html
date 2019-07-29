@@ -14,7 +14,11 @@
 </head>
 <body>
     <x-extension id="demo-template" grid-template="1 2" 
-                 schema="url(schema.json)" icos="url(icos.html)" validation-mapping="true">
+                 main-menu="main-menu" main-display="main-display"
+                 schema="url(schema.json)" icos="url(icos.html)">
+        <!--
+            Main Menu
+            -->
         <x-tabbox id="main-menu" class="main-menu" transition selected-index="0">
             <menu>
                 <button index="0" selected>DashingJS Builder</button>
@@ -46,7 +50,7 @@
                 <li>
                     <x-panel id="demo-panel" 
                              menu="demo-panel-menu"
-                             resizer-options="true">
+                             resizer-options="demo-panel-menu">
                         <x-menu id="demo-panel-menu"
                                 display-current="x-extension-demo"
                                 display-target="demo-display"
@@ -61,9 +65,9 @@
             </ul>
         </x-tabbox>
         <!-- 
-            
+            Main Display
             -->
-        <x-book>
+        <x-book id="main-display">
             <x-page active="true">
                 <header>
                     <h1>DashingJS Full Version</h1>

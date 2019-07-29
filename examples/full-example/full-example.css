@@ -5,3 +5,8 @@ x-tabbox.main-menu {
     height: auto;
     border-bottom: 1px solid rgb(78, 78, 78);
 }
+
+x-panel > x-menu {
+    display: flex;
+    flex-direction: row;
+}

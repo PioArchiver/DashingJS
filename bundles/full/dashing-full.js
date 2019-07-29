@@ -1386,10 +1386,10 @@ ____________________ **/
                     return {
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
-
+                            
                         },
                         inserted: function InsertedXExtension() {
-                            // 
+                            //
                         },
                         removed: function RemovedXExtension() {
                             this.closeDashed(this.schemes);
@@ -1455,6 +1455,28 @@ ____________________ **/
                                 }
                             },
                             get: function GetSchemes() { return this.getAttribute("schema") || false; }
+                        },
+                        "main-menu": {
+                            connected: true,
+                            get: function GetMainMenu() { return this.getAttribute("main-menu") || false; },
+                            set: function SetMainMenu(value) {
+                                Dashing.typeOf(value) === "string" ?
+                                    (this.setAttribute("main-menu", value),
+                                        this.MainMenu = document.getElementById(value) ) :
+                                    ( this.MainMenu = false );
+                                
+                            }
+                        },
+                        "main-display": {
+                            connected: true,
+                            get: function GetMainMenu() { return this.getAttribute("main-display") || false; },
+                            set: function SetMainMenu(value) {
+                                Dashing.typeOf(value) === "string" ?
+                                    (this.setAttribute("main-display", value),
+                                        this.MainDisplay = document.getElementById(value)) :
+                                    (this.MainDisplay = false);
+
+                            }
                         }
                     };
                 }
@@ -1582,7 +1604,6 @@ ____________________ **/
                         created: function createdXPanel() {
                             let _extension = document.querySelector("x-extension");
                             this.menu = this.menu;
-                            this.extension = _extension ? _extension : null;
                         },
                         inserted: function InsertedXPanel() {
                             this.cached = this.cached ? this.cached : {};
@@ -1612,7 +1633,7 @@ ____________________ **/
                             }
                         },
                         drawIcons: function DrawIcons() {
-
+                            //
                         }
                     };
                 }
