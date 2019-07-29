@@ -1588,7 +1588,7 @@ ____________________ **/
                                         for (let i = 0; i < this.templateItems.length; i++) {
                                             this.addTemplate({
                                                 id: this.templateItems[i],
-                                                template: _doc ? _doc.outerHTML : `<div>Resource not found.</div>`;
+                                                template: _doc ? _doc.outerHTML : `<div>Resource not found.</div>`
                                             });
                                             this.createTabButton(this.templateItems[i]);
                                         }
