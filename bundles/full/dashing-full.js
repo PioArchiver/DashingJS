@@ -1586,10 +1586,12 @@ ____________________ **/
                                     if (xtag.typeOf(this.templateItems) === "array") {
                                         for (let i = 0; i < this.templateItems.length; i++) {
                                             let _doc = document.querySelector(`#${this.templateItems[i]}`);
-                                            this.addTemplate({
-                                                id: this.templateItems[i],
-                                                template: _doc ? _doc.outerHTML : `<div>Resource not found.</div>`
-                                            });
+                                            if (_doc) {
+                                                this.addTemplate({
+                                                    id: this.templateItems[i],
+                                                    template: _doc.outerHTML
+                                                });
+                                            }
                                             this.createTabButton(this.templateItems[i]);
                                         }
                                     }

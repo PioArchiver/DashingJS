@@ -56,9 +56,12 @@
                                 display-target="demo-display"
                                 display-items='["x-extension-demo", "x-panel-demo", "x-canvas-demo", "x-form-demo", "x-table-demo"]'></x-menu>
                         <div id="demo-display">
-                            <textarea id="x-extension-demo">
-                                x-extension
-                            </textarea>
+                            <x-form>
+                                <form>
+                                    <textarea><x-extension></x-extension></textarea>
+                                </form>
+                                <button>Preview</button>
+                            </x-form>
                         </div>
                     </x-panel>
                 </li>
