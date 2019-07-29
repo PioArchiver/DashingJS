@@ -1514,6 +1514,17 @@ ____________________ **/
                                 _tabbtn.innerHTML = _title;
                             this.insertAdjacentElement("beforeend", _tabbtn);
                         },
+                        addTemplate: function AddTemplate(opts) {
+                            if (xtag.typeOf(opts) === "object") {
+                                if (opts.id && opts.template) {
+                                    /\<script\>/.test(opts.template) === false ?
+                                        this[opts.id] = function () { return opts.template; } :
+                                        this[opts.id] = function () {
+                                            return "<div>No script tags Allowed in templates</div>";
+                                        };
+                                }
+                            }
+                        },
                         "x-extension-demo": function XExtensionDemo() {
                             return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
                             <button>Preview</button></x-form>`;
@@ -1537,6 +1548,15 @@ ____________________ **/
                         "x-menu-demo": function XMenuDemo() {
                             return `<x-form><form><textarea><x-menu></x-menu></textarea></form>
                             <button>Preview</button><x-form>`;
+                        },
+                        "dashing-js-builder": function DashingJsBuilder() {
+                            return `<x-form id="dashing-js-builder" resource-selection="builder" form-view="Form-Sheet-View">
+                                <strong>DashingJS Builder</strong>
+                                <form name="dashingjs-build">
+                                    <label for="build_name">Name: </label><input type="text" id="build_name" name="build_name" placeholder="Package name" />
+                                    <input type="button" name="submit_build" value="Build" />
+                                </form>
+                            </x-form>`;
                         }
                     };
                 }
@@ -1563,17 +1583,14 @@ ____________________ **/
                                 try { this.templateItems = JSON.parse(val); }
                                 catch (e) { throw e; }
                                 finally {
+                                    let _doc = document.querySelector(`#${_tempKey}`);
                                     if (xtag.typeOf(this.templateItems) === "array") {
                                         for (let i = 0; i < this.templateItems.length; i++) {
-                                            let _tempKey = this.templateItems[i];
-                                            this.createTabButton(_tempKey);
-                                            if (!this[_tempKey]) {
-                                                let _doc = document.querySelector(`#${_tempKey}`);
-
-                                                this[_tempKey] = function () {
-                                                    return _doc.outerHTML;
-                                                };
-                                            }
+                                            this.addTemplate({
+                                                id: this.templateItems[i],
+                                                template: _doc ? _doc.outerHTML : `<div>Resource not found.</div>`;
+                                            });
+                                            this.createTabButton(this.templateItems[i]);
                                         }
                                     }
                                 }
