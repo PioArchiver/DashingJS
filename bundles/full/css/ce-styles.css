@@ -1,3 +1,6 @@
+body {
+    margin: 0px;
+}
 body:not([allow-scroll-x]) {
     overflow-x: hidden;
 }
