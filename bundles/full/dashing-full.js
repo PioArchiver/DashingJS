@@ -1583,9 +1583,9 @@ ____________________ **/
                                 try { this.templateItems = JSON.parse(val); }
                                 catch (e) { throw e; }
                                 finally {
-                                    let _doc = document.querySelector(`#${_tempKey}`);
                                     if (xtag.typeOf(this.templateItems) === "array") {
                                         for (let i = 0; i < this.templateItems.length; i++) {
+                                            let _doc = document.querySelector(`#${this.templateItems[i]}`);
                                             this.addTemplate({
                                                 id: this.templateItems[i],
                                                 template: _doc ? _doc.outerHTML : `<div>Resource not found.</div>`
