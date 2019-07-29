@@ -1374,7 +1374,10 @@ ____________________ **/
                             });
 
                         },
-                        queryArray: QueryArray
+                        queryArray: QueryArray,
+                        addIcons: function AddIcons(name, address) { 
+                            // 
+                        }
                     };
                 }
 
@@ -1577,7 +1580,9 @@ ____________________ **/
                 static lifecycle() {
                     return {
                         created: function createdXPanel() {
+                            let _extension = document.querySelector("x-extension");
                             this.menu = this.menu;
+                            this.extension = _extension ? _extension : null;
                         },
                         inserted: function InsertedXPanel() {
                             this.cached = this.cached ? this.cached : {};
@@ -1605,6 +1610,9 @@ ____________________ **/
                                     // the panel's content is currently displaying.
                                 }
                             }
+                        },
+                        drawIcons: function DrawIcons() {
+
                         }
                     };
                 }
@@ -1733,16 +1741,18 @@ ____________________ **/
                                 _menu.displayCurrent = _panel;
                             }
                         },
-                        "click:delegate(x-menu > div[panel-resizer] > button[icon])": function ResizePanel(e) {
+                        "click:delegate(div[panel-resizer] > button[icon])": function ResizePanel(e) {
+                            let _panel = this.parentNode.parentNode.parentNode.nodeName === "x-panel" ?
+                                this.parentNode.parentNode.parentNode : this.parentNode.parentNode;
                             switch (this.getAttribute("icon")) {
                                 case "minimize":
-                                    this.parentNode.parentNode.parentNode.minimized = true;
+                                    _panel.minimized = true;
                                     break;
                                 case "normal":
-                                    this.parentNode.parentNode.parentNode.normalized = true;
+                                    _panel.normalized = true;
                                     break;
                                 case "maximize":
-                                    this.parentNode.parentNode.parentNode.maximized = true;
+                                    _panel.maximized = true;
                                     break;
                             }
                         }
