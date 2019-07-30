@@ -1376,7 +1376,7 @@ ____________________ **/
                         },
                         queryArray: QueryArray,
                         addIcons: function AddIcons(name, address) { 
-                            // 
+                            return "";
                         }
                     };
                 }
