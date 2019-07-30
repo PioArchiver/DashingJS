@@ -827,8 +827,8 @@ ____________________ **/
             this.platformPrompt = dashed.platformPrompt === undefined ? false : dashed.platformPrompt;
             // set the start screen
             this.startscreen = dashed.startscreen === undefined ? false : dashed.startscreen;
-            // set the rootElement
-            this.rootElement = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
+            // set the extension
+            this.extension = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
             // set linked property
             this.linked = {};
 
@@ -1651,8 +1651,14 @@ ____________________ **/
                                 }
                             }
                         },
-                        drawIcons: function DrawIcons() {
-                            //
+                        drawIcon: async function DrawIcon(opts) {
+                            let ico = null;
+                            if (Dashing.extensions.icos === "true") {
+                                ico = await Dashing.addIcon();
+                            }
+                            else {
+                                return Dashing.addIcon();
+                            }
                         }
                     };
                 }
@@ -1750,9 +1756,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = this.querySelector(`#${val}`),
                                         _panelresizer = xtag.createFragment(`<div panel-resizer="true">
-                                            <button icon="minimize">_</button>
-                                            <button icon='normal'>[]</button>
-                                            <button icon='maximize'>[<>]</button>
+                                            <button icon="minimize" title="Minimize">${this.drawIcon() || "_"}</button>
+                                            <button icon='normal' title="Normal">${this.drawIcon() || "[]"}</button>
+                                            <button icon='maximize' title="Maximize">${this.drawIcon() || "[-]"}</button>
                                         </div>`);
                                     _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
                                 }
@@ -1761,9 +1767,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
                                     _container.setAttribute("panel-resizer", val);
-                                    _container.innerHTML = `<button icon="minimize">_</button>
-                                                <button icon='normal'>[]</button>
-                                                <button icon='maximize'>[<>]</button>`;
+                                    _container.innerHTML = `<button icon="minimize" title="Minimize">${this.drawIcon() || "_"}</button>
+                                            <button icon='normal' title="Normal">${this.drawIcon() || "[]"}</button>
+                                            <button icon='maximize' title="Maximize">${this.drawIcon() || "[-]"}</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
                                 }
                             }
