@@ -1757,9 +1757,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = this.querySelector(`#${val}`),
                                         _panelresizer = xtag.createFragment(`<div panel-resizer="true">
-                                            <button icon="minimize" title="Minimize">${this.drawIcon() || "_"}</button>
-                                            <button icon='normal' title="Normal">${this.drawIcon() || "[]"}</button>
-                                            <button icon='maximize' title="Maximize">${this.drawIcon() || "[-]"}</button>
+                                            <button icon="minimize" title="Minimize">${"_"}</button>
+                                            <button icon='normal' title="Normal">${"[]"}</button>
+                                            <button icon='maximize' title="Maximize">${"[-]"}</button>
                                         </div>`);
                                     _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
                                 }
@@ -1768,9 +1768,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
                                     _container.setAttribute("panel-resizer", val);
-                                    _container.innerHTML = `<button icon="minimize" title="Minimize">${this.drawIcon() || "_"}</button>
-                                            <button icon='normal' title="Normal">${this.drawIcon() || "[]"}</button>
-                                            <button icon='maximize' title="Maximize">${this.drawIcon() || "[-]"}</button>`;
+                                    _container.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
+                                            <button icon='normal' title="Normal">${"[]"}</button>
+                                            <button icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
                                 }
                             }
