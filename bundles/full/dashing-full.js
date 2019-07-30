@@ -1386,7 +1386,10 @@ ____________________ **/
                     return {
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
-                            
+                            this.icons = {
+                                uploader: false,
+                                uploads: {}
+                            };
                         },
                         inserted: function InsertedXExtension() {
                             //
@@ -1409,6 +1412,12 @@ ____________________ **/
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response;
+                                            if (Dashing.typeOf(_this.icons.uploader) === "function") {
+                                                _this.icons.uploader = false;
+                                                console.log(e);
+                                                // _this.uploaded[] = icos.firstElementChild;
+                                                _this.icons.uploader(icos.firstElementChild);
+                                            }
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
                                         });
@@ -1649,16 +1658,6 @@ ____________________ **/
                                     // Need to cached validated data from what
                                     // the panel's content is currently displaying.
                                 }
-                            }
-                        },
-                        drawIcon: async function DrawIcon(opts) {
-                            let ico = null;
-                            if (Dashing.extension.icos === "true") {
-                                ico = await Dashing.extension.addIcons();
-                                return ico;
-                            }
-                            else {
-                                return Dashing.extension.addIcons();
                             }
                         }
                     };
