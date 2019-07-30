@@ -12,7 +12,7 @@ x-panel > x-menu {
 }
 x-panel > x-menu > div[panel-resizer] {
     position: absolute;
-    right: 0px;
+    right: 10px;
 }
 #main-menu li {
     width: 100%;
