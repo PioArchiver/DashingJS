@@ -1653,7 +1653,7 @@ ____________________ **/
                         },
                         drawIcon: async function DrawIcon(opts) {
                             let ico = null;
-                            if (Dashing.extensions.icos === "true") {
+                            if (Dashing.extension.icos === "true") {
                                 ico = await Dashing.addIcon();
                                 return ico;
                             }
