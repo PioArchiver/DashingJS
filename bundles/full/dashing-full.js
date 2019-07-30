@@ -1654,11 +1654,11 @@ ____________________ **/
                         drawIcon: async function DrawIcon(opts) {
                             let ico = null;
                             if (Dashing.extension.icos === "true") {
-                                ico = await Dashing.addIcon();
+                                ico = await Dashing.extension.addIcon();
                                 return ico;
                             }
                             else {
-                                return Dashing.addIcon();
+                                return Dashing.extension.addIcon();
                             }
                         }
                     };
