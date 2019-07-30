@@ -1658,7 +1658,7 @@ ____________________ **/
                                 return ico;
                             }
                             else {
-                                return Dashing.extension.addIcona();
+                                return Dashing.extension.addIcons();
                             }
                         }
                     };
