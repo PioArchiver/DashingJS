@@ -1588,8 +1588,8 @@ ____________________ **/
                                             let _doc = document.querySelector(`#${this.templateItems[i]}`);
                                             if (_doc) {
                                                 this.addTemplate({
-                                                    id: this.templateItems[i],
-                                                    template: _doc.outerHTML
+                                                    id: this.templateItems[i], 
+                                                    template: _doc.outerHTML 
                                                 });
                                             }
                                             this.createTabButton(this.templateItems[i]);
@@ -1750,9 +1750,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = this.querySelector(`#${val}`),
                                         _panelresizer = xtag.createFragment(`<div panel-resizer="true">
-                                            <button icon="minimize"></button>
-                                            <button icon='normal'></button>
-                                            <button icon='maximize'></button>
+                                            <button icon="minimize">_</button>
+                                            <button icon='normal'>[ ]</button>
+                                            <button icon='maximize'>[<>]</button>
                                         </div>`);
                                     _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
                                 }
@@ -1761,9 +1761,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
                                     _container.setAttribute("panel-resizer", val);
-                                    _container.innerHTML = `<button icon="minimize"></button>
-                                                <button icon='normal'></button>
-                                                <button icon='maximize'></button>`;
+                                    _container.innerHTML = `<button icon="minimize">_</button>
+                                                <button icon='normal'>[ ]</button>
+                                                <button icon='maximize'>[<>]</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
                                 }
                             }
