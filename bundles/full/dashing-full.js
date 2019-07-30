@@ -1655,6 +1655,7 @@ ____________________ **/
                             let ico = null;
                             if (Dashing.extensions.icos === "true") {
                                 ico = await Dashing.addIcon();
+                                return ico;
                             }
                             else {
                                 return Dashing.addIcon();
