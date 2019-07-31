@@ -1411,8 +1411,9 @@ ____________________ **/
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
-                                            let icos = e.target.response;
-                                            console.log(e);
+                                            let icos = e.target.response,
+                                                filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)$/g);
+                                            console.log(filenm);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.uploader = false;
                                                 // _this.uploaded[] = icos.firstElementChild;
