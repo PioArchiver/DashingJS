@@ -1412,7 +1412,7 @@ ____________________ **/
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
-                                                filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)$/g);
+                                                filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
                                             console.log(filenm);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.uploader = false;
