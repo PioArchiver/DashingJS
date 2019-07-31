@@ -1412,9 +1412,9 @@ ____________________ **/
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response;
+                                            console.log(e);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.uploader = false;
-                                                console.log(e);
                                                 // _this.uploaded[] = icos.firstElementChild;
                                                 _this.icons.uploader(icos.firstElementChild);
                                             }
