@@ -14,6 +14,9 @@ window.addEventListener("load", function LoadExample() {
     });
     qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
 
+    Dashing.icons.uploader = function addPanelIcons(icons) {
+        console.log(icons);
+    };
 
 });
 

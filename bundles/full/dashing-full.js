@@ -91,23 +91,22 @@ ____________________ **/
     class CssWriter {
         constructor(name) {
             if (document.getElementById(name)) {
-                this.Stylesheet = { ready: document.getElementById(name) };
+                this.Stylesheet = { ready: document.getElementById(name), progressing: false };
             }
-            else {
+            else if(typeof name === "string") {
                 let sy = document.createElement("style");
-                sy.id = name;
-                this.Stylesheet = { progressing: sy };
+                    sy.id = name;
+                    this.Stylesheet = { ready: false, progressing: sy };
             }
 
             document.addEventListener('load', function LoadCss(e) {
                 let node = e.target;
-                if ((node.nodeName === 'LINK' || node.nodeName === 'STYLE') && node.sheet) {
-                    Array.prototype.forEach.call(node.sheet.cssRules, function (rule) { css.parseRule(node, rule); });
+                if (node.nodeName === 'STYLE') && node.sheet) {
+                    Array.prototype.forEach.call(node.sheet.cssRules, function CssWriterLoad(rule) { css.parseRule(node, rule); });
                 }
             }, true);
 
         }
-        get Stylesheet() { return this.css.sheet; }
         set Stylesheet(_sy) {
             if (_sy.ready) {
                 this.sheet = _sy.ready.sheet;
@@ -115,11 +114,12 @@ ____________________ **/
             }
             else {
                 let _syid = _sy.progressing.id;
-                document.head.appendChild(_sy.progressing);
+                    document.head.appendChild(_sy.progressing);
                 this.sheet = document.getElementById(_syid).sheet;
                 this.style = document.getElementById(_syid);
             }
         }
+        
         transitions(elem, options, state) {
             if (state === "hide") {
                 let _applyStyle = `${elem.nodeName.toLowerCase()}[type="${elem.type}"][transitioned="${elem.getAttribute("transition-end")}"]{ -webkit-transition:`,
@@ -167,6 +167,7 @@ ____________________ **/
         parseRule(node, rule, remove) {
             if (rule instanceof CSSSupportsRule) {
                 let match = rule.conditionText.match(regexpConditionMatch);
+                console.log(match);
                 if (match) {
                     let state = states[match[1]];
                     let entries = (state || (state = states[match[1]] = { active: false, entries: [] })).entries;
@@ -203,7 +204,7 @@ ____________________ **/
                 });
             }
         }
-    }
+    };
 
     // Create new CssWriter
     const css = new CssWriter("ApplicationInlineStyleElement"),
@@ -484,53 +485,18 @@ ____________________ **/
     class Validator extends Mappings {
         constructor(data, cases) {
             super();
-            if (data === undefined || data === false || data === null) {
-                this.case = false;
-            }
-            else if (xtag.typeOf(data) === "object") {
-                this.case = data;
-            }
         }
         open() {
 
         }
         add(_case, _cond, _def) {
             // Add key words passed as cases here.
-            switch (_case) {
-                case "startCase":
-                    _cond.startCase = _cond;
-                    return _def;
-                case "finishCase":
-                    _cond.finishCase = _cond;
-                    return _def;
-                default:
-                    _cond.caseKeys === undefined ? (
-                        _cond.caseKeys = [],
-                        _cond.caseKeys.push(_case),
-                        _cond[_case] = _def) : _cond.caseKeys.toString().match(_case) ? true : _cond.caseKeys.push(_case), _cond[_case] = _def;
-                    return _def;
-            }
         }
         set case(data) {
-            if (data === undefined || data === false || data === null) {
-                this.cached = {
-                    current: null
-                };
-                this.cached.error = "Used falsey value for case setter. Please use the required object.";
-            }
-            else if (typeOf(data) === "object") {
-                this.cached.error = false;
-                this.cached.success = true;
-                this.cached[data.id] ? "Not allowed to overwrite." : this.cached[data.id] = data;
-            }
-            else {
-                this.cached.error = `Type error while setting case.`;
-            } 
+            // 
         }
         get case() {
-            return function GetCase(name) {
-                return this.cached[name] || false;
-            };
+            //
         }
     }
 
@@ -1375,8 +1341,11 @@ ____________________ **/
 
                         },
                         queryArray: QueryArray,
-                        addIcons: function AddIcons(name, address) { 
-                            return "";
+                        addIcons: function AddIcons(name, icons) {
+                            this.icons.uploads[name] = this.icons.uploads[name] ? icons : this.icons.uploads[name];
+                            this.icons.uploader(icons);
+                            this.icons.uploader = false;
+                            return icons;
                         }
                     };
                 }
@@ -1413,16 +1382,18 @@ ____________________ **/
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
-                                            console.log(filenm);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
-                                                _this.icons.uploader = false;
-                                                // _this.uploaded[] = icos.firstElementChild;
-                                                _this.icons.uploader(icos.firstElementChild);
+                                                _this.addIcons(filenm[0], icos);
                                             }
+                                            else {
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
+                                            }
                                         });
                                     }
+                                }
+                                else if (val === true) {
+                                    //
                                 }
 
                             },
