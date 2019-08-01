@@ -101,7 +101,7 @@ ____________________ **/
 
             document.addEventListener('load', function LoadCss(e) {
                 let node = e.target;
-                if (node.nodeName === 'STYLE') && node.sheet) {
+                if (node.nodeName === 'STYLE' && node.sheet) {
                     Array.prototype.forEach.call(node.sheet.cssRules, function CssWriterLoad(rule) { css.parseRule(node, rule); });
                 }
             }, true);
