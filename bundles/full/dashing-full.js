@@ -1087,6 +1087,11 @@ ____________________ **/
     }
 
     Dashing = new dashboard({
+        /**
+         * @name Namespaces
+         * @description Array of HTML Element names
+         * @notes The `celements` property must be set to true so that the constructor reads the array.
+        */
         namespaces: [
             "x-json", 
             "x-extension",
@@ -1115,18 +1120,20 @@ ____________________ **/
         },
         elements: function Components(elems) {
             elems.xLink = class xLink extends HTMLElement {
-                appendResources(target, frag) {
-                    if (target) {
-                        target.appendChild(frag);
-                    }
-                    else {
-                        this.appendChild(frag);
-                    }
+                static methods() {
+                    return {
+                        appendResources: function AppendResources(target, frag) {
+                            if (target) {
+                                target.appendChild(frag);
+                            }
+                            else {
+                                this.appendChild(frag);
+                            }
+                        }
+                    };
                 }
-                parseResources(data) {
-                    //
-                }
-                attrs() {
+
+                static attrs() {
                     return {
                         load: {
                             set: function (fn) { this._load = fn; },
@@ -1199,6 +1206,7 @@ ____________________ **/
                                     return "Error: No User request service exists named: " + isInNeedOf;
                             }
                         },
+                        // [getFormValues] in progress
                         getFormValues: function GetFormValues(_form) {
                             let _obj = {};
                             return _obj;
@@ -1406,14 +1414,11 @@ ____________________ **/
                                         });
                                     }
                                 }
-                                else if (val === true) {
-                                    //
-                                }
-
                             },
                             get: function GetIcos(val) { return this.getAttribute("icos") || false; }
                         },
                         stylesheet: {
+                            connected: true,
                             get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; }, 
                             set: function SetSyleSheet(value) {
                                 this.styles = new CssWriter(value);
