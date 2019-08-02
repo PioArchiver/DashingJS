@@ -1395,9 +1395,9 @@ ____________________ **/
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
+                                                _this.icons.uploader(icos);
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
-                                                _this.icons.uploader(_this.icons.uploads[filenm[0]]);
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
