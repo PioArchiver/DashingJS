@@ -1358,13 +1358,7 @@ ____________________ **/
                             });
 
                         },
-                        queryArray: QueryArray,
-                        addIcons: function AddIcons(name, icons) {
-                            this.icons.uploads[name] = this.icons.uploads[name] ? icons : this.icons.uploads[name];
-                            this.icons.uploader(icons);
-                            this.icons.uploader = false;
-                            return icons;
-                        }
+                        queryArray: QueryArray
                     };
                 }
 
@@ -1374,6 +1368,7 @@ ____________________ **/
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
                             this.icons = new Iconography();
+                            console.log(this.icons);
                         },
                         inserted: function InsertedXExtension() {
                             //
