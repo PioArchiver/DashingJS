@@ -216,7 +216,11 @@ ____________________ **/
             this.uploader = false;
             this.uploads = {};
         }
-        add(name, snippet) { this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet; }
+        add(name, snippet) {
+            this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet;
+            this.uploader(this.uploads[name]);
+            this.uploader = false;
+        }
         createIcon(snippet) {
             let ico = document.createDocumentFragment(),
                 svg = document.createElement("svg");
@@ -1368,7 +1372,6 @@ ____________________ **/
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
                             this.icons = new Iconography();
-                            console.log(this.icons);
                         },
                         inserted: function InsertedXExtension() {
                             //
@@ -1394,6 +1397,7 @@ ____________________ **/
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.add(filenm[0], icos);
+                                                _this.setAttribute("icos", "true");
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
