@@ -13,11 +13,11 @@ window.addEventListener("load", function LoadExample() {
         return val;
     });
     qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
-    console.log(Dashing.icons);
     Dashing.icons.uploader = function addPanelIcons(icons) {
         let icos = icons.firstElementChild.getElementsByTagName("symbol");
         for (let i = 0; i < icos.length; i++) {
             Dashing.icons.add(icos[i].id, icos[i]);
+            console.log(Dashing.icons.uploads[icos[i].id]);
         }
     };
 
