@@ -218,7 +218,6 @@ ____________________ **/
         }
         add(name, snippet) {
             this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet;
-            this.uploader(this.uploads[name]);
             this.uploader = false;
         }
         createIcon(snippet) {
@@ -1398,6 +1397,7 @@ ____________________ **/
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
+                                                _this.icons.uploader(_this.icons.uploads[filenm[0]]);
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
