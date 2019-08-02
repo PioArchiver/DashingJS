@@ -1393,7 +1393,7 @@ ____________________ **/
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
-                                                _this.addIcons(filenm[0], icos);
+                                                _this.icons.add(filenm[0], icos);
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
