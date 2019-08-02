@@ -14,6 +14,9 @@ x-panel > x-menu > div[panel-resizer] {
     position: absolute;
     right: 10px;
 }
+    x-panel > x-menu > button[panel-content] {
+        padding: 0px;
+    }
     x-panel > x-menu > div[panel-resizer] > [icon="maximize"] {
         width: 30px;
         padding: 0px;

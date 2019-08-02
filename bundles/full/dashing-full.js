@@ -210,6 +210,27 @@ ____________________ **/
     const css = new CssWriter("ApplicationInlineStyleElement"),
         sheet = css.sheet;
 
+    // Icon Class
+    class Iconography {
+        constructor() {
+            uploader = false;
+            uploads = {};
+        }
+        add(name, snippet) { this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet; }
+        createIcon(snippet) {
+            let ico = document.createDocumentFragment(),
+                svg = document.createElement("svg");
+                snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
+                svg.innerHTML = snippet;
+                ico.appendChild(svg);
+            return ico;
+        }
+        append(target, opts) {
+            let ico = this.createIcon(opts.icon);
+            target.appendChild(ico);
+        }
+    }
+
     // Pseudos
     (function _Pseudos_() {
         // Transitions
@@ -229,7 +250,7 @@ ____________________ **/
                     delta.hide(elem);
                 }
             }
-
+            // allows overrides
             add(name, options) {
                 this[name] = { id: name, attributes: options.attrs };
             }
@@ -255,9 +276,7 @@ ____________________ **/
             }
             get style() {
                 return function ApplyStyle(pseudo, state) {
-                    let _style = pseudo.style,
-                        _dt = _style.delta,
-                        _keys = _style.keys;
+                    let _style = pseudo.style;
 
                     css.transitions(this, _style, state);
                 };
@@ -318,7 +337,7 @@ ____________________ **/
                     _hat = this.getAttribute("transition-hide") || "fade-out",
                     _st = transitions[_sat],
                     _ht = transitions[_hat];
-
+                // loop through attrs keys
                 for (let i = 0; i < a.attrs.keys.length; i++) {
                     let _attr = this.hasAttribute(a.attrs.keys[i]) === true ? a.attrs[a.attrs.keys[i]].name : false,
                         _cstate = this.hasAttribute(a.attrs.keys[i]) === true ? true : false;
@@ -473,7 +492,6 @@ ____________________ **/
         }
         open(condition, cases) { }
         close(condition, cases) { }
-
         success(e, _super, _this) {
 
         }
@@ -1355,10 +1373,7 @@ ____________________ **/
                     return {
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
-                            this.icons = {
-                                uploader: false,
-                                uploads: {}
-                            };
+                            this.icons = new Iconography();
                         },
                         inserted: function InsertedXExtension() {
                             //
@@ -1398,6 +1413,12 @@ ____________________ **/
 
                             },
                             get: function GetIcos(val) { return this.getAttribute("icos") || false; }
+                        },
+                        stylesheet: {
+                            get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; }, 
+                            set: function SetSyleSheet(value) {
+                                this.styles = new CssWriter(value);
+                            }
                         },
                         schema: {
                             connected: true,
