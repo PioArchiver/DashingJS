@@ -1627,7 +1627,7 @@ ____________________ **/
                 static lifecycle() {
                     return {
                         created: function createdXPanel() {
-                            this.extension = document.querySelector("x-extionsion");
+                            this.extension = document.querySelector("x-extension");
                             this.menu = this.menu;
                         },
                         inserted: function InsertedXPanel() {
@@ -1662,7 +1662,6 @@ ____________________ **/
                                 _this.extension.icons.uploaded["logo"]);
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
-                            console.log(this.extension);
                             this.extension.icons.append(this.MainMenu.querySelector("strong[logo]") || this.MainMeanu,
                                 _this.extension.icons.uploaded["logo"]);
                         },
@@ -1683,7 +1682,7 @@ ____________________ **/
                                     });
                                     break;
                                 case "resizer":
-                                    this.addResizerIcons(["minimized", "normal", "maximized"], {
+                                    this.addResizerIcons(["minimize", "normal", "maximize"], {
 
                                     });
                                     break;
@@ -1698,7 +1697,7 @@ ____________________ **/
                                     this.addLogoIcon("logo", {
 
                                     });
-                                    this.addResizerIcons(["minimized", "normal", "maximized"], {
+                                    this.addResizerIcons(["minimize", "normal", "maximize"], {
 
                                     });
                                     this.addContentIcons(this.templateItems, {
