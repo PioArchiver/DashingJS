@@ -1659,17 +1659,17 @@ ____________________ **/
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
                             this.extension.icons.append(this.xMenu.querySelector("div[panel-resizer]") || this.querySelector("div[panel-resizer]"),
-                                _this.extension.icons.uploaded["logo"]);
+                                _this.extension.icons.uploads["logo"]);
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
                             this.extension.icons.append(this.xMenu.querySelector("strong[logo]") || this.MainMeanu,
-                                this.extension.icons.uploaded["logo"]);
+                                this.extension.icons.uploads["logo"]);
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
                             let _this = this;
                             this.menu.templateItems.forEach(function appendContentIcons(item, index) {
                                 this.extension.icons.append(_this.querySelectorAll("button[panel-content]")[index],
-                                    _this.extension.icons.uploaded[item]);
+                                    _this.extension.icons.uploads[item]);
                             });                            
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
