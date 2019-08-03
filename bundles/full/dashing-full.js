@@ -1738,8 +1738,8 @@ ____________________ **/
                                 if (val === true || val === "true") {
                                     this.setAttribute("minimized", "true");
                                     this.xMenu.display.style.display = "none";
-                                    this.removeAttribute("normalized");
-                                    this.removeAttribute("maximized");
+                                    this.normalized = false;
+                                    this.maximized = false;
                                 }
                                 else if (val === false || val === "false") {
                                     this.removeAttribute("minimized");
@@ -1749,12 +1749,12 @@ ____________________ **/
                         }, 
                         normalized: {
                             connected: true,
-                            get: function GetEnlarged() { return this.hasAttribute("enlarged"); },
+                            get: function GetEnlarged() { return this.hasAttribute("enlarged") ? true : null; },
                             set: function SetEnlarged(val) {
                                 if (val === true || val === "true") {
                                     this.setAttribute("normalized", "true");
-                                    this.removeAttribute("minimized");
-                                    this.removeAttribute("maximized");
+                                    this.maximized = false;
+                                    this.minimized = false;
                                 }
                                 else if(val === false || val === "false") {
                                     this.removeAttribute("normalize");
@@ -1763,14 +1763,13 @@ ____________________ **/
                         }, 
                         maximized: {
                             connected: true,
-                            get: function GetMaximized() { return this.hasAttribute("maximized"); },
+                            get: function GetMaximized() { return this.hasAttribute("maximized") ? true : null; },
                             set: function SetMaximized(val) {
                                 if (val === true || val === "true") {
                                     this.setAttribute("maximized", "true");
-                                    this.removeAttribute("minimized");
-                                    this.removeAttribute("normalized");
+                                    this.normalized = false;
+                                    this.minimized = false;
                                     this.setAttribute("style", "position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100000; background-color: white;");
-                                    this.xMenu.display.removeAttribute("style");
                                 }
                                 else if (val === false || val === "false") {
                                     this.removeAttribute("maximized");
