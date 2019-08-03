@@ -20,7 +20,7 @@ window.addEventListener("load", function LoadExample() {
             Dashing.icons.add(icos[i].id, icos[i]);
         }
         console.log(Dashing.icons);
-        Dashing.MainMenu.iconography = true;
+        Dashing.MainMenu.querySelector("#demo-panel").iconography = true;
     };
 
 });
