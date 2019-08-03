@@ -1739,7 +1739,6 @@ ____________________ **/
                                     this.setAttribute("minimized", "true");
                                     this.xMenu.display.style.display = "none";
                                     this.normalized = false;
-                                    this.maximized = false;
                                 }
                                 else if (val === false || val === "false") {
                                     this.removeAttribute("minimized");
