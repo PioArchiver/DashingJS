@@ -1627,7 +1627,7 @@ ____________________ **/
                 static lifecycle() {
                     return {
                         created: function createdXPanel() {
-                            let _extension = document.querySelector("x-extension");
+                            this.extension = document.querySelector("x-extionsion");
                             this.menu = this.menu;
                         },
                         inserted: function InsertedXPanel() {
@@ -1655,6 +1655,52 @@ ____________________ **/
                                     // Need to cached validated data from what
                                     // the panel's content is currently displaying.
                                 }
+                            }
+                        },
+                        addResizerIcons: function AddResizerIcons(icons, opts) {
+                            this.extension.icons.append(this.MainMenu.querySelector("div[panel-resizer]") || this.querySelector("div[panel-resizer]"),
+                                _this.extension.icons.uploaded["logo"]);
+                        },
+                        addLogoIcon: function AddLogoIcon(icon, opts) {
+                            this.extension.icons.append(this.MainMenu.querySelector("strong[logo]") || this.MainMeanu,
+                                _this.extension.icons.uploaded["logo"]);
+                        },
+                        addContentIcons: function AddContentIcons(icons, opts) {
+                            let _this = this;
+                            this.menu.templateItems.forEach(function appendContentIcons(item, index) {
+                                this.extension.icons.append(_this.querySelectorAll("button[panel-content]")[index],
+                                    _this.extension.icons.uploaded[item]);
+                            });                            
+                        },
+                        insertIcons: function InsertPanelIcon(type, opts) {
+                            switch (type) {
+                                case "content":
+                                    this.addContentIcons(this.templateItems, {
+                                        drawer: opts.drawer ? opts.drawer : noop,
+                                        data: opts.data ? opts.data : noop
+                                    });
+                                    break;
+                                case "resizer":
+                                    this.addResizerIcons(["minimized", "normal", "maximized"], {
+
+                                    });
+                                    break;
+                                case "logo":
+                                    this.addLogoIcon("logo", {
+
+                                    });
+                                    break;
+                                case "all":
+                                case "*":
+                                default:
+                                    this.addLogoIcon("logo", {});
+                                    this.addResizerIcons(["minimized", "normal", "maximized"], {
+
+                                    });
+                                    this.addContentIcons(this.templateItems, {
+
+                                    });
+                                    break;
                             }
                         }
                     };
@@ -1691,16 +1737,13 @@ ____________________ **/
                             set: function SetMinimized(val) {
                                 if (val === true || val === "true") {
                                     this.setAttribute("minimized", "true");
-                                    this.removeAttribute("style");
                                     this.xMenu.display.style.display = "none";
                                     this.removeAttribute("normalized");
                                     this.removeAttribute("maximized");
-                                    this.isMinimized = true;
                                 }
-                                else {
-                                    this.isMinimized = true;
-                                    this.isMaximized = false;
-                                    this.isNormalized = false;
+                                else if (val === false || val === "false"){
+                                    this.removeAttribute("minimized");
+                                    this.xMenu.display.removeAttribute("style");
                                 }
                             }
                         }, 
@@ -1710,16 +1753,11 @@ ____________________ **/
                             set: function SetEnlarged(val) {
                                 if (val === true || val === "true") {
                                     this.setAttribute("normalized", "true");
-                                    this.xMenu.display.removeAttribute("style");
-                                    this.removeAttribute("style");
                                     this.removeAttribute("minimized");
                                     this.removeAttribute("maximized");
-                                    this.isNomralized = true;
                                 }
                                 else {
-                                    this.isMinimized = false;
-                                    this.isMaximized = false;
-                                    this.isNormalized = true;
+                                    this.removeAttribute("normalize");
                                 }
                             }
                         }, 
@@ -1733,12 +1771,10 @@ ____________________ **/
                                     this.removeAttribute("normalized");
                                     this.setAttribute("style", "position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100000; background-color: white;");
                                     this.xMenu.display.removeAttribute("style");
-                                    this.isMaximized = false;
                                 }
                                 else {
-                                    this.isMinimized = false;
-                                    this.isMaximized = true;
-                                    this.isNormalized = false;
+                                    this.removeAttribute("maximized");
+                                    this.removeAttribute("style");
                                 }
                             }
                         }, 
@@ -1768,6 +1804,22 @@ ____________________ **/
                                             <button icon='normal' title="Normal">${"[]"}</button>
                                             <button icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
+                                }
+                            }
+                        },
+                        iconography: {
+                            connected: true,
+                            get: function GetIconography() { return this.hasAttribute("iconography"); },
+                            set: function SetIconography(value) {
+                                if (value === "true" || value === true) {
+                                    this.inserticons("*", {
+                                        resizers: true,
+                                        content: true,
+                                        logo: true
+                                    });
+                                }
+                                else if (Dashing.typeOf(value) === "string") {
+                                    this.insertIcons(value);
                                 }
                             }
                         }

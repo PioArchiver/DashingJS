@@ -20,9 +20,7 @@ window.addEventListener("load", function LoadExample() {
             Dashing.icons.add(icos[i].id, icos[i]);
         }
 
-        Dashing.MainMenu.querySelectorAll("button[icon]").forEach(function iconIcon(node, index) {
-            console.log(node);
-        });
+        Dashing.MainMenu.iconography = true;
     };
 
 });
