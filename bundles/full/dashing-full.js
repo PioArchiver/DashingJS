@@ -1658,8 +1658,10 @@ ____________________ **/
                             }
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
-                            this.extension.icons.append(this.xMenu.querySelector("div[panel-resizer] > [minimize]") || this.querySelector("div[panel-resizer]"),
-                                { icon: "minimize" });
+                            for (let i = 0; i < icons.length; i++) {
+                                this.extension.icons.append(this.xMenu.querySelector(`div[panel-resizer] > [${icons[i]}]`)),
+                                    { icon: icons[i] });
+                            } 
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
                             this.extension.icons.append(this.xMenu.querySelector("strong[logo]") || this.xMenu,
