@@ -1673,6 +1673,7 @@ ____________________ **/
                             });                            
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
+                            console.log(type);
                             switch (type) {
                                 case "content":
                                     this.addContentIcons(this.templateItems, {
@@ -1693,7 +1694,6 @@ ____________________ **/
                                 case "all":
                                 case "*":
                                 default:
-                                    console.log(opts);
                                     this.addLogoIcon("logo", {
 
                                     });
