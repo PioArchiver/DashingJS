@@ -1658,18 +1658,18 @@ ____________________ **/
                             }
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
-                            this.extension.icons.append(this.xMenu.querySelector("div[panel-resizer]") || this.querySelector("div[panel-resizer]"),
-                                { icon: this.extension.icons.uploads["minimize"] });
+                            this.extension.icons.append(this.xMenu.querySelector("div[panel-resizer] > [minimize]") || this.querySelector("div[panel-resizer]"),
+                                { icon: "minimize" });
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
                             this.extension.icons.append(this.xMenu.querySelector("strong[logo]") || this.xMenu,
-                                { icon: this.extension.icons.uploads["logo"] });
+                                { icon: "logo" });
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
                             let _this = this;
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
                                 _this.extension.icons.append(_this.querySelectorAll("button[panel-content]")[index],
-                                    { icon: _this.extension.icons.uploads[item] });
+                                    { icon: item });
                             });                            
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
