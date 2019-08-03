@@ -1749,7 +1749,7 @@ ____________________ **/
                         }, 
                         normalized: {
                             connected: true,
-                            get: function GetEnlarged() { return this.hasAttribute("enlarged") ? true : null; },
+                            get: function GetEnlarged() { return this.hasAttribute("normalized") ? true : null; },
                             set: function SetEnlarged(val) {
                                 if (val === true || val === "true") {
                                     this.setAttribute("normalized", "true");
