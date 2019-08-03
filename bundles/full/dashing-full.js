@@ -1733,7 +1733,7 @@ ____________________ **/
                         }, 
                         minimized: {
                             connected: true,
-                            get: function GetMinimized() { return this.hasAttribute("minimized"); },
+                            get: function GetMinimized() { return this.hasAttribute("minimized") ? true : null; },
                             set: function SetMinimized(val) {
                                 if (val === true || val === "true") {
                                     this.setAttribute("minimized", "true");
@@ -1741,7 +1741,7 @@ ____________________ **/
                                     this.removeAttribute("normalized");
                                     this.removeAttribute("maximized");
                                 }
-                                else if (val === false || val === "false"){
+                                else if (val === false || val === "false") {
                                     this.removeAttribute("minimized");
                                     this.xMenu.display.removeAttribute("style");
                                 }
@@ -1756,7 +1756,7 @@ ____________________ **/
                                     this.removeAttribute("minimized");
                                     this.removeAttribute("maximized");
                                 }
-                                else {
+                                else if(val === false || val === "false") { {
                                     this.removeAttribute("normalize");
                                 }
                             }
@@ -1772,7 +1772,7 @@ ____________________ **/
                                     this.setAttribute("style", "position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100000; background-color: white;");
                                     this.xMenu.display.removeAttribute("style");
                                 }
-                                else {
+                                else if (val === false || val === "false") {  {
                                     this.removeAttribute("maximized");
                                     this.removeAttribute("style");
                                 }
