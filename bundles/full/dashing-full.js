@@ -1662,6 +1662,7 @@ ____________________ **/
                                 _this.extension.icons.uploaded["logo"]);
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
+                            console.log(this.extension);
                             this.extension.icons.append(this.MainMenu.querySelector("strong[logo]") || this.MainMeanu,
                                 _this.extension.icons.uploaded["logo"]);
                         },
