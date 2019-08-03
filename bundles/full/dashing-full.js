@@ -1667,7 +1667,7 @@ ____________________ **/
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
                             let _this = this;
-                            this.menu.templateItems.forEach(function appendContentIcons(item, index) {
+                            this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
                                 _this.extension.icons.append(_this.querySelectorAll("button[panel-content]")[index],
                                     _this.extension.icons.uploads[item]);
                             });                            
