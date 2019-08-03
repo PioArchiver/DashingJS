@@ -19,7 +19,7 @@ window.addEventListener("load", function LoadExample() {
         for (let i = 0; i < icos.length; i++) {
             Dashing.icons.add(icos[i].id, icos[i]);
         }
-
+        console.log(Dashing.icons);
         Dashing.MainMenu.iconography = true;
     };
 

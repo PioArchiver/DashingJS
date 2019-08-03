@@ -1693,7 +1693,10 @@ ____________________ **/
                                 case "all":
                                 case "*":
                                 default:
-                                    this.addLogoIcon("logo", {});
+                                    console.log(opts);
+                                    this.addLogoIcon("logo", {
+
+                                    });
                                     this.addResizerIcons(["minimized", "normal", "maximized"], {
 
                                     });
@@ -1810,7 +1813,7 @@ ____________________ **/
                             get: function GetIconography() { return this.hasAttribute("iconography"); },
                             set: function SetIconography(value) {
                                 if (value === "true" || value === true) {
-                                    this.inserticons("*", {
+                                    this.insertIcons("*", {
                                         resizers: true,
                                         content: true,
                                         logo: true
