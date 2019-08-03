@@ -1658,12 +1658,12 @@ ____________________ **/
                             }
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
-                            this.extension.icons.append(this.MainMenu.querySelector("div[panel-resizer]") || this.querySelector("div[panel-resizer]"),
+                            this.extension.icons.append(this.xMenu.querySelector("div[panel-resizer]") || this.querySelector("div[panel-resizer]"),
                                 _this.extension.icons.uploaded["logo"]);
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
-                            this.extension.icons.append(this.MainMenu.querySelector("strong[logo]") || this.MainMeanu,
-                                _this.extension.icons.uploaded["logo"]);
+                            this.extension.icons.append(this.xMenu.querySelector("strong[logo]") || this.MainMeanu,
+                                this.extension.icons.uploaded["logo"]);
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
                             let _this = this;
