@@ -17,7 +17,7 @@ window.addEventListener("load", function LoadExample() {
     Dashing.icons.uploader = function addPanelIcons(icons) {
         let icos = icons.firstElementChild.getElementsByTagName("symbol");
         for (let i = 0; i < icos.length; i++) {
-            Dashing.icons.add(icos[i].id, icos[i]);
+            Dashing.icons.add(icos[i].id, icos[i].lastElementChild.outerHTML);
         }
         console.log(Dashing.icons);
         Dashing.MainMenu.querySelector("#demo-panel").iconography = true;
