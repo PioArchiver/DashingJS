@@ -1659,7 +1659,7 @@ ____________________ **/
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
                             this.extension.icons.append(this.xMenu.querySelector("div[panel-resizer]") || this.querySelector("div[panel-resizer]"),
-                                this.extension.icons.uploads["logo"]);
+                                this.extension.icons.uploads["minimize"]);
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
                             this.extension.icons.append(this.xMenu.querySelector("strong[logo]") || this.xMenu,
