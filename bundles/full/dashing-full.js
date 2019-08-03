@@ -1659,7 +1659,8 @@ ____________________ **/
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
                             for (let i = 0; i < icons.length; i++) {
-                                this.extension.icons.append(this.xMenu.querySelector(`div[panel-resizer] > [icon="${icons[i]}]"`),
+                                console.log(`div[panel-resizer] > button[icon="${icons[i]}]"`);
+                                this.extension.icons.append(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}]"`),
                                     { icon: icons[i] });
                             } 
                         },
