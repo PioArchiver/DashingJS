@@ -14,13 +14,54 @@ window.addEventListener("load", function LoadExample() {
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
 
+    // Set Callback function for icons
     Dashing.icons.uploader = function addPanelIcons(icons) {
         let icos = icons.firstElementChild.getElementsByTagName("symbol");
         for (let i = 0; i < icos.length; i++) {
             Dashing.icons.add(icos[i].id, icos[i].innerHTML);
         }
-        console.log(Dashing.icons);
-        Dashing.MainMenu.querySelector("#demo-panel").iconography = true;
+
+        // Set Builder Panel Icons
+        Dashing.MainMenu.querySelector("#buiilder-panel")
+        Dashing.MainMenu.querySelector("#builder-panel").iconography = {
+            insertAt: "before",
+            type: "svg",
+            name: "*"
+        };
+
+        // Set Demo Panel Icons
+        Dashing.MainMenu.querySelector("#demo-panel").iconography = {
+            insertAt: "before",
+            type: "svg",
+            name: "logo",
+            snippets: "logo",
+            overwrite: true,
+            drawer: function BeforeInitDraw(icons) {
+                // 
+            }
+
+        };
+        Dashing.MainMenu.querySelector("#demo-panel").iconography = {
+            insertAt: "before",
+            type: "svg",
+            name: "resizer",
+            snippets: ["minimize", "normal", "maximize"],
+            overwrite: true,
+            drawer: function BeforeInitDraw(icons) {
+                // 
+            }
+        };
+        Dashing.MainMenu.querySelector("#demo-panel").iconography = {
+            insertAt: "before", 
+            type: "svg", 
+            name: "content", 
+            snippets: Dashing.MainMenu.querySelector("#demo-panel").xMenu.templateItems, 
+            overwrite: true, 
+            drawer: function BeforeInitDraw(icons) {
+                // 
+            }
+
+        };
     };
 
 });

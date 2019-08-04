@@ -232,6 +232,13 @@ ____________________ **/
             let ico = this.createIcon(opts.icon);
             target.appendChild(ico);
         }
+        fireDrawer() {
+            this.drawer();
+            this.drawer = false;
+        }
+
+        set drawer(value) { this.draw = Dashing.typeOf(value) === "function" ? value : false; }
+        get drawer() { return this.draw; }
     }
 
     // Pseudos
@@ -1629,6 +1636,7 @@ ____________________ **/
                         created: function createdXPanel() {
                             this.extension = document.querySelector("x-extension");
                             this.menu = this.menu;
+                            this.drawer = false;
                         },
                         inserted: function InsertedXPanel() {
                             this.cached = this.cached ? this.cached : {};
@@ -1658,8 +1666,7 @@ ____________________ **/
                             }
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
-                            for (let i = 0; i < icons.length; i++) {
-                                console.log(`div[panel-resizer] > button[icon="${icons[i]}"]`);
+                            for (let i = 0; i < icons.length; i++) { 
                                 this.extension.icons.append(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}"]`),
                                     { icon: icons[i] });
                             } 
@@ -1677,6 +1684,7 @@ ____________________ **/
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
                             console.log(type);
+                            let nm = opts.name
                             switch (type) {
                                 case "content":
                                     this.addContentIcons(this.templateItems, {
@@ -1696,7 +1704,6 @@ ____________________ **/
                                     break;
                                 case "all":
                                 case "*":
-                                default:
                                     this.addLogoIcon("logo", {
 
                                     });
@@ -1706,6 +1713,8 @@ ____________________ **/
                                     this.addContentIcons(this.templateItems, {
 
                                     });
+                                    break;
+                                default:
                                     break;
                             }
                         }
@@ -1817,13 +1826,21 @@ ____________________ **/
                             set: function SetIconography(value) {
                                 if (value === "true" || value === true) {
                                     this.insertIcons("*", {
-                                        resizers: true,
-                                        content: true,
-                                        logo: true
+                                        insertAt: "before",
+                                        type: "svg",
+                                        overwrite: true,
+                                        drawer: this.extension.drawer ? this.extension.drawer : noop
                                     });
                                 }
-                                else if (Dashing.typeOf(value) === "string") {
-                                    this.insertIcons(value);
+                                else if (Dashing.typeOf(value) === "object") {
+                                    this.drawer = value.drawer;
+                                    this.insertIcons(value.name, {
+                                        target: value.target,
+                                        insertAt: value.insertAt,
+                                        snippets: value.snippets,
+                                        type: value.type,
+                                        overwrite: value.overwrite
+                                    });
                                 }
                             }
                         }
@@ -1858,6 +1875,14 @@ ____________________ **/
                     };
                 }
             };
+            Object.defineProperty(elems.xPanel.prototype, "drawer", {
+                set: function (value) {
+                    console.log(this);
+                },
+                get: function () {
+                    return this;
+                }
+            });
 
             elems.xBook = class xBook extends HTMLElement {
                 static mixins() { return ["dashed", "typed", "themed"]; }
