@@ -1877,7 +1877,7 @@ ____________________ **/
             };
             Object.defineProperty(elems.xPanel.prototype, "drawer", {
                 set: function (value) {
-                    console.log(this);
+                    console.log(value);
                 },
                 get: function () {
                     return this;
