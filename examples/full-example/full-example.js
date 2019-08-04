@@ -21,8 +21,11 @@ window.addEventListener("load", function LoadExample() {
             Dashing.icons.add(icos[i].id, icos[i].innerHTML);
         }
 
+        // Set Builder Panel Icons drawer callback
+        Dashing.MainMenu.querySelector("#buiilder-panel").drawer = function BuilderPanelIconDrawer() {
+
+        };
         // Set Builder Panel Icons
-        Dashing.MainMenu.querySelector("#buiilder-panel")
         Dashing.MainMenu.querySelector("#builder-panel").iconography = {
             insertAt: "before",
             type: "svg",
