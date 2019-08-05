@@ -229,7 +229,7 @@ ____________________ **/
             return ico;
         }
         insertIcon(target, opts) {
-            let ico = this.createIcon(opts.icon);
+            let ico = this.createIcon(opts.snippet);
             switch (opts.insertAt) {
                 case "beforebegin":
                 case "afterend":
@@ -1685,21 +1685,22 @@ ____________________ **/
                                 }
                             }
                         },
-                        addResizerIcons: function AddResizerIcons(icons, opts) {
-                            for (let i = 0; i < icons.length; i++) { 
+                        addResizerIcons: function AddResizerIcons(opts) {
+                            for (let i = 0; i < opts.snippets.length; i++) { 
+                                let icons = opts.snippets;
                                 this.extension.icons.insertIcon(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}"]`),
-                                    { icon: icons[i] });
+                                    opts);
                             } 
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
-                            this.extension.icons.append(this.xMenu.querySelector("strong[logo]") || this.xMenu,
-                                { icon: "logo" });
+                            this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
+                                opts);
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
                             let _this = this;
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
-                                _this.extension.icons.append(_this.querySelectorAll("button[panel-content]")[index],
-                                    { icon: item });
+                                _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
+                                    opts);
                             });                            
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
@@ -1707,37 +1708,46 @@ ____________________ **/
                                 case "content":
                                     this.addContentIcons(this.templateItems, {
                                         overwrite: opts.overwrite || true,
-                                        insertAt: opts.insertAt || "atBeginning"
+                                        insertAt: opts.insertAt || "atBeginning",
+                                        snippets: opts.snippets || this.templateItems
                                     });
                                     break;
                                 case "resizer":
-                                    this.addResizerIcons(["minimize", "normal", "maximize"], {
+                                    this.addResizerIcons({
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "atBeginning"
+                                        insertAt: opts.insertAt || "afterbegin",
+                                        snippets: ["minimize", "normal", "maximize"]
                                     });
                                     break;
                                 case "logo":
                                     this.addLogoIcon("logo", {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "atBeginning"
+                                        insertAt: opts.insertAt || "afterbegin",
+                                        snippets: "logo"
                                     });
                                     break;
                                 case "all":
                                 case "*":
                                     this.addLogoIcon("logo", {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "atBeginning"
+                                        insertAt: opts.insertAt || "afterbegin",
+                                        snippet: logo
                                     });
                                     this.addResizerIcons(["minimize", "normal", "maximize"], {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "atBeginning"
+                                        insertAt: opts.insertAt || "afterbegin",
+                                        snippets: ["minimize", "normal", "maximize"]
                                     });
                                     this.addContentIcons(this.templateItems, {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "atBeginning"
+                                        insertAt: opts.insertAt || "afterbegin",
+                                        snippets: opts.snippets || this.templateItems
                                     });
                                     break;
                                 default:
+                                    this.extension.icons.insertIcon(this, {
+
+                                    });
                                     break;
                             }
                         }
