@@ -16,6 +16,7 @@ x-panel > x-menu > div[panel-resizer] {
 }
     x-panel > x-menu > button[panel-content] {
         padding: 0px;
+        font-size: 0px;
     }
     x-panel > x-menu > div[panel-resizer] > [icon="maximize"] {
         width: 30px;
