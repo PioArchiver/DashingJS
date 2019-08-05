@@ -27,14 +27,14 @@ window.addEventListener("load", function LoadExample() {
         };
         // Set Builder Panel Icons
         Dashing.MainMenu.querySelector("#builder-panel").iconography = {
-            insertAt: "before",
+            insertAt: "afterbegin",
             type: "svg",
             name: "*"
         };
 
         // Set Demo Panel Icons
         Dashing.MainMenu.querySelector("#demo-panel").iconography = {
-            insertAt: "before",
+            insertAt: "afterbegin",
             type: "svg",
             name: "logo",
             snippets: "logo",
@@ -45,7 +45,7 @@ window.addEventListener("load", function LoadExample() {
 
         };
         Dashing.MainMenu.querySelector("#demo-panel").iconography = {
-            insertAt: "before",
+            insertAt: "afterbegin",
             type: "svg",
             name: "resizer",
             snippets: ["minimize", "normal", "maximize"],
@@ -55,7 +55,7 @@ window.addEventListener("load", function LoadExample() {
             }
         };
         Dashing.MainMenu.querySelector("#demo-panel").iconography = {
-            insertAt: "before", 
+            insertAt: "afterbegin", 
             type: "svg", 
             name: "content", 
             snippets: Dashing.MainMenu.querySelector("#demo-panel").xMenu.templateItems, 
