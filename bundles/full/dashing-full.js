@@ -253,6 +253,8 @@ ____________________ **/
                         vbox = _doc.firstElementChild.getAttribute("viewBox");
                         vbox ? _doc.setAttribute("viewBox", vbox) : null;
                         _doc.appendChild(_doc.firstElementChild.firstElementChild);
+
+                        console.log(_doc);
                     }
                     else {
                         _doc.className = "dashing-icon";
@@ -261,8 +263,6 @@ ____________________ **/
                     if (css !== false) {
                         _doc.appendChild(css);
                     }
-
-                    console.log(_doc);
                     break;
             }
                 ico.appendChild(_doc);
