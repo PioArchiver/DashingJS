@@ -246,6 +246,10 @@ ____________________ **/
                         vbox = null,
                         _new = null;
 
+                    if (css !== false) {
+                        _doc.appendChild(css);
+                    }
+
                     if (_doc.firstElementChild.getAttribute("data-icon") === "true") {
                         _doc.firstElementChild
                     }
@@ -258,10 +262,6 @@ ____________________ **/
                     }
                     else {
                         _doc.className = "dashing-icon";
-                    }
-
-                    if (css !== false) {
-                        _doc.appendChild(css);
                     }
                     break;
             }
