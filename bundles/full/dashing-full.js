@@ -239,13 +239,30 @@ ____________________ **/
                 case "svg":
                 default:
                     _doc = document.createElement("svg");
-                    ico.appendChild(_doc);
-                    let svg = ico.firstElementChild;
-                        svg.innerHTML = snippet;
-                    let css = svg.querySelector("style") || false,
-                        sym = svg.lastElementChild;
-                    console.log(sym);
-                    console.log(css);
+
+                    _doc.innerHTML = snippet;
+
+                    let css = _doc.firstElementChild.querySelector("style") || false,
+                        vbox = null,
+                        _new = null;
+
+                    if (_doc.firstElementChild.getAttribute("data-icon") === "true") {
+                        _doc.firstElementChild
+                    }
+                    else if (_doc.firstElementChild.getAttribute("data-icon") === "symbol") {
+                        vbox = _doc.firstElementChild.getAttribute("viewBox");
+                        vbox ? _doc.setAttribute("viewBox", vbox) : null;
+                        _doc.appendChild(_doc.firstElementChild.firstElementChild);
+                    }
+                    else {
+                        _doc.className = "dashing-icon";
+                    }
+
+                    if (css !== false) {
+                        _doc.appendChild(css);
+                    }
+
+                    console.log(_doc);
                     break;
             }
                 ico.appendChild(_doc);
