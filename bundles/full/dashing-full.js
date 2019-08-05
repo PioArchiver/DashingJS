@@ -1761,7 +1761,7 @@ ____________________ **/
                                 case "*":
                                     this.addLogoIcon({
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",,
+                                        insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
                                         snippet: "logo"
                                     });
@@ -1773,7 +1773,7 @@ ____________________ **/
                                     });
                                     this.addContentIcons(this.templateItems, {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",,
+                                        insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
                                         snippets: opts.snippets || this.templateItems
                                     });
