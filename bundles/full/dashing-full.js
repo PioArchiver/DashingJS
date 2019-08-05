@@ -223,6 +223,7 @@ ____________________ **/
         createIcon(type, snippet) {
             let ico = document.createDocumentFragment(),
                 _doc = null;
+            snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
             switch (type) {
                 case "png":
                 case "gif":
@@ -241,7 +242,6 @@ ____________________ **/
                     _doc.innerHTML = snippet;
                     break;
             }
-                snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
                 ico.appendChild(_doc);
             return ico;
         }
