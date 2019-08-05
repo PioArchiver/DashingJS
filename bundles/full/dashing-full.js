@@ -220,16 +220,29 @@ ____________________ **/
             this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet;
             this.uploader = false;
         }
-        createIcon(snippet) {
+        createIcon(type, snippet) {
             let ico = document.createDocumentFragment(),
-                svg = document.createElement("svg");
+                _doc = null;
+            switch (type) {
+                case "png":
+                case "gif":
+                case "jpeg":
+                case "img":
+                    break;
+                case "canvas":
+                    break;
+                case "svg":
+                default:
+
+                    break;
+            }
                 snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
-                svg.innerHTML = snippet;
-                ico.appendChild(svg);
+                _doc.innerHTML = snippet;
+                ico.appendChild(_doc);
             return ico;
         }
         insertIcon(target, opts) {
-            let ico = this.createIcon(opts.snippet);
+            let ico = this.createIcon(opts.type, opts.snippet);
             switch (opts.insertAt) {
                 case "beforebegin":
                 case "afterend":
@@ -1690,14 +1703,20 @@ ____________________ **/
                                 let icons = opts.snippets;
                                 this.extension.icons.insertIcon(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}"]`),
                                     {
-                                        snippet: icons[i]
+                                        snippet: icons[i],
+                                        insertAt: opts.insertAt || false,
+                                        overwrite: opts.overwrite || true,
+                                        type: opts.type
                                     });
                             } 
                         },
-                        addLogoIcon: function AddLogoIcon(icon, opts) {
+                        addLogoIcon: function AddLogoIcon(opts) {
                             this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
                                 {
-                                    snippet: "logo"
+                                    snippet: "logo",
+                                    insertAt: opts.insertAt || false,
+                                    overwrite: opts.overwrite || true,
+                                    type: opts.type
                                 });
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
@@ -1705,7 +1724,10 @@ ____________________ **/
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
                                 _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
                                     {
-                                        snippet: item
+                                        snippet: item,
+                                        insertAt: opts.insertAt || false,
+                                        overwrite: opts.overwrite || true,
+                                        type: opts.type
                                     });
                             });                            
                         },
@@ -1715,6 +1737,7 @@ ____________________ **/
                                     this.addContentIcons(this.templateItems, {
                                         overwrite: opts.overwrite || true,
                                         insertAt: opts.insertAt || "atBeginning",
+                                        type: opts.type,
                                         snippets: opts.snippets || this.templateItems
                                     });
                                     break;
@@ -1722,31 +1745,36 @@ ____________________ **/
                                     this.addResizerIcons({
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
+                                        type: opts.type || "svg",
                                         snippets: ["minimize", "normal", "maximize"]
                                     });
                                     break;
                                 case "logo":
                                     this.addLogoIcon("logo", {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
+                                        insertAt: opts.insertAt || "afterbegin",,
+                                        type: opts.type || "svg",
                                         snippets: "logo"
                                     });
                                     break;
                                 case "all":
                                 case "*":
-                                    this.addLogoIcon("logo", {
+                                    this.addLogoIcon({
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
+                                        insertAt: opts.insertAt || "afterbegin",,
+                                        type: opts.type || "svg",
                                         snippet: "logo"
                                     });
                                     this.addResizerIcons({
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
+                                        insertAt: opts.insertAt || "afterbegin",,
+                                        type: opts.type || "svg",
                                         snippets: ["minimize", "normal", "maximize"]
                                     });
                                     this.addContentIcons(this.templateItems, {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
+                                        insertAt: opts.insertAt || "afterbegin",,
+                                        type: opts.type || "svg",
                                         snippets: opts.snippets || this.templateItems
                                     });
                                     break;
