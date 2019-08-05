@@ -242,7 +242,10 @@ ____________________ **/
                     ico.appendChild(_doc);
                     let svg = ico.firstElementChild;
                         svg.innerHTML = snippet;
-                    console.log(svg.firstElementChild);
+                    let css = svg.querySelector("style") || false,
+                        sym = svg.lastElementChild();
+                    console.log(sym);
+                    console.log(css);
                     break;
             }
                 ico.appendChild(_doc);
