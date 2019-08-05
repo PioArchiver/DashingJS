@@ -1752,7 +1752,7 @@ ____________________ **/
                                 case "logo":
                                     this.addLogoIcon("logo", {
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",,
+                                        insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
                                         snippets: "logo"
                                     });
