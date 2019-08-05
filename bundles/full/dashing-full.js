@@ -1725,8 +1725,8 @@ ____________________ **/
                         },
                         addContentIcons: function AddContentIcons(opts) {
                             let _this = this;
+                            console.log(this.xMenu.templateItems);
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
-                                console.log(_this.querySelectorAll("button[panel-content]")[index]);
                                 _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
                                     {
                                         snippet: item,
