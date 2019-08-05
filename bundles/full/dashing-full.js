@@ -1704,7 +1704,7 @@ ____________________ **/
                         addResizerIcons: function AddResizerIcons(opts) {
                             for (let i = 0; i < opts.snippets.length; i++) { 
                                 let icons = opts.snippets;
-                                console.log(icons[i]);
+                                console.log(this.xMenu);
                                 this.extension.icons.insertIcon(this.xMenu.querySelector(`button[icon="${icons[i]}"]`),
                                     {
                                         snippet: icons[i],
