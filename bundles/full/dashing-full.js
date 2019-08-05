@@ -252,7 +252,7 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
-                    this.drawer === false ? this.fireDrawer() : false;
+                    this.drawer !== false ? this.fireDrawer() : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.insertAdjacentElement(opts.insertAt, ico);
                     break;
