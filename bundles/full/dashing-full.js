@@ -1719,7 +1719,7 @@ ____________________ **/
                                 {
                                     snippet: "logo",
                                     insertAt: opts.insertAt || false,
-                                    overwrite: opts.overwrite || true,
+                                    overwrite: opts.overwrite || false,
                                     type: opts.type
                                 });
                         },

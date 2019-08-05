@@ -38,7 +38,7 @@ window.addEventListener("load", function LoadExample() {
             type: "svg",
             name: "logo",
             snippets: "logo",
-            overwrite: true,
+            overwrite: false,
             drawer: function BeforeInitDraw(icons) {
                 // 
             }
