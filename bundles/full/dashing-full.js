@@ -240,8 +240,7 @@ ____________________ **/
                 default:
                     _doc = document.createElement("svg");
                     ico.appendChild(_doc);
-                    let svg = ico.firstElementChild.getElementsByTagName("svg")[0];
-                    console.log(ico.firstElementChild);
+                    let svg = ico.firstElementChild;
                     svg.innerHTML = snippet;
 
                     console.log(ico);
