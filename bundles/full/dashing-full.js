@@ -238,7 +238,7 @@ ____________________ **/
                     break;
                 case "svg":
                 default:
-                    _doc = document.createElement("svg");
+                    _doc = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
                     _doc.innerHTML = snippet;
 
