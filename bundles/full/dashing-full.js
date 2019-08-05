@@ -241,10 +241,8 @@ ____________________ **/
                     _doc = document.createElement("svg");
                     ico.appendChild(_doc);
                     let svg = ico.firstElementChild;
-                    svg.innerHTML = snippet;
-
-                    console.log(ico);
-
+                        svg.innerHTML = snippet;
+                    console.log(svg.firstElementChild);
                     break;
             }
                 ico.appendChild(_doc);
