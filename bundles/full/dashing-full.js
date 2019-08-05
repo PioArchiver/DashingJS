@@ -1689,18 +1689,24 @@ ____________________ **/
                             for (let i = 0; i < opts.snippets.length; i++) { 
                                 let icons = opts.snippets;
                                 this.extension.icons.insertIcon(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}"]`),
-                                    opts);
+                                    {
+                                        snippet: icons[i]
+                                    });
                             } 
                         },
                         addLogoIcon: function AddLogoIcon(icon, opts) {
                             this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
-                                opts);
+                                {
+                                    snippet: "logo"
+                                });
                         },
                         addContentIcons: function AddContentIcons(icons, opts) {
                             let _this = this;
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
                                 _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
-                                    opts);
+                                    {
+                                        snippet: item
+                                    });
                             });                            
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
