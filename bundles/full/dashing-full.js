@@ -254,13 +254,12 @@ ____________________ **/
                 case "beforeend":
                     this.drawer === false ? this.fireDrawer() : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
-                    target.insertAdjacentElement("beforeend", ico);
+                    target.insertAdjacentElement(opts.insertAt, ico);
                     break;
                 case "atIndex":
                     this.drawer === false ? this.fireDrawer() : false;
                     break;
             }
-                target.appendChild(ico);
         }
 
         fireDrawer() {
