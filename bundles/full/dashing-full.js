@@ -1767,7 +1767,7 @@ ____________________ **/
                                     });
                                     this.addResizerIcons({
                                         overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",,
+                                        insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
                                         snippets: ["minimize", "normal", "maximize"]
                                     });
