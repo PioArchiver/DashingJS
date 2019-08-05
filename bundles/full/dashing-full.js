@@ -228,15 +228,28 @@ ____________________ **/
                 ico.appendChild(svg);
             return ico;
         }
-        append(target, opts) {
+        insertIcon(target, opts) {
             let ico = this.createIcon(opts.icon);
-            target.appendChild(ico);
+            switch (opts.insertAt) {
+                case "beforebegin":
+                case "afterend":
+                case "afterbegin":
+                case "beforeend":
+                    this.drawer === false ? this.fireDrawer() : false;
+                    opts.overwrite === true ? target.innerHTML = "" : null;
+                    target.insertAdjacentElement("beforeend", ico);
+                    break;
+                case "atIndex":
+                    this.drawer === false ? this.fireDrawer() : false;
+                    break;
+            }
+                target.appendChild(ico);
         }
+
         fireDrawer() {
             this.drawer();
             this.drawer = false;
         }
-
         set drawer(value) { this.draw = Dashing.typeOf(value) === "function" ? value : false; }
         get drawer() { return this.draw; }
     }
@@ -1631,6 +1644,13 @@ ____________________ **/
             };
 
             elems.xPanel = class xPanel extends HTMLElement {
+                set drawer (value) {
+                    this.extension.icons.drawer = value;
+                }
+                get drawer() {
+                    return this.extension.icons.drawer;
+                }
+
                 static lifecycle() {
                     return {
                         created: function createdXPanel() {
@@ -1667,7 +1687,7 @@ ____________________ **/
                         },
                         addResizerIcons: function AddResizerIcons(icons, opts) {
                             for (let i = 0; i < icons.length; i++) { 
-                                this.extension.icons.append(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}"]`),
+                                this.extension.icons.insertIcon(this.xMenu.querySelector(`div[panel-resizer] > button[icon="${icons[i]}"]`),
                                     { icon: icons[i] });
                             } 
                         },
@@ -1683,35 +1703,38 @@ ____________________ **/
                             });                            
                         },
                         insertIcons: function InsertPanelIcon(type, opts) {
-                            console.log(type);
-                            let nm = opts.name
                             switch (type) {
                                 case "content":
                                     this.addContentIcons(this.templateItems, {
-                                        drawer: opts.drawer ? opts.drawer : noop,
-                                        data: opts.data ? opts.data : noop
+                                        overwrite: opts.overwrite || true,
+                                        insertAt: opts.insertAt || "atBeginning"
                                     });
                                     break;
                                 case "resizer":
                                     this.addResizerIcons(["minimize", "normal", "maximize"], {
-
+                                        overwrite: opts.overwrite,
+                                        insertAt: opts.insertAt || "atBeginning"
                                     });
                                     break;
                                 case "logo":
                                     this.addLogoIcon("logo", {
-
+                                        overwrite: opts.overwrite,
+                                        insertAt: opts.insertAt || "atBeginning"
                                     });
                                     break;
                                 case "all":
                                 case "*":
                                     this.addLogoIcon("logo", {
-
+                                        overwrite: opts.overwrite,
+                                        insertAt: opts.insertAt || "atBeginning"
                                     });
                                     this.addResizerIcons(["minimize", "normal", "maximize"], {
-
+                                        overwrite: opts.overwrite,
+                                        insertAt: opts.insertAt || "atBeginning"
                                     });
                                     this.addContentIcons(this.templateItems, {
-
+                                        overwrite: opts.overwrite,
+                                        insertAt: opts.insertAt || "atBeginning"
                                     });
                                     break;
                                 default:
@@ -1825,15 +1848,15 @@ ____________________ **/
                             get: function GetIconography() { return this.hasAttribute("iconography"); },
                             set: function SetIconography(value) {
                                 if (value === "true" || value === true) {
+                                    this.drawer = value.drawer ? value.drawer : false;
                                     this.insertIcons("*", {
                                         insertAt: "before",
                                         type: "svg",
-                                        overwrite: true,
-                                        drawer: this.extension.drawer ? this.extension.drawer : noop
+                                        overwrite: true
                                     });
                                 }
                                 else if (Dashing.typeOf(value) === "object") {
-                                    this.drawer = value.drawer;
+                                    this.drawer = value.drawer ? value.drawer : false;
                                     this.insertIcons(value.name, {
                                         target: value.target,
                                         insertAt: value.insertAt,
@@ -1875,14 +1898,6 @@ ____________________ **/
                     };
                 }
             };
-            Object.defineProperty(elems.xPanel.prototype, "drawer", {
-                set: function (value) {
-                    console.log(value);
-                },
-                get: function () {
-                    return this;
-                }
-            });
 
             elems.xBook = class xBook extends HTMLElement {
                 static mixins() { return ["dashed", "typed", "themed"]; }
