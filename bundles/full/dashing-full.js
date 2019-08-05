@@ -257,7 +257,7 @@ ____________________ **/
                         vbox = _doc.firstElementChild.getAttribute("viewBox");
                         vbox ? _doc.setAttribute("viewBox", vbox) : null;
                         _doc.appendChild(_doc.firstElementChild.firstElementChild);
-
+                        _doc.removeChild(_doc.firstElementChild);
                         console.log(_doc);
                     }
                     else {
@@ -277,7 +277,7 @@ ____________________ **/
                 case "beforeend":
                     this.drawer !== false ? this.fireDrawer() : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
-                    target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
+                    target.insertAdjacentElement(opts.insertAt, ico);
                     break;
                 case "atIndex":
                     this.drawer === false ? this.fireDrawer() : false;
