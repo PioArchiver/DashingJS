@@ -247,7 +247,6 @@ ____________________ **/
         }
         insertIcon(target, opts) {
             let ico = this.createIcon(opts.type, opts.snippet);
-            console.log(opts.snippet);
             switch (opts.insertAt) {
                 case "beforebegin":
                 case "afterend":
