@@ -252,9 +252,10 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
+                    console.log(ico);
                     this.drawer !== false ? this.fireDrawer() : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
-                    target.insertAdjacentElement(opts.insertAt, ico);
+                    target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
                     break;
                 case "atIndex":
                     this.drawer === false ? this.fireDrawer() : false;
