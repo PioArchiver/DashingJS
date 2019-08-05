@@ -239,7 +239,12 @@ ____________________ **/
                 case "svg":
                 default:
                     _doc = document.createElement("svg");
-                    _doc.innerHTML = snippet;
+                    ico.appendChild(_doc);
+                    let svg = ico.firstElementChild.getElementsByTagName("svg")[0];
+                    svg.innerHTML = snippet;
+
+                    console.log(ico);
+
                     break;
             }
                 ico.appendChild(_doc);

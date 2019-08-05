@@ -294,7 +294,7 @@
 
     var unwrapComment = /\/\*!?(?:\@preserve)?[ \t]*(?:\r\n|\n)([\s\S]*?)(?:\r\n|\n)\s*\*\//;
     function parseMultiline(fn) {
-        return typeof fn == 'function' ? unwrapComment.exec(fn.toString())[1] : fn;
+        return typeof fn === 'function' ? unwrapComment.exec(fn.toString())[1] : fn;
     }
 
     /*** X-Tag Object Definition ***/
