@@ -1673,7 +1673,6 @@ ____________________ **/
                         created: function createdXPanel() {
                             this.extension = document.querySelector("x-extension");
                             this.menu = this.menu;
-                            this.drawer = false;
                         },
                         inserted: function InsertedXPanel() {
                             this.cached = this.cached ? this.cached : {};
@@ -1814,6 +1813,7 @@ ____________________ **/
                             set: function SetPanelMenu(val) {
                                 if (xtag.typeOf(val) === "string") {
                                     this.setAttribute("menu", val);
+                                    console.log(this.querySelector(`#${val}`));
                                     this.xMenu = this.querySelector(`#${val}`);
                                 }
                             }
