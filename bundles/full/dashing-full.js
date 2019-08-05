@@ -229,17 +229,19 @@ ____________________ **/
                 case "jpeg":
                 case "img":
                     _doc = document.createElement("img");
+                    _doc.src = snippet;
                     break;
                 case "canvas":
                     _doc = document.createElement("canvas");
+                    // to be decided_doc.src = snippet;
                     break;
                 case "svg":
                 default:
                     _doc = document.createElement("svg");
+                    _doc.innerHTML = snippet;
                     break;
             }
                 snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
-                _doc.innerHTML = snippet;
                 ico.appendChild(_doc);
             return ico;
         }
