@@ -247,12 +247,12 @@ ____________________ **/
         }
         insertIcon(target, opts) {
             let ico = this.createIcon(opts.type, opts.snippet);
+            console.log(target);
             switch (opts.insertAt) {
                 case "beforebegin":
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
-                    console.log(target);
                     this.drawer !== false ? this.fireDrawer() : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
