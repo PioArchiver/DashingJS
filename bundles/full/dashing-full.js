@@ -1704,7 +1704,6 @@ ____________________ **/
                         addResizerIcons: function AddResizerIcons(opts) {
                             for (let i = 0; i < opts.snippets.length; i++) { 
                                 let icons = opts.snippets;
-                                console.log(this.xMenu);
                                 this.extension.icons.insertIcon(this.xMenu.querySelector(`button[icon="${icons[i]}"]`),
                                     {
                                         snippet: icons[i],
@@ -1725,7 +1724,6 @@ ____________________ **/
                         },
                         addContentIcons: function AddContentIcons(opts) {
                             let _this = this;
-                            console.log(this.xMenu.templateItems);
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
                                 _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
                                     {
@@ -1814,7 +1812,6 @@ ____________________ **/
                             set: function SetPanelMenu(val) {
                                 if (xtag.typeOf(val) === "string") {
                                     this.setAttribute("menu", val);
-                                    console.log(this.querySelector(`#${val}`));
                                     this.xMenu = this.querySelector(`#${val}`);
                                 }
                             }
