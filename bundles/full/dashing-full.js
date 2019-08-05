@@ -1731,9 +1731,9 @@ ____________________ **/
                                     this.addLogoIcon("logo", {
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
-                                        snippet: logo
+                                        snippet: "logo"
                                     });
-                                    this.addResizerIcons(["minimize", "normal", "maximize"], {
+                                    this.addResizerIcons({
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         snippets: ["minimize", "normal", "maximize"]
