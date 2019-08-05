@@ -22,7 +22,7 @@ window.addEventListener("load", function LoadExample() {
         }
 
         // Set Builder Panel Icons drawer callback
-        Dashing.MainMenu.querySelector("#buiilder-panel").drawer = function BuilderPanelIconDrawer() {
+        Dashing.MainMenu.querySelector("#builder-panel").drawer = function BuilderPanelIconDrawer() {
 
         };
         // Set Builder Panel Icons
