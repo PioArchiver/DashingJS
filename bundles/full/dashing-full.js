@@ -257,10 +257,10 @@ ____________________ **/
                         vbox = _doc.firstElementChild.getAttribute("viewBox");
                         vbox ? _doc.setAttribute("viewBox", vbox) : null;
                         _doc.appendChild(_doc.firstElementChild.firstElementChild);
-                        _doc.firstElementChild.hasAttribute("width") ? _doc.setAttribute('width', _doc.firstElementChild.getAttribute("width")) : null;
-                        _doc.firstElementChild.hasAttribute("height") ? _doc.setAttribute('height', _doc.firstElementChild.getAttribute("height")) : null;
-                        _doc.removeChild(_doc.firstElementChild);
-                        console.log(_doc.toString());
+
+                            _doc.firstElementChild.hasAttribute("width") ? _doc.setAttribute('width', _doc.firstElementChild.getAttribute("width")) : null;
+                            _doc.firstElementChild.hasAttribute("height") ? _doc.setAttribute('height', _doc.firstElementChild.getAttribute("height")) : null;
+                            _doc.removeChild(_doc.firstElementChild);
                     }
                     else {
                         _doc.className = "dashing-icon";
