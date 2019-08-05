@@ -243,7 +243,7 @@ ____________________ **/
                     let svg = ico.firstElementChild;
                         svg.innerHTML = snippet;
                     let css = svg.querySelector("style") || false,
-                        sym = svg.lastElementChild();
+                        sym = svg.lastElementChild;
                     console.log(sym);
                     console.log(css);
                     break;
