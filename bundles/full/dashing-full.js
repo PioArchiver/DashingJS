@@ -1740,8 +1740,8 @@ ____________________ **/
                                 case "content":
                                     this.addContentIcons(this.templateItems, {
                                         overwrite: opts.overwrite || true,
-                                        insertAt: opts.insertAt || "atBeginning",
-                                        type: opts.type,
+                                        insertAt: opts.insertAt || "afterbegin",
+                                        type: opts.type || "svg",
                                         snippets: opts.snippets || this.templateItems
                                     });
                                     break;
