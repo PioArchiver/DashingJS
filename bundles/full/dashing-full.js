@@ -228,12 +228,14 @@ ____________________ **/
                 case "gif":
                 case "jpeg":
                 case "img":
+                    _doc = document.createElement("img");
                     break;
                 case "canvas":
+                    _doc = document.createElement("canvas");
                     break;
                 case "svg":
                 default:
-
+                    _doc = document.createElement("svg");
                     break;
             }
                 snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
