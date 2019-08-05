@@ -1723,7 +1723,7 @@ ____________________ **/
                                     type: opts.type
                                 });
                         },
-                        addContentIcons: function AddContentIcons(icons, opts) {
+                        addContentIcons: function AddContentIcons(opts) {
                             let _this = this;
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
                                 _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
@@ -1738,7 +1738,7 @@ ____________________ **/
                         insertIcons: function InsertPanelIcon(type, opts) {
                             switch (type) {
                                 case "content":
-                                    this.addContentIcons(this.templateItems, {
+                                    this.addContentIcons({
                                         overwrite: opts.overwrite || true,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
@@ -1754,7 +1754,7 @@ ____________________ **/
                                     });
                                     break;
                                 case "logo":
-                                    this.addLogoIcon("logo", {
+                                    this.addLogoIcon({
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
@@ -1775,7 +1775,7 @@ ____________________ **/
                                         type: opts.type || "svg",
                                         snippets: ["minimize", "normal", "maximize"]
                                     });
-                                    this.addContentIcons(this.templateItems, {
+                                    this.addContentIcons({
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
