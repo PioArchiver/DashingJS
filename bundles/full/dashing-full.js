@@ -1726,6 +1726,7 @@ ____________________ **/
                         addContentIcons: function AddContentIcons(opts) {
                             let _this = this;
                             this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
+                                console.log(_this.querySelectorAll("button[panel-content]")[index]);
                                 _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
                                     {
                                         snippet: item,
@@ -1907,7 +1908,6 @@ ____________________ **/
                                 else if (Dashing.typeOf(value) === "object") {
                                     this.drawer = value.drawer ? value.drawer : false;
                                     this.insertIcons(value.name, {
-                                        target: value.target,
                                         insertAt: value.insertAt,
                                         snippets: value.snippets,
                                         type: value.type,
