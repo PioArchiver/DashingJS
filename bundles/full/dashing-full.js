@@ -258,7 +258,7 @@ ____________________ **/
                         vbox ? _doc.setAttribute("viewBox", vbox) : null;
                         _doc.appendChild(_doc.firstElementChild.firstElementChild);
                         _doc.removeChild(_doc.firstElementChild);
-                        console.log(_doc);
+                        console.log(_doc.toString());
                     }
                     else {
                         _doc.className = "dashing-icon";
