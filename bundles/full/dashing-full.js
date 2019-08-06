@@ -277,6 +277,7 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
+                    console.log(opts.drawer);
                     opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild, css)) :
                         this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
