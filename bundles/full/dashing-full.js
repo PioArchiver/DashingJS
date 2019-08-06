@@ -213,7 +213,6 @@ ____________________ **/
     // Icon Class
     class Iconography {
         constructor() {
-            this.uploader = false;
             this.uploads = {};
         }
         add(name, snippet) {
