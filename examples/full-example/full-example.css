@@ -32,7 +32,7 @@ x-panel > x-menu > div[panel-resizer] {
 }
     #main-menu > menu > button[index][selected] {
         background-color: rgb(205, 205, 205);
-        darkslateblue
+        color: darkslateblue;
     }
 
     x-book#main-menu {
