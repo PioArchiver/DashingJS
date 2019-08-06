@@ -40,3 +40,6 @@ x-book#main-display {
     margin-left: 3em;
     overflow-y: scroll;
 }
+    x-book#main-display > x-menu[main-book-menu] {
+        background-color: rgb(86, 86, 166);
+    }
