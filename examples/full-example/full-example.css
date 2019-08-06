@@ -49,4 +49,5 @@ x-book#main-display {
     }
     x-book#main-display > x-page[active] {
         left: 150px;
+        width: calc(100% - 165px);
     }
