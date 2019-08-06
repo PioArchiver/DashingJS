@@ -478,26 +478,26 @@ ____________________ **/
                 _xhr.responseType = options.type ? options.type : "text";
 
                 _xhr.onload = options.onload ? function LoadRef(e) {
-                    Dashing.requests[_id] = e.target.responses;
-                    Dashing.requests._loaded += 1;
+                    Dashing.model.requests[_id] = e.target.responses;
+                    Dashing.model.requests._loaded += 1;
                     options.onload(e);
                 } : function LOADREF(e) {
-                    Dashing.requests[_id] = e.target.responses;
-                    Dashing.requests._loaded += 1;
+                    Dashing.model.requests[_id] = e.target.responses;
+                    Dashing.model.requests._loaded += 1;
                 };
 
                 _xhr.onprogress = options.onprogress ? function ProgressModel(e) {
-                    Dashing.requests._progress += 1;
+                    Dashing.model.requests._progress += 1;
                     options.onprogress(e);
                 } : function ProgressModelDefault(e) {
-                    Dashing.requests._progress += 1;
+                    Dashing.model.requests._progress += 1;
                 };
 
                 _xhr.onerror = options.onerror ? function ERRORREF(e) {
-                    Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
+                    Dashing.model.requests[_id] = `Request Error: ${e.target.responseURL}`;
                     options.onerror(e);
                 } : function ERRORREF(e) {
-                    Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
+                    Dashing.model.requests[_id] = `Request Error: ${e.target.responseURL}`;
                 };
 
                 _xhr.send();
