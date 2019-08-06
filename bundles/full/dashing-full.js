@@ -1526,6 +1526,7 @@ ____________________ **/
                     this.Model = this.Model ? this.Model : {
                         requests: {}
                     };
+                    console.log(Dashing.model);
                     if (Dashing.typeOf(value) === "object") {
                         this.Model.requests = value.Model.requests ? value.Model.requests : Dashing.model.requests ? Dashing.model.requests : { _uploads: 0, _progress: 0 };
                     }
