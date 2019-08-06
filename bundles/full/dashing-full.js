@@ -2038,6 +2038,14 @@ ____________________ **/
                     };
                 }
 
+                // setters/getters
+                set drawer(value) {
+                    this.extension.icons.drawer = value;
+                }
+                get drawer() {
+                    return this.extension.icons.drawer;
+                }
+
             };
 
             elems.xPage = class xPage extends HTMLElement {
