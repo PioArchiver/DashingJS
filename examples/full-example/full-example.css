@@ -37,6 +37,6 @@ x-panel > x-menu > div[panel-resizer] {
 
 x-book#main-display {
     padding: 3em;
-    margin-top: 3em;
+    margin-left: 3em;
     overflow-y: scroll;
 }
