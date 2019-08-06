@@ -25,7 +25,7 @@ window.addEventListener("load", function LoadExample() {
             for (let i = 0; i < icos.length; i++) {
                 Dashing.icons.add(icos[i].id, icos[i].outerHTML);
             }
-            console.log(Dashing.MainDisplay.iconography);
+            console.log(Dashing.MainDisplay.prototype);
 
             Dashing.MainDisplay.iconography = {
                 name: "resizer",
