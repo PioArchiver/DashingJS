@@ -2036,16 +2036,21 @@ ____________________ **/
                                     }
                                     switch (val) {
                                         case "left":
-                                            this.BookMenu.setAttribute("style", `position: absolute; top: 0px; left: 0px; min-width: 100px; max-width: 150px; `)
+                                            this.BookMenu.setAttribute("style", `position: absolute; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100px; max-width: 150px; `)
                                             break;
                                         case "top":
-                                            this.BookMenu.setAttribute("style", `position: absolute; top: 0px; left: 0px; min-width: 100%; `);
+                                            this.BookMenu.setAttribute("style", `position: absolute; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
                                             break;
                                         case "right":
                                             break;
                                         case "bottom":
                                             break;
+                                        case "false":
+                                        case "hide":
+                                        case "minimize":
+                                        case "":
                                         default:
+                                            this.BookMenu.removeAttribute("style"); 
                                             break;
                                     }
                                 }
