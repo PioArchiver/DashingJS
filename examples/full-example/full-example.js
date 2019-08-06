@@ -33,7 +33,7 @@ window.addEventListener("load", function LoadExample() {
                 insertAt: "afterbegin",
                 overwrite: true,
                 type: "svg",
-                drawer: function UploadBookMenuIcons(icons) {
+                drawer: function UploadBookMenuIcons(icons, css) {
                     console.log(icons);
                 }
             };
