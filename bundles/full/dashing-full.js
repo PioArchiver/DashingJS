@@ -1465,6 +1465,7 @@ ____________________ **/
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
+                                            console.log(icos);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.uploader(icos);
                                                 _this.icons.add(filenm[0], icos);
@@ -1473,6 +1474,7 @@ ____________________ **/
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
+                                                console.log(icos);
                                             }
                                         });
                                     }

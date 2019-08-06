@@ -27,8 +27,7 @@ window.addEventListener("load", function LoadExample() {
             type: "svg",
             name: "*",
             drawer: function BuilderPanelDrawIconography(icons, css) {
-                console.log(icons);
-                console.log(css);
+                //
             }
         };
 
