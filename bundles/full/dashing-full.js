@@ -1457,7 +1457,7 @@ ____________________ **/
                         icos: {
                             set: function SetIcos(val) {
                                 let _this = this;
-
+                                console.log(val);
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
