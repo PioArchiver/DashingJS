@@ -277,7 +277,6 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
-                    console.log(opts.drawer);
                     opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild, css)) :
                         this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
@@ -1334,7 +1333,6 @@ ____________________ **/
                                     }
                                 }
                                 else if (Dashing.typeOf(data) === "array") {
-                                    console.log(data);
                                     for (let i = 0; i < data.length; i++) {
                                         if (Dashing.typeOf(data[i]) === "object" || Dashing.typeOf(data[i]) === "array") {
                                             let r = _this.queryJson(search, data[i], token, true);
@@ -1372,7 +1370,6 @@ ____________________ **/
                                     }
                                 }
                                 else {
-                                    console.log(data);
                                     return key;
                                 }
 
@@ -1469,6 +1466,7 @@ ____________________ **/
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
+                                                console.log(icos);
                                                 _this.icons.uploader(icos);
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
