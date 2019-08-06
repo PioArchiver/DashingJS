@@ -2078,11 +2078,15 @@ ____________________ **/
                             },
                             set: function SetBookResizer(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    Dashing.fnQuery.call(this, `[book-resizer]`, function BookResizerFn(resizer) {
+                                    this.setAttribute("book-resizer", val);
+                                    let tar = this.querySelector(val);
+                                    Dashing.fnQuery.call(tar, `[resizer-menu]`, function BookResizerFn(resizer) {
                                         // 
                                     },
                                         function BookResizerNullfn(resizer) {
-                                            //
+                                            let rzr = document.createElement("div");
+                                                rzr.setAttribute("resizer-menu", "true");
+                                                tar.appendChild(rzr);
                                         });
                                 }
                             }
