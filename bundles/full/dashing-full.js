@@ -1056,6 +1056,7 @@ ____________________ **/
             let qy = (this.querySelector ? this : document).querySelector(query);
             return qy ? fn.call(this, qy) : (nullFn || noop).call(this, qy);
         }
+        uid() { return Math.random().toString(36).substr(2, 10); }
         createAccessor(selector) {
             return {
                 get: function () {
@@ -1535,6 +1536,11 @@ ____________________ **/
                 get model() {
                     return this.Model;
                 }
+
+                set book(value) {
+                    this.Book = value;
+                }
+                get book() { }
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
@@ -1979,6 +1985,16 @@ ____________________ **/
                                 if (Number(book.page) - 1 === i) { node.active = true; }
                             });
                             this.extension = Dashing.extension;
+                        },
+                        inserted: function Insert() {
+                            this.extension.book = this.extension.book ? this.extension.book : {
+                                id: this.id || Dashing.uid() + "auto-book-id",
+                                pages: {
+                                    length: this.querySelectorAll("x-page").length || 0,
+                                    elements: this.querySelectorAll("x-page")
+                                }
+                            };
+
                         }
                     };
                 }
@@ -1999,6 +2015,38 @@ ____________________ **/
                         page: {
                             set: function (val) { val ? this.setAttribute("page", val) : false; },
                             get: function () { return this.getAttribute("page"); }
+                        },
+                        "book-menu": {
+                            connected: true,
+                            get: function GetBookMenu() {
+                                //
+                            },
+                            set: function SetBookMenu(val) {
+                                if (Dashing.typeOf(val) === "string") {
+                                    this.setAttribute("book-menu", val);
+                                    let bookmenu = this.querySelector("[main-book-menu]");
+                                    if (bookmenu) {
+                                        //
+                                    }
+                                    else {
+                                        let node = document.createElement("x-menu");
+                                            node.setAttribute("main-book-menu", "true");
+                                        this.BookMenu = this.querySelector(`[main-book-menu]`);
+                                    }
+                                    switch (val) {
+                                        case "left":
+                                            break;
+                                        case "top":
+                                            break;
+                                        case "right":
+                                            break;
+                                        case "bottom":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
                         },
                         "book-controls": {
                             connected: true,
