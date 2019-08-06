@@ -1467,13 +1467,13 @@ ____________________ **/
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
-                                                _this.icons.uploader(_icos.firstElementChild);
+                                                _this.icons.uploader(icos.firstElementChild);
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
                                             }
-                                        });
+                                        }, function IcosProgress(e) { console.log("progressing") }, function IcosError(e) { console.error(e); });
                                     }
                                 }
                             },
