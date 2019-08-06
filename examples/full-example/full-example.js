@@ -11,16 +11,7 @@ window.addEventListener("load", function LoadExample() {
         qpromise.then(function SchemaDemoQuery(val) {
             Dashing.MainDisplay.bookMenu = "left";
             Dashing.MainDisplay.bookResizer = "x-menu";
-            Dashing.MainDisplay.iconography = {
-                name: "resizer",
-                snippets: ["minimize", "normal", "maximize"],
-                insertAt: "afterbegin",
-                overwrite: true,
-                type: "svg",
-                drawer: function UploadBookMenuIcons(icons) {
-                    console.log(icons);
-                }
-            };
+
             console.log(Dashing.MainDisplay.iconography);
             return val;
         });
@@ -35,6 +26,17 @@ window.addEventListener("load", function LoadExample() {
             for (let i = 0; i < icos.length; i++) {
                 Dashing.icons.add(icos[i].id, icos[i].outerHTML);
             }
+
+            Dashing.MainDisplay.iconography = {
+                name: "resizer",
+                snippets: ["minimize", "normal", "maximize"],
+                insertAt: "afterbegin",
+                overwrite: true,
+                type: "svg",
+                drawer: function UploadBookMenuIcons(icons) {
+                    console.log(icons);
+                }
+            };
 
             // Set Builder Panel Icons
             Dashing.MainMenu.querySelector("#builder-panel").iconography = {
