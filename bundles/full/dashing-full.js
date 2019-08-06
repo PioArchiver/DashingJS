@@ -456,25 +456,11 @@ ____________________ **/
     let _setprog = 0;
     function noop(n) { return n || false; }
     class Model {
-        constructor(_links, readyModelCallback) {
-            if (!_links && !readyModelCallback) {
-                this.requests = {};
-                this.requests._progress = 0; 
-                this.requests._loaded = 0; 
-            }
-            else {
-                this.requests = {}; 
+        constructor(data) {
+            this.requests = {};
+            this.requests._progress = 0; 
+            this.requests._loaded = 0; 
 
-                this.requests._progress = 0; 
-                this.requests._loaded = 0; 
-
-                this.requests.mappings = readyModelCallback(); 
-                this.requests.hrefs = this.getLinkHrefs(_links); 
-
-                this.requests.keys = Object.keys(this.requests.mappings); 
-
-                this.openModelLinks(); 
-            } 
         }
         request(ref, options) {
             let _xhr = new XMLHttpRequest(),
