@@ -2033,7 +2033,7 @@ ____________________ **/
                         "book-title": {
                             connected: true,
                             get: function GetBookTitle() { return this.getAttribute("book-title") || false; },
-                            set: function SetBookTitle() {
+                            set: function SetBookTitle(val) {
                                 if (Dashing.typeOf(val) === "string") {
                                     this.setAttribute("book-title", val);
                                     Dashing.fnQuery.call(this, `[book-icon="title"]`, function BookResizerFn(title) {
