@@ -1455,6 +1455,7 @@ ____________________ **/
                 static attrs() {
                     return {
                         icos: {
+                            connected: true,
                             set: function SetIcos(val) {
                                 let _this = this;
                                 if (Dashing.typeOf(val) === "string") {
@@ -1476,13 +1477,6 @@ ____________________ **/
                                 }
                             },
                             get: function GetIcos(val) { return this.getAttribute("icos") || false; }
-                        },
-                        stylesheet: {
-                            connected: true,
-                            get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; }, 
-                            set: function SetSyleSheet(value) {
-                                this.styles = new CssWriter(value);
-                            }
                         },
                         schema: {
                             connected: true,
@@ -1521,6 +1515,13 @@ ____________________ **/
                                 }
                             },
                             get: function GetSchemes() { return this.getAttribute("schema") || false; }
+                        },
+                        stylesheet: {
+                            connected: true,
+                            get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; },
+                            set: function SetSyleSheet(value) {
+                                this.styles = new CssWriter(value);
+                            }
                         },
                         "main-menu": {
                             connected: true,
