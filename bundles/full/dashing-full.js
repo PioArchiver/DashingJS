@@ -1736,7 +1736,8 @@ ____________________ **/
                                         insertAt: opts.insertAt || "afterbegin",
                                         overwrite: opts.overwrite || true,
                                         type: opts.type || "svg",
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                             } 
                         },
@@ -1747,7 +1748,8 @@ ____________________ **/
                                     insertAt: opts.insertAt || false,
                                     overwrite: opts.overwrite || false,
                                     type: opts.type,
-                                    insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false
+                                    insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                    drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                 });
                         },
                         addContentIcons: function AddContentIcons(opts) {
