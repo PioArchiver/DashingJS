@@ -1467,7 +1467,7 @@ ____________________ **/
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
-                                                _this.icons.uploader(icos.firstElementChild);
+                                                _this.icons.uploader(icos);
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
