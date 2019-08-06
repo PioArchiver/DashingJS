@@ -11,7 +11,7 @@ window.addEventListener("load", function LoadExample() {
         qpromise.then(function SchemaDemoQuery(val) {
             console.log(Dashing.MainDisplay);
             Dashing.MainDisplay.bookMenu = "left";
-            Dashing.bookResizer = "x-menu";
+            Dashing.MainDisplay.bookResizer = "x-menu";
             return val;
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
