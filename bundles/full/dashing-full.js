@@ -1530,6 +1530,7 @@ ____________________ **/
                         this.Model.requests = value.Model.requests ? value.Model.requests : Dashing.model.requests ? Dashing.model.requests : { _uploads: 0, _progress: 0 };
                     }
                     else if (Dashing.typeOf(value) === true) {
+                        console.log(Dashing.model);
                         this.Model.requests = Dashing.model.requests;
                     }
                 }
