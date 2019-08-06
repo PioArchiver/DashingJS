@@ -36,14 +36,13 @@ x-panel > x-menu > div[panel-resizer] {
     }
 
 x-book#main-display {
-    padding: 3em;
-    margin-left: 3em;
+    margin-left: 1em;
     overflow-y: scroll;
 }
     x-book#main-display > x-menu[main-book-menu] {
         background-color: rgb(86, 86, 166);
         top: calc(0px - 3em);
-        left: calc(0px - 3em);
+        left: 0px;
         min-width: 100px;
         max-width: 150px;
         height: 100%;
