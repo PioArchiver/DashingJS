@@ -2086,7 +2086,10 @@ ____________________ **/
                                         function BookResizerNullfn(resizer) {
                                             let rzr = document.createElement("div");
                                                 rzr.setAttribute("resizer-menu", "true");
-                                                tar.appendChild(rzr);
+                                            rzr.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
+                                                <button icon='normal' title="Normal">${"[]"}</button>
+                                                <button icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                            tar.appendChild(rzr);
                                         });
                                 }
                             }
@@ -3283,7 +3286,7 @@ ____________________ **/
                 };
             }
         },
-        'add(mixin=drawing)': class Drawing {
+        'add(mixin=iconography)': class Drawing {
             static methods(XTagElement) {
                 return {};
             }
