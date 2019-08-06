@@ -298,7 +298,7 @@ ____________________ **/
 
         set uploader(value) {
             Dashing.typeOf(value) === "object" ? (Dashing.model.requests[value.id] ? Dashing.model.requests[value.id].firstElementChild !== null ? (value.uploader(Dashing.model.requests[value.id])) : (value.uploader(document.querySelector("[data-icons]"))) : this.Uploader = value.uploader) : function UndefinedError() { return "Caution: No uploader available."; }; 
-        }
+        } 
         get uploader() { return this.Uploader; }
     }
 
@@ -842,8 +842,6 @@ ____________________ **/
             this.startscreen = dashed.startscreen === undefined ? false : dashed.startscreen;
             // set the extension
             this.extension = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
-            // set linked property
-            this.linked = {};
 
                 // Set added properties
                 protokeys = Dashing.setAddedProps(dashed);
@@ -1055,7 +1053,7 @@ ____________________ **/
             return r;
         }
         fnQuery(query, fn, nullFn) {
-            let qy = document.querySelector(query);
+            let qy = (this.querySelector ? this : document).querySelector(query);
             return qy ? fn(qy) : (nullFn || noop)(qy);
         }
         createAccessor(selector) {
@@ -2033,9 +2031,18 @@ ____________________ **/
                             }
                         },
                         "book-title": {
+                            connected: true,
                             get: function GetBookTitle() { return this.getAttribute("book-title") || false; },
                             set: function SetBookTitle() {
-                                //
+                                if (Dashing.typeOf(val) === "string") {
+                                    this.setAttribute("book-title", val);
+                                    Dashing.fnQuery.call(this, `[book-icon="title"]`, function BookResizerFn(title) {
+                                        console.log(title);
+                                    },
+                                        function BookResizerNullfn(resizer) {
+                                            //
+                                        });
+                                }
                             }
                         },
                         "tabbed-book": {

@@ -10,6 +10,7 @@ window.addEventListener("load", function LoadExample() {
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
             console.log(Dashing.MainDisplay);
+            Dashing.MainDisplay
             return val;
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
@@ -18,8 +19,6 @@ window.addEventListener("load", function LoadExample() {
     Dashing.icons.uploader = {
         id: "icos",
         uploader: function addPanelIcons(icons) {
-
-            console.log(Dashing.model);
 
             let icos = icons.firstElementChild.getElementsByTagName("symbol");
             for (let i = 0; i < icos.length; i++) {

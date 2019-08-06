@@ -9,3 +9,6 @@
     grid-template-columns: auto;
     grid-template-rows: auto auto;
 }
+.memory {
+    display: none;
+}
