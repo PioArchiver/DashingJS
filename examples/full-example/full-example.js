@@ -65,6 +65,8 @@ window.addEventListener("load", function LoadExample() {
 
         };
     };
+    Dashing.icos = Dashing.icos;
+
 
 });
 

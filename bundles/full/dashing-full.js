@@ -1455,26 +1455,22 @@ ____________________ **/
                 static attrs() {
                     return {
                         icos: {
-                            connected: true,
                             set: function SetIcos(val) {
                                 let _this = this;
-                                console.log(this.icons.uploader);
+
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
-                                            console.log(Dashing.typeOf(_this.icons.uploader));
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
-                                                _this.icons.uploader(icos);
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
                                             }
                                             else {
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
-                                                console.log(icos);
                                             }
                                         });
                                     }
