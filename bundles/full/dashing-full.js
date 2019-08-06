@@ -1563,7 +1563,7 @@ ____________________ **/
                     // needs to be started
                 }
                 get model() {
-                    return Dashing.model.responses;
+                    return Dashing.model;
                 }
             };
 
