@@ -2026,11 +2026,12 @@ ____________________ **/
                                     this.setAttribute("book-menu", val);
                                     let bookmenu = this.querySelector("[main-book-menu]");
                                     if (bookmenu) {
-                                        //
+                                        this.BookMenu = bookmenu;
                                     }
                                     else {
                                         let node = document.createElement("x-menu");
                                             node.setAttribute("main-book-menu", "true");
+                                            this.insertAdjacentElement("afterbegin", node);
                                         this.BookMenu = this.querySelector(`[main-book-menu]`);
                                     }
                                     switch (val) {
