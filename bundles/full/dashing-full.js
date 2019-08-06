@@ -461,7 +461,6 @@ ____________________ **/
                 this.requests = {};
                 this.requests._progress = 0; 
                 this.requests._loaded = 0; 
-                this.requests.length = 0; 
             }
             else {
                 this.requests = {}; 
@@ -494,13 +493,17 @@ ____________________ **/
                 _xhr.responseType = options.type ? options.type : "text";
 
                 _xhr.onload = options.onload ? function LoadRef(e) {
-                    Dashing.responses[_id] = e.target.responses;
+                    Dashing.requests[_id] = e.target.responses;
+                    Dashing.requests._loaded += 1;
                     options.onload(e);
                 } : function LOADREF(e) {
                     Dashing.responses[_id] = e.target.responses;
                 };
 
-                _xhr.onprogress = options.onprogress ? options.onprogress : false;
+                _xhr.onprogress = options.onprogress ? function ProgressModel(e) {
+                    Dashing.requests._progress += 1;
+                    options.onprogress(e);
+                } : false;
 
                 _xhr.onerror = options.onerror ? function ERRORREF(e) {
                     Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
@@ -510,9 +513,6 @@ ____________________ **/
                 };
 
                 _xhr.send();
-
-                Dashing.requests[_id] = _xhr;
-                Dashing.responses[_id] = false;
 
                 return _id;
             }
