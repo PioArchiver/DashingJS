@@ -66,7 +66,7 @@ window.addEventListener("load", function LoadExample() {
         };
     };
     if (Dashing.icos === "true" && document.getElementById("icon-memory")) {
-        Dashing.icons.uploader(document.getElementById("icon-memory").firstElementChild);
+        Dashing.icons.uploader(document.getElementById("icon-memory"));
     }
 
 
