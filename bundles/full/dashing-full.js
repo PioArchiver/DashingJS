@@ -296,7 +296,7 @@ ____________________ **/
         set drawer(value) { this.draw = Dashing.typeOf(value) === "function" ? value : false; }
         get drawer() { return this.draw; }
         set uploader(value) {
-            console.log(Dashing.requests);
+            console.log(Dashing.model.requests);
             Dashing.typeOf(value) === "object" ? (Dashing.model.requests[value.id] ? value.uploader ? value.uploader(Dashing.model.requests[value.id]) : false : this.Uploader = value.uploader) : function UndefinedError() { return "Caution: No uploader available."; }; 
         }
         get uploader() { return this.Uploader; }
