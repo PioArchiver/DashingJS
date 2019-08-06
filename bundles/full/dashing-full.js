@@ -277,20 +277,22 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
-                    opts.drawer !== false ? ( this.drawer = opts.drawer, this.fireDrawer() ): this.drawer !== false ? this.fireDrawer() : false;
+                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild, css)) :
+                        this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
                     break;
                 case "atIndex":
-                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer()) : this.drawer !== false ? this.fireDrawer() : false;
+                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild, css)) :
+                        this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.elements[opts.insertIndex].insertAdjacentElement("afterend", ico.firstElementChild);
                     break;
             }
         }
 
-        fireDrawer() {
-            this.drawer();
+        fireDrawer(icon, css) {
+            this.drawer(icon, css);
             this.drawer = false;
         }
         set drawer(value) { this.draw = Dashing.typeOf(value) === "function" ? value : false; }

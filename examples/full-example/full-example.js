@@ -29,7 +29,11 @@ window.addEventListener("load", function LoadExample() {
         Dashing.MainMenu.querySelector("#builder-panel").iconography = {
             insertAt: "afterbegin",
             type: "svg",
-            name: "*"
+            name: "*",
+            drawer: function BuilderPanelDrawIconography(icons, css) {
+                console.log(icons);
+                console.log(css);
+            }
         };
 
         // Set Demo Panel Icons
