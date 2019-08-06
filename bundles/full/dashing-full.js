@@ -3276,6 +3276,7 @@ ____________________ **/
                         get: function GetIconography() { return this.hasAttribute("iconography"); },
                         set: function SetIconography(value) {
                             if (value === "true" || value === true) {
+                                this.setAttribute("iconography", "true");
                                 this.drawer = value.drawer ? value.drawer : false;
                                 this.insertIcons("*", {
                                     insertAt: "before",
@@ -3285,6 +3286,7 @@ ____________________ **/
                                 });
                             }
                             else if (Dashing.typeOf(value) === "object") {
+                                this.setAttribute("iconography", "true");
                                 this.insertIcons(value.name, {
                                     insertAt: value.insertAt,
                                     snippets: value.snippets,
@@ -3293,6 +3295,7 @@ ____________________ **/
                                     drawer: Dashing.typeOf(value.drawer) === "function" ? value.drawer : false
                                 });
                             }
+                            else if (value === "false" || value === false) { this.removeAttribute("iconography"); }
                         }
                     }
                 };
