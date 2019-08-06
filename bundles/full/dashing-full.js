@@ -1678,6 +1678,8 @@ ____________________ **/
                     return this.extension.icons.drawer;
                 }
 
+                static mixins() { return ["iconography"]; }
+
                 static lifecycle() {
                     return {
                         created: function createdXPanel() {
@@ -1709,111 +1711,6 @@ ____________________ **/
                                     // Need to cached validated data from what
                                     // the panel's content is currently displaying.
                                 }
-                            }
-                        },
-                        addResizerIcons: function AddResizerIcons(opts) {
-                            for (let i = 0; i < opts.snippets.length; i++) { 
-                                let icons = opts.snippets;
-                                this.extension.icons.insertIcon(this.xMenu.querySelector(`button[icon="${icons[i]}"]`),
-                                    {
-                                        snippet: icons[i],
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        overwrite: opts.overwrite || true,
-                                        type: opts.type || "svg",
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                            } 
-                        },
-                        addLogoIcon: function AddLogoIcon(opts) {
-                            this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
-                                {
-                                    snippet: "logo",
-                                    insertAt: opts.insertAt || false,
-                                    overwrite: opts.overwrite || false,
-                                    type: opts.type,
-                                    insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                    drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                });
-                        },
-                        addContentIcons: function AddContentIcons(opts) {
-                            let _this = this;
-                            this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
-                                _this.extension.icons.insertIcon(_this.querySelectorAll("button[panel-content]")[index],
-                                    {
-                                        snippet: item,
-                                        insertAt: opts.insertAt || false,
-                                        overwrite: opts.overwrite || true,
-                                        type: opts.type,
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                            });                            
-                        },
-                        insertIcons: function InsertPanelIcon(type, opts) {
-                            switch (type) {
-                                case "content":
-                                    this.addContentIcons({
-                                        overwrite: opts.overwrite || true,
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        type: opts.type || "svg",
-                                        snippets: opts.snippets || this.templateItems,
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                                    break;
-                                case "resizer":
-                                    this.addResizerIcons({
-                                        overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        type: opts.type || "svg",
-                                        snippets: ["minimize", "normal", "maximize"],
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                                    break;
-                                case "logo":
-                                    this.addLogoIcon({
-                                        overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        type: opts.type || "svg",
-                                        snippets: "logo",
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                                    break;
-                                case "all":
-                                case "*":
-                                    this.addLogoIcon({
-                                        overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        type: opts.type || "svg",
-                                        snippet: "logo",
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                                    this.addResizerIcons({
-                                        overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        type: opts.type || "svg",
-                                        snippets: ["minimize", "normal", "maximize"],
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                                    this.addContentIcons({
-                                        overwrite: opts.overwrite,
-                                        insertAt: opts.insertAt || "afterbegin",
-                                        type: opts.type || "svg",
-                                        snippets: opts.snippets || this.templateItems,
-                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
-                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
-                                    });
-                                    break;
-                                default:
-                                    this.extension.icons.insertIcon(this, {
-
-                                    });
-                                    break;
                             }
                         }
                     };
@@ -1915,30 +1812,6 @@ ____________________ **/
                                             <button icon='normal' title="Normal">${"[]"}</button>
                                             <button icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
-                                }
-                            }
-                        },
-                        iconography: {
-                            connected: true,
-                            get: function GetIconography() { return this.hasAttribute("iconography"); },
-                            set: function SetIconography(value) {
-                                if (value === "true" || value === true) {
-                                    this.drawer = value.drawer ? value.drawer : false;
-                                    this.insertIcons("*", {
-                                        insertAt: "before",
-                                        type: "svg",
-                                        overwrite: true,
-                                        drawer: Dashing.typeOf(value.drawer) === "function" ? value.drawer : false
-                                    });
-                                }
-                                else if (Dashing.typeOf(value) === "object") {
-                                    this.insertIcons(value.name, {
-                                        insertAt: value.insertAt,
-                                        snippets: value.snippets,
-                                        type: value.type,
-                                        overwrite: value.overwrite,
-                                        drawer: Dashing.typeOf(value.drawer) === "function" ? value.drawer : false
-                                    });
                                 }
                             }
                         }
