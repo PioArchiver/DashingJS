@@ -1287,6 +1287,7 @@ ____________________ **/
                         requestHTML: function RequestHTML(url, load, progress, error) {
                             let _url = this.checkUrl(url);
                             if (_url !== false) {
+                                console.log(_url);
                                 Dashing.model.request(_url, {
                                     type: "document",
                                     onload: load,
@@ -1460,7 +1461,6 @@ ____________________ **/
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
-                                        console.log(urltest);
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
