@@ -66,7 +66,6 @@ window.addEventListener("load", function LoadExample() {
         };
     };
 
-
 });
 
 })();

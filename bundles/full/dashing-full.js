@@ -481,7 +481,7 @@ ____________________ **/
         request(ref, options) {
             let _xhr = new XMLHttpRequest(),
                 _id = ref.match(/[\w\-]+(?=\.\w+$)/g)[0];
-            console.log(_id);
+
             Dashing.requests ? true : Dashing.requests = {};
             Dashing.responses ? true : Dashing.responses = {};
 
@@ -1458,6 +1458,7 @@ ____________________ **/
                             connected: true,
                             set: function SetIcos(val) {
                                 let _this = this;
+
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
@@ -1477,6 +1478,13 @@ ____________________ **/
                                 }
                             },
                             get: function GetIcos(val) { return this.getAttribute("icos") || false; }
+                        },
+                        stylesheet: {
+                            connected: true,
+                            get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; }, 
+                            set: function SetSyleSheet(value) {
+                                this.styles = new CssWriter(value);
+                            }
                         },
                         schema: {
                             connected: true,
@@ -1515,13 +1523,6 @@ ____________________ **/
                                 }
                             },
                             get: function GetSchemes() { return this.getAttribute("schema") || false; }
-                        },
-                        stylesheet: {
-                            connected: true,
-                            get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; },
-                            set: function SetSyleSheet(value) {
-                                this.styles = new CssWriter(value);
-                            }
                         },
                         "main-menu": {
                             connected: true,
