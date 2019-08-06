@@ -14,7 +14,8 @@
 </head>
 <body>
     <x-extension id="demo-template" grid-template="1 2" 
-                 main-menu="main-menu" main-display="main-display"
+                 main-menu="main-menu" 
+                 main-display="main-display"
                  schema="url(schema.json)" icos="url(icos.html)">
         <!--
             Main Menu
@@ -68,7 +69,7 @@
         <!-- 
             Main Display
             -->
-        <x-book id="main-display">
+        <x-book id="main-display" title="">
             <x-page active="true">
                 <header>
                     <h1>DashingJS Full Version</h1>

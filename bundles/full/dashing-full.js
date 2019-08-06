@@ -277,12 +277,14 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
-                    this.drawer !== false ? this.fireDrawer() : false;
+                    opts.drawer !== false ? ( this.drawer = opts.drawer, this.fireDrawer() ): this.drawer !== false ? this.fireDrawer() : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
                     break;
                 case "atIndex":
-                    this.drawer === false ? this.fireDrawer() : false;
+                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer()) : this.drawer !== false ? this.fireDrawer() : false;
+                    opts.overwrite === true ? target.innerHTML = "" : null;
+                    target.elements[opts.insertIndex].insertAdjacentElement("afterend", ico.firstElementChild);
                     break;
             }
         }
@@ -1733,7 +1735,8 @@ ____________________ **/
                                         snippet: icons[i],
                                         insertAt: opts.insertAt || "afterbegin",
                                         overwrite: opts.overwrite || true,
-                                        type: opts.type || "svg"
+                                        type: opts.type || "svg",
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false
                                     });
                             } 
                         },
@@ -1743,7 +1746,8 @@ ____________________ **/
                                     snippet: "logo",
                                     insertAt: opts.insertAt || false,
                                     overwrite: opts.overwrite || false,
-                                    type: opts.type
+                                    type: opts.type,
+                                    insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false
                                 });
                         },
                         addContentIcons: function AddContentIcons(opts) {
@@ -1754,7 +1758,9 @@ ____________________ **/
                                         snippet: item,
                                         insertAt: opts.insertAt || false,
                                         overwrite: opts.overwrite || true,
-                                        type: opts.type
+                                        type: opts.type,
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                             });                            
                         },
@@ -1765,7 +1771,9 @@ ____________________ **/
                                         overwrite: opts.overwrite || true,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
-                                        snippets: opts.snippets || this.templateItems
+                                        snippets: opts.snippets || this.templateItems,
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                                     break;
                                 case "resizer":
@@ -1773,7 +1781,9 @@ ____________________ **/
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
-                                        snippets: ["minimize", "normal", "maximize"]
+                                        snippets: ["minimize", "normal", "maximize"],
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                                     break;
                                 case "logo":
@@ -1781,7 +1791,9 @@ ____________________ **/
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
-                                        snippets: "logo"
+                                        snippets: "logo",
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                                     break;
                                 case "all":
@@ -1790,19 +1802,25 @@ ____________________ **/
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
-                                        snippet: "logo"
+                                        snippet: "logo",
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                                     this.addResizerIcons({
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
-                                        snippets: ["minimize", "normal", "maximize"]
+                                        snippets: ["minimize", "normal", "maximize"],
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                                     this.addContentIcons({
                                         overwrite: opts.overwrite,
                                         insertAt: opts.insertAt || "afterbegin",
                                         type: opts.type || "svg",
-                                        snippets: opts.snippets || this.templateItems
+                                        snippets: opts.snippets || this.templateItems,
+                                        insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                        drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                     });
                                     break;
                                 default:
@@ -1923,16 +1941,17 @@ ____________________ **/
                                     this.insertIcons("*", {
                                         insertAt: "before",
                                         type: "svg",
-                                        overwrite: true
+                                        overwrite: true,
+                                        drawer: Dashing.typeOf(value.drawer) === "function" ? value.drawer : false
                                     });
                                 }
                                 else if (Dashing.typeOf(value) === "object") {
-                                    this.drawer = value.drawer ? value.drawer : false;
                                     this.insertIcons(value.name, {
                                         insertAt: value.insertAt,
                                         snippets: value.snippets,
                                         type: value.type,
-                                        overwrite: value.overwrite
+                                        overwrite: value.overwrite,
+                                        drawer: Dashing.typeOf(value.drawer) === "function" ? value.drawer : false
                                     });
                                 }
                             }
@@ -1980,19 +1999,17 @@ ____________________ **/
                                 if (Number(book.page) - 1 === i) { node.active = true; }
                             });
 
-                        },
-                        inserted: function Inserted() {
-                            this.allowTabs = this.allowTabs;
                         }
                     };
                 }
 
                 static methods() {
                     return {
-                        createTabButtons: function CreateBookTabButtons() {
-                            let ti = this.querySelectorAll("x-page");
-
-                                // 
+                        createPageTabs: function CreatePageTabs(page) {
+                            //
+                        },
+                        createBookControls: function CreateBookControl() {
+                            //
                         }
                     };
                 }
@@ -2009,11 +2026,11 @@ ____________________ **/
                                 return this.getAttribute("book-controls") || false;
                             },
                             set: function SetBookControls(val) {
-                                if (xtag.typeOf(val) === "string") {
+                                if (Dashing.typeOf(val) === "string") {
                                     Dashing.fnQuery(`#${val}`, function BookControlsFn(resizer) {
                                         // 
                                     }, function BookControlsNullFn() {
-                                            //
+                                            
                                         });
                                 }
                             }
@@ -2027,10 +2044,17 @@ ____________________ **/
                                 if (Dashing.typeOf(val) === "string") {
                                     Dashing.fnQuery(`#${val}`, function BookResizerFn(resizer) {
                                         // 
-                                    }, function BookResizerNullfn(resizer) {
+                                    },
+                                        function BookResizerNullfn(resizer) {
                                             //
                                         });
                                 }
+                            }
+                        },
+                        "book-title": {
+                            get: function GetBookTitle() { return this.getAttribute("book-title") || false; },
+                            set: function SetBookTitle() {
+                                //
                             }
                         },
                         "tabbed-book": {
@@ -2040,7 +2064,12 @@ ____________________ **/
                             },
                             set: function SetTabbedBook(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    Dashing.fnQuery(`#${val}`);
+                                    Dashing.fnQuery(`#${val}`, function TabbedBookQuery(doc) {
+                                        //
+                                    },
+                                        function TabbedBookQueryNull(doc) {
+                                            //
+                                        });
                                 }
                             }
                         }
