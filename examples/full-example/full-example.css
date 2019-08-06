@@ -39,6 +39,7 @@ x-book#main-display {
     left: 0px;
     top: 200px;
     display: flex;
+    height: calc(100% - 200px);
 }
     x-book#main-display > x-menu[main-book-menu] {
         top: 0px;
