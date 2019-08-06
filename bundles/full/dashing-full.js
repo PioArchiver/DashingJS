@@ -2081,7 +2081,7 @@ ____________________ **/
                                     this.setAttribute("book-resizer", val);
                                     let tar = this.querySelector(val);
                                     Dashing.fnQuery.call(tar, `[resizer-menu]`, function BookResizerFn(resizer) {
-                                        // 
+                                        console.log(resizer);
                                     },
                                         function BookResizerNullfn(resizer) {
                                             let rzr = document.createElement("div");
