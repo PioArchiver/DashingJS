@@ -2036,8 +2036,10 @@ ____________________ **/
                                     }
                                     switch (val) {
                                         case "left":
+                                            this.BookMenu.setAttribute("style", `position: absolute; top: 0px; left: 0px; min-width: 100px; max-width: 150px; `)
                                             break;
                                         case "top":
+                                            this.BookMenu.setAttribute("style", `position: absolute; top: 0px; left: 0px; min-width: 100%; `);
                                             break;
                                         case "right":
                                             break;
