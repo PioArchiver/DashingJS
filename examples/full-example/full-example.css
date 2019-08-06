@@ -43,7 +43,7 @@ x-book#main-display {
     x-book#main-display > x-menu[main-book-menu] {
         background-color: rgb(86, 86, 166);
         top: calc(0px - 3em);
-        left: 0px;
+        left: calc(0px - 3em);
         min-width: 100px;
         max-width: 150px;
         height: 100%;
