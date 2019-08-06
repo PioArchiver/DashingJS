@@ -9,13 +9,16 @@ window.addEventListener("load", function LoadExample() {
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
-            console.log(Dashing.MainDisplay);
             Dashing.MainDisplay.bookMenu = "left";
             Dashing.MainDisplay.bookResizer = "x-menu";
             Dashing.MainDisplay.iconography = {
-                id: "icos",
+                name: "resizer",
+                snippets: ["minimize", "normal", "maximize"],
+                insertAt: "afterbegin",
+                overwrite: true,
+                type: "svg",
                 drawer: function UploadBookMenuIcons(icons) {
-
+                    console.log(icons);
                 }
             };
             return val;
