@@ -467,7 +467,6 @@ ____________________ **/
 
                 this.requests._progress = 0; 
                 this.requests._loaded = 0; 
-                this.requests.length = 0; 
 
                 this.requests.mappings = readyModelCallback(); 
                 this.requests.hrefs = this.getLinkHrefs(_links); 
