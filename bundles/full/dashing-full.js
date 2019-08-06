@@ -1650,6 +1650,7 @@ ____________________ **/
                                 return this.getAttribute("display-current") || false;
                             },
                             set: function SetCurrentDisplay(val) {
+                                if (val === false) { return false; }
                                 this.setAttribute("display-current", val);
                                 if (val !== this.current) {
                                     this.current = val;
