@@ -233,7 +233,7 @@ ____________________ **/
                     break;
                 case "canvas":
                     _doc = document.createElement("canvas");
-                    // to be decided_doc.src = snippet;
+                    // needs to be started
                     break;
                 case "svg":
                 default:
@@ -296,6 +296,10 @@ ____________________ **/
         }
         set drawer(value) { this.draw = Dashing.typeOf(value) === "function" ? value : false; }
         get drawer() { return this.draw; }
+        set uploader(value) {
+            Dashing.typeOf(value) === "object" ? (Dashing.requests[value.id] ? value.uploader ? value.uploader(Dashing.requests[value.id]) : false : this.Uploader = value.uploader) : function UndefinedError() { return "Caution: No uploader available."; }; 
+        }
+        get uploader() { return this.Uploader; }
     }
 
     // Pseudos
