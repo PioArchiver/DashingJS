@@ -2,8 +2,9 @@ x-extension[grid-template] {
     position: fixed;
 }
 x-tabbox.main-menu {
-    height: auto;
+    min-height: 150px;
     border-bottom: 1px solid rgb(78, 78, 78);
+    max-height: 350px;
 }
 
 x-panel > x-menu {
@@ -24,4 +25,14 @@ x-panel > x-menu > div[panel-resizer] {
     }
 #main-menu li {
     width: 100%;
+}
+#main-menu > menu > button[index] {
+    height: 50px;
+    border-radius: 15px 8px 0px
+}
+
+x-book#main-menu {
+    padding: 3em;
+    margin-top: 3em;
+    overflow-y: scroll;
 }
