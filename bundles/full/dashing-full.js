@@ -1465,8 +1465,8 @@ ____________________ **/
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
-                                            console.log(icos);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
+                                                console.log(icos);
                                                 _this.icons.uploader(icos);
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
