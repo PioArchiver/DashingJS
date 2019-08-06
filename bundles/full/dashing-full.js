@@ -478,11 +478,11 @@ ____________________ **/
                 _xhr.responseType = options.type ? options.type : "text";
 
                 _xhr.onload = options.onload ? function LoadRef(e) {
-                    Dashing.model.requests[_id] = e.target.responses;
+                    Dashing.model.requests[_id] = e.target;
                     Dashing.model.requests._loaded += 1;
                     options.onload(e);
                 } : function LOADREF(e) {
-                    Dashing.model.requests[_id] = e.target.responses;
+                    Dashing.model.requests[_id] = e.target;
                     Dashing.model.requests._loaded += 1;
                 };
 
