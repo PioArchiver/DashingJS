@@ -43,8 +43,10 @@ x-book#main-display {
         background-color: rgb(86, 86, 166);
         top: calc(0px - 3em);
         left: 0px;
-        min-width: 100px;
-        max-width: 150px;
+        width: 150px;
         height: 100%;
         background-color: rgb(78, 125, 155);
+    }
+    x-book#main-display > x-page[active] {
+        left: 150px;
     }
