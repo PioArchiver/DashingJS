@@ -1557,6 +1557,14 @@ ____________________ **/
                         }
                     };
                 }
+
+                // setters/getters
+                set model(value) {
+                    // needs to be started
+                }
+                get model() {
+                    return Dashing.model.responses;
+                }
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
