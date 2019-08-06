@@ -2036,7 +2036,7 @@ ____________________ **/
                                     }
                                     switch (val) {
                                         case "left":
-                                            this.BookMenu.setAttribute("style", `position: absolute; display: flex; flex-direction: column;`)
+                                            this.BookMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column;`)
                                             break;
                                         case "top":
                                             this.BookMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
