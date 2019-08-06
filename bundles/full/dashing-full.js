@@ -2039,7 +2039,7 @@ ____________________ **/
                                             this.BookMenu.setAttribute("style", `position: absolute; display: flex; flex-direction: column;`)
                                             break;
                                         case "top":
-                                            this.BookMenu.setAttribute("style", `position: absolute; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
+                                            this.BookMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
                                             break;
                                         case "right":
                                             break;
