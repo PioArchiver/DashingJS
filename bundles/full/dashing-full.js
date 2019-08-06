@@ -1402,6 +1402,7 @@ ____________________ **/
                     return {
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
+                            this.model = true;
                             this.icons = new Iconography();
                         },
                         inserted: function InsertedXExtension() {
@@ -1522,10 +1523,18 @@ ____________________ **/
 
                 // setters/getters
                 set model(value) {
-                    // needs to be started
+                    this.Model = this.Model ? this.Model : {
+                        requests: {}
+                    };
+                    if (Dashing.typeOf(value) === "object") {
+                        this.Model.requests = value.Model.requests ? value.Model.requests : Dashing.model.requests ? Dashing.model.requests : { _uploads: 0, _progress: 0 };
+                    }
+                    else if (Dashing.typeOf(value) === true) {
+                        this.Model.requests = Dashing.model.requests;
+                    }
                 }
                 get model() {
-                    return Dashing.model;
+                    return this.Model;
                 }
             };
 
