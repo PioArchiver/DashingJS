@@ -11,6 +11,7 @@ window.addEventListener("load", function LoadExample() {
         qpromise.then(function SchemaDemoQuery(val) {
             Dashing.MainDisplay.bookMenu = "left";
             Dashing.MainDisplay.bookResizer = "x-menu";
+            console.log(Dashing.MainDisplay.iconography);
             Dashing.MainDisplay.iconography = {
                 name: "resizer",
                 snippets: ["minimize", "normal", "maximize"],
