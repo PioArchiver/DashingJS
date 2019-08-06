@@ -218,7 +218,6 @@ ____________________ **/
         }
         add(name, snippet) {
             this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet;
-            this.uploader = false;
         }
         createIcon(type, snippet) {
             let ico = document.createDocumentFragment(),
