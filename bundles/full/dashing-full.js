@@ -1459,6 +1459,7 @@ ____________________ **/
                             connected: true,
                             set: function SetIcos(val) {
                                 let _this = this;
+                                console.log(this.icons.uploader);
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
@@ -1466,7 +1467,6 @@ ____________________ **/
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
                                             if (Dashing.typeOf(_this.icons.uploader) === "function") {
-                                                console.log(icos);
                                                 _this.icons.uploader(icos);
                                                 _this.icons.add(filenm[0], icos);
                                                 _this.setAttribute("icos", "true");
