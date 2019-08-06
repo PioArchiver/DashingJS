@@ -482,13 +482,16 @@ ____________________ **/
                     Dashing.requests._loaded += 1;
                     options.onload(e);
                 } : function LOADREF(e) {
-                    Dashing.responses[_id] = e.target.responses;
+                    Dashing.requests[_id] = e.target.responses;
+                    Dashing.requests._loaded += 1;
                 };
 
                 _xhr.onprogress = options.onprogress ? function ProgressModel(e) {
                     Dashing.requests._progress += 1;
                     options.onprogress(e);
-                } : false;
+                } : function ProgressModelDefault(e) {
+                    Dashing.requests._progress += 1;
+                };
 
                 _xhr.onerror = options.onerror ? function ERRORREF(e) {
                     Dashing.responses[_id] = `Request Error: ${e.target.responseURL}`;
@@ -500,35 +503,6 @@ ____________________ **/
                 _xhr.send();
 
                 return _id;
-            }
-        }
-        getLinkHrefs(links) {
-            let _urlarray = [];
-            for (let i = 0; i < links.length; i++) {
-                let link = links[i];
-                if (link.hasAttribute("data-model") === true) {
-                    let _href = link.getAttribute("href");
-                        _urlarray.push(_href);
-                    this.requests[_href.match(/[\w\-]+(?=\.[\w\-]+$)/g)[0]] = { appendResources: link.hasAttribute("append-resource") };
-                }
-            }
-            return _urlarray;
-        }
-        openModelLinks(modelready) {
-            let reqs = this.requests, 
-                _links = reqs.hrefs;
-            for (let z = 0; z < _links.length; z++) {
-                let _href = _links[z].match(/[\w\-]+(?=\.[\w\-]+$)/g)[0],
-                    _insert = reqs[_href],
-                    _xlink = document.createElement(`x-link`),
-                    _callbacks = reqs.mappings[_href];
-
-                _xlink.load = _callbacks.load;
-                _xlink.progress = _callbacks.progress;
-                _xlink.error = _callbacks.error;
-
-                _xlink.href = _links[z];
-
             }
         }
     }
