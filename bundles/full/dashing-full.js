@@ -1457,10 +1457,10 @@ ____________________ **/
                         icos: {
                             set: function SetIcos(val) {
                                 let _this = this;
-                                console.log(val);
                                 if (Dashing.typeOf(val) === "string") {
                                     let urltest = this.checkUrl(val);
                                     if (urltest !== false) {
+                                        console.log(urltest);
                                         this.requestHTML(val, function OpenIcons(e) {
                                             let icos = e.target.response,
                                                 filenm = e.target.responseURL.match(/[\w\-]+(?=\.html)/g);
