@@ -1473,7 +1473,7 @@ ____________________ **/
                                                 _this.appendChild(icos.firstElementChild);
                                                 _this.setAttribute("icos", "true");
                                             }
-                                        }, function IcosProgress(e) { console.log("progressing") }, function IcosError(e) { console.error(e); });
+                                        }, function IcosProgress(e) { console.log("progressing " + e.target.responseURL); console }, function IcosError(e) { console.error(e); });
                                     }
                                 }
                             },
