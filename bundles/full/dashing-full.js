@@ -1054,7 +1054,7 @@ ____________________ **/
         }
         fnQuery(query, fn, nullFn) {
             let qy = (this.querySelector ? this : document).querySelector(query);
-            return qy ? fn(qy) : (nullFn || noop)(qy);
+            return qy ? fn.call(this, qy) : (nullFn || noop).call(this, qy);
         }
         createAccessor(selector) {
             return {
@@ -1978,7 +1978,7 @@ ____________________ **/
                             this.querySelectorAll("x-page").forEach(function (node, i) {
                                 if (Number(book.page) - 1 === i) { node.active = true; }
                             });
-
+                            this.extension = Dashing.extension;
                         }
                     };
                 }
@@ -2007,7 +2007,7 @@ ____________________ **/
                             },
                             set: function SetBookControls(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    Dashing.fnQuery(`#${val}`, function BookControlsFn(resizer) {
+                                    Dashing.fnQuery.call(this, `[control-menu]`, function BookControlsFn(controls) {
                                         // 
                                     }, function BookControlsNullFn() {
                                             
@@ -2022,7 +2022,7 @@ ____________________ **/
                             },
                             set: function SetBookResizer(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    Dashing.fnQuery(`#${val}`, function BookResizerFn(resizer) {
+                                    Dashing.fnQuery.call(this, `[book-resizer]`, function BookResizerFn(resizer) {
                                         // 
                                     },
                                         function BookResizerNullfn(resizer) {
@@ -2036,12 +2036,13 @@ ____________________ **/
                             get: function GetBookTitle() { return this.getAttribute("book-title") || false; },
                             set: function SetBookTitle(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    this.setAttribute("book-title", val);
-                                    Dashing.fnQuery.call(this, `[book-icon="title"]`, function BookResizerFn(title) {
-                                        console.log(title);
+                                    let stg = /\<script|onclick|onmouseover|onmouseout|obdblclick/gi.test(val) === true ? "not allowed error" : val
+                                    this.setAttribute("book-title", stg);
+                                    Dashing.fnQuery.call(this, `[book-icon="title"]`, function BookTitleFn(title) {
+                                        title.innerHTML = val;
                                     },
-                                        function BookResizerNullfn(resizer) {
-                                            //
+                                        function BookTitleNullfn(title) {
+                                            
                                         });
                                 }
                             }
