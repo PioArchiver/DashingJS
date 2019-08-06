@@ -1526,12 +1526,11 @@ ____________________ **/
                     this.Model = this.Model ? this.Model : {
                         requests: {}
                     };
-                    console.log(Dashing.model);
+
                     if (Dashing.typeOf(value) === "object") {
                         this.Model.requests = value.Model.requests ? value.Model.requests : Dashing.model.requests ? Dashing.model.requests : { _uploads: 0, _progress: 0 };
                     }
-                    else if (Dashing.typeOf(value) === true) {
-                        console.log(Dashing.model);
+                    else if (Dashing.typeOf(value) === "boolean") {
                         this.Model.requests = Dashing.model.requests;
                     }
                 }
