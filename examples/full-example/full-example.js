@@ -12,6 +12,7 @@ window.addEventListener("load", function LoadExample() {
             console.log(Dashing.MainDisplay);
             Dashing.MainDisplay.bookMenu = "left";
             Dashing.MainDisplay.bookResizer = "x-menu";
+            console.log(Dashing.MainDisplay.addResizerIcons);
             return val;
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
