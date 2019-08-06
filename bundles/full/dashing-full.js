@@ -481,7 +481,7 @@ ____________________ **/
         request(ref, options) {
             let _xhr = new XMLHttpRequest(),
                 _id = ref.match(/[\w\-]+(?=\.\w+$)/g)[0];
-
+            console.log(_id);
             Dashing.requests ? true : Dashing.requests = {};
             Dashing.responses ? true : Dashing.responses = {};
 
@@ -1287,7 +1287,6 @@ ____________________ **/
                         requestHTML: function RequestHTML(url, load, progress, error) {
                             let _url = this.checkUrl(url);
                             if (_url !== false) {
-                                console.log(_url);
                                 Dashing.model.request(_url, {
                                     type: "document",
                                     onload: load,
