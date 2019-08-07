@@ -135,7 +135,7 @@
         // get events
         let events = mix.events ? mix.events() : {};
 
-        let attrs = mix.attrs ? mix.attrs() : {};
+        let attrs = mix.prototype.attrs ? mix.prototype.attrs() : {};
 
         // loop through retrieved objects 
         for (let _key in methods) {
@@ -163,7 +163,7 @@
             xtag.addEvents(proto, events);
             _key.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = _key.match(regexPseudoCapture) : null;
         }
-
+        console.log(attrs);
         for (let akey in attrs) {
             setElemAttr(proto, akey, attrs[akey]);
         }
