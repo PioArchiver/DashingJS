@@ -342,9 +342,9 @@
 
             // Create the mixins.
             let mixins = _this.mixins === undefined ? [] : _this.mixins();
-                addMixins(XTagElement, mixins, xtag.mixins);
-                addMixins(XTagElement, ["self"], xtag.mixins);
-            console.log(mixins);
+                addMixins(_this, mixins, xtag.mixins);
+                addMixins(_this, ["self"], xtag.mixins);
+
             // Create Attribute getter/setters. 
             let _attrMixins = attrMixins(_this);
                 _attrMixins === false ? false : xtag.merge(_hasAttributes, _attrMixins);
