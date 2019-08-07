@@ -163,7 +163,7 @@
             xtag.addEvents(proto, events);
             _key.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = _key.match(regexPseudoCapture) : null;
         }
-        console.log(attrs);
+
         for (let akey in attrs) {
             setElemAttr(proto, akey, attrs[akey]);
         }
@@ -183,19 +183,6 @@
 
         }
         return true;
-    }
-    function attrMixins(mix) {
-        var _mixins = xtag.mixins,
-            _added = mix.prototype.mixins ? mix.prototype.mixins() : false,
-            _attrs = {},
-            attrs = {};
-        for (var k = 0; k < _added.length; k++) {
-            var key = _added[k];
-            attrs = _mixins[key].prototype.attrs ? _mixins[key].prototype.attrs() : false;
-            xtag.merge(_attrs, attrs);
-        }
-        var test = Object.keys(_attrs).length > 0 ? _attrs : false;
-        return test;
     }
 
     // Events 
@@ -344,11 +331,6 @@
             let mixins = _this.mixins === undefined ? [] : _this.mixins();
                 addMixins(_this, mixins, xtag.mixins);
                 addMixins(_this, ["self"], xtag.mixins);
-
-            // Create Attribute getter/setters. 
-            let _attrMixins = attrMixins(_this);
-                _attrMixins === false ? false : xtag.merge(_hasAttributes, _attrMixins);
-                ckeys = Object.keys(_hasAttributes);
 
             xtag.merge(XTagElement.prototype, _methods);
 
