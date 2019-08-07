@@ -164,8 +164,8 @@
             _key.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = _key.match(regexPseudoCapture) : null;
         }
         console.log(attrs);
-        for (let _c = 0; _c < attrs.length; _c++) {
-            setElemAttr(proto, akey, xtag.mixins[attrs[_c]]);
+        for (let akey in attrs) {
+            setElemAttr(proto, akey, attrs[akey]);
         }
         return true;
     }
