@@ -135,6 +135,8 @@
         // get events
         let events = mix.events ? mix.events() : {};
 
+        let attrs = mix.attrs ? mix.attrs() : {};
+
         // loop through retrieved objects 
         for (let _key in methods) {
             var psdo = xtag.applyPseudos(_key, methods[_key], pseudoArray, methods[_key]),
@@ -161,6 +163,10 @@
             xtag.addEvents(proto, events);
             _key.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = _key.match(regexPseudoCapture) : null;
         }
+
+        for (let akey in attrs) {
+            setElemAttr(_proto, akey, attrs[akey]);
+        }
         return true;
     }
 
@@ -173,56 +179,7 @@
             var name = names[z],
                 _defmethod = mixins[name].methods();
 
-            name === "typed" ? (
-                writeMixin(mixinClass, mixins[name]),
-                setElemAttr(mixinClass, "type", {
-                    type: {
-                        set: function SetType(val) {
-                            if (!this.type) { 
-                                console.warn(`${this.nodeName}: Tried to retrieve a type attribute.\n %cGetter returned: [${this.type}].`, "color: skyblue;");
-                                return false;
-                            }
-                            else if (typeof this[this.type] === "function") {
-                                xtag.addEvent(this, this.type, val);
-                                xtag.fireEvent(this, this.type, { detail: {} });
-
-                                this.setAttribute("type", this.type);
-                            }
-                            else {
-                                console.warn(`%c The type, ${this.type} hasn't been implemented, for ${this.nodeName}.`);
-                                return false;
-                            }
-
-                        },
-                        get: function GetType() { return this.getAttribute("type"); }
-                    }
-                })
-            ) : null;
-
-            name === "themed" ? (
-                writeMixin(mixinClass, mixins[name]),
-                setElemAttr(mixinClass, "theme", {
-                    theme: {
-                        set: function SetTheme(val) {
-                            if (!this.theme) {
-                                console.warn(`%c ${this.nodeName}: Tried to retrieve a theme attribute. \n %c Getter returned [${this.theme}].`, "color: skyblue",  "color: rgb(255,155,0);");
-                                return false;
-                            }
-                            else if (typeof this[this.theme] === "function") {
-                                xtag.addEvent(this, this.theme, val);
-                                xtag.fireEvent(this, this.theme, { detail: {} });
-
-                                this.setAttribute("theme", this.theme);
-                            }
-                            else {
-                                console.warn(`The theme, ${this.theme} hasn't been implemented, for ${this.nodeName}.`);
-                                return false;
-                            }
-                        },
-                        get: function GetTheme() { return this.getAttribute("theme"); }
-                    }
-                })
-            ) : writeMixin(mixinClass, mixins[name]);
+                writeMixin(mixinClass, mixins[name]);
 
         }
         return true;
