@@ -3173,7 +3173,7 @@ ____________________ **/
                     addResizerIcons: function AddResizerIcons(opts) {
                         for (let i = 0; i < opts.snippets.length; i++) {
                             let icons = opts.snippets;
-                            console.log(this.querySelector(`button[icon="${icons[i]}"]`)); 
+                            console.log(this); 
                             this.extension.icons.insertIcon(this.querySelector(`button[icon="${icons[i]}"]`),
                                 {
                                     snippet: icons[i],
