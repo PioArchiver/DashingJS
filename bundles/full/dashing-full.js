@@ -1899,20 +1899,20 @@ ____________________ **/
                                     this.setAttribute("book-menu", val);
                                     let bookmenu = this.querySelector("[main-book-menu]");
                                     if (bookmenu) {
-                                        this.BookMenu = bookmenu;
+                                        this.xMenu = bookmenu;
                                     }
                                     else {
                                         let node = document.createElement("x-menu");
                                             node.setAttribute("main-book-menu", "true");
                                             this.insertAdjacentElement("afterbegin", node);
-                                        this.BookMenu = this.querySelector(`[main-book-menu]`);
+                                        this.xMenu = this.querySelector(`[main-book-menu]`);
                                     }
                                     switch (val) {
                                         case "left":
-                                            this.BookMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column;`)
+                                            this.xMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column;`)
                                             break;
                                         case "top":
-                                            this.BookMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
+                                            this.xMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
                                             break;
                                         case "right":
                                             break;
@@ -1923,7 +1923,7 @@ ____________________ **/
                                         case "minimize":
                                         case "":
                                         default:
-                                            this.BookMenu.removeAttribute("style"); 
+                                            this.xMenu.removeAttribute("style"); 
                                             break;
                                     }
                                 }
@@ -3173,8 +3173,7 @@ ____________________ **/
                     addResizerIcons: function AddResizerIcons(opts) {
                         for (let i = 0; i < opts.snippets.length; i++) {
                             let icons = opts.snippets;
-                            console.log(this); 
-                            this.extension.icons.insertIcon(this.querySelector(`button[icon="${icons[i]}"]`),
+                            this.extension.icons.insertIcon(this.xMenu.querySelector(`button[icon="${icons[i]}"]`),
                                 {
                                     snippet: icons[i],
                                     insertAt: opts.insertAt || "afterbegin",
@@ -3186,7 +3185,7 @@ ____________________ **/
                         }
                     },
                     addLogoIcon: function AddLogoIcon(opts) {
-                        this.extension.icons.insertIcon(this.querySelector("strong[logo]") || this.xMenu,
+                        this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
                             {
                                 snippet: "logo",
                                 insertAt: opts.insertAt || false,
