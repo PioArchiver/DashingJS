@@ -10,8 +10,6 @@ window.addEventListener("load", function LoadExample() {
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
             console.log(val);
-            Dashing.MainDisplay.bookMenu = "left";
-            Dashing.MainDisplay.bookResizer = "x-menu";
 
             return val;
         });
@@ -27,6 +25,9 @@ window.addEventListener("load", function LoadExample() {
                 Dashing.icons.add(icos[i].id, icos[i].outerHTML);
             }
             console.log(Dashing.MainDisplay.prototype);
+
+            Dashing.MainDisplay.bookMenu = "left";
+            Dashing.MainDisplay.bookResizer = "x-menu";
 
             Dashing.MainDisplay.iconography = {
                 name: "resizer",
