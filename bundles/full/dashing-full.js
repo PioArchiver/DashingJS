@@ -3173,7 +3173,7 @@ ____________________ **/
                     addResizerIcons: function AddResizerIcons(opts) {
                         for (let i = 0; i < opts.snippets.length; i++) {
                             let icons = opts.snippets;
-                            this.extension.icons.insertIcon(this.xMenu.querySelector(`button[icon="${icons[i]}"]`),
+                            this.extension.icons.insertIcon(this.querySelector(`button[icon="${icons[i]}"]`),
                                 {
                                     snippet: icons[i],
                                     insertAt: opts.insertAt || "afterbegin",
@@ -3185,7 +3185,7 @@ ____________________ **/
                         }
                     },
                     addLogoIcon: function AddLogoIcon(opts) {
-                        this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
+                        this.extension.icons.insertIcon(this.querySelector("strong[logo]") || this.xMenu,
                             {
                                 snippet: "logo",
                                 insertAt: opts.insertAt || false,
