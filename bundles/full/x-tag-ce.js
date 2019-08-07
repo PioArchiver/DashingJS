@@ -165,7 +165,7 @@
         }
 
         for (let akey in attrs) {
-            setElemAttr(_proto, akey, attrs[akey]);
+            setElemAttr(proto, akey, attrs[akey]);
         }
         return true;
     }
