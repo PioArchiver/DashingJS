@@ -881,9 +881,9 @@ ____________________ **/
             // set the extension
             this.extension = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
             // set the images
-            this.writer = new Writer();
+            this.writer = Writer;
             // set the iconography
-            this.iconography = iconography;
+            this.iconography = Iconography;
 
                 // Set added properties
                 protokeys = Dashing.setAddedProps(dashed);
