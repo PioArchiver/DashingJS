@@ -1108,7 +1108,7 @@ ____________________ **/
         }
         get platform() { return this.themed.platform || false; }
         get writer() {
-            //
+            return this.Writer;
         }
         set writer(value) {
             if (this.Writer !== false) { return true; }
