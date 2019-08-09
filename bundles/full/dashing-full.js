@@ -75,12 +75,15 @@ ____________________ **/
             return false;
         }
     } 
-
-    // Command cell regular expressions
-    const testLiteralCmd = /\w+\{[\w\,]+\}\;/g,
-          testArrayCmd = /\w+\[[\w\,]+\]\;/g,
-          testStringCmd = /\w+\([\w\,]+\)\;/g,
-          testNumberCmd = /\w+\|[\d\.]+\|\;/g;
+    function writeSetterGetter(proto, key, obj) {
+        Object.defineProperty(proto.prototype, key, {
+            configurable: false,
+            enumerable: true,
+            get: obj.get ? obj.get : function GetAttrDefault() { return false; },
+            set: obj.set ? obj.set : function SetAttrDefault(val) { false; }
+        });
+        return k;
+    }
 
     const states = {},
         insertRule = CSSStyleSheet.prototype.insertRule,
@@ -210,6 +213,41 @@ ____________________ **/
     const css = new CssWriter("ApplicationInlineStyleElement"),
         sheet = css.sheet;
 
+    // Svg class
+    class Svg {
+        constructor() {
+            this.fragments = {};
+        }
+    }
+
+    // Canvas class
+    class Canvas {
+        constructor() {
+            this.fragments = {};
+        }
+    }
+
+    // Images Class
+    class Images {
+        constructor() {
+            this.length = 0;
+            this.library = {};
+        }
+        add(name, image) {
+            this.query(name) === false ? this.library[name] = image : true;
+        }
+        get library { return this.Library || false; }
+        set library(value) {
+            if (this.Library !== false) { return true; }
+            this.Library = Dashing.typeOf(value) === "array" ? value : [];
+        }
+        query(name, options) {
+            if (!this.library[name]) {
+                // not found
+            }
+        }
+    }
+
     // Icon Class
     class Iconography {
         constructor() {
@@ -256,16 +294,16 @@ ____________________ **/
                         vbox ? _doc.setAttribute("viewBox", vbox) : null;
                         _doc.appendChild(_doc.firstElementChild.firstElementChild);
 
-                            _doc.firstElementChild.hasAttribute("width") ? _doc.setAttribute('width', _doc.firstElementChild.getAttribute("width")) : null;
-                            _doc.firstElementChild.hasAttribute("height") ? _doc.setAttribute('height', _doc.firstElementChild.getAttribute("height")) : null;
-                            _doc.removeChild(_doc.firstElementChild);
+                        _doc.firstElementChild.hasAttribute("width") ? _doc.setAttribute('width', _doc.firstElementChild.getAttribute("width")) : null;
+                        _doc.firstElementChild.hasAttribute("height") ? _doc.setAttribute('height', _doc.firstElementChild.getAttribute("height")) : null;
+                        _doc.removeChild(_doc.firstElementChild);
                     }
                     else {
                         _doc.className = "dashing-icon";
                     }
                     break;
             }
-                ico.appendChild(_doc);
+            ico.appendChild(_doc);
             return ico;
         }
         insertIcon(target, opts) {
@@ -297,9 +335,94 @@ ____________________ **/
         get drawer() { return this.draw; }
 
         set uploader(value) {
-            Dashing.typeOf(value) === "object" ? (Dashing.model.requests[value.id] ? Dashing.model.requests[value.id].firstElementChild !== null ? (value.uploader(Dashing.model.requests[value.id])) : (value.uploader(document.querySelector("[data-icons]"))) : this.Uploader = value.uploader) : function UndefinedError() { return "Caution: No uploader available."; }; 
-        } 
+            Dashing.typeOf(value) === "object" ? (Dashing.model.requests[value.id] ? Dashing.model.requests[value.id].firstElementChild !== null ? (value.uploader(Dashing.model.requests[value.id])) : (value.uploader(document.querySelector("[data-icons]"))) : this.Uploader = value.uploader) : function UndefinedError() { return "Caution: No uploader available."; };
+        }
         get uploader() { return this.Uploader; }
+    }
+
+    // Writer class
+    class Writer {
+        constructor() {
+            this.extension = false;
+
+            this.PenTip = {};
+            this.patterns = {};
+
+            this.PenStroke = "black";
+            this.PenFill = "black";
+
+            this.x = 0;
+            this.y = 0;
+
+            this.width = "auto";
+            this.height = "auto";
+
+            this.svg = New Svg();
+            this.canvas = new Canvas();
+
+            this.css = css;
+        }
+
+        add(type, options) {
+            if (!options.name || !type) {
+                console.error(`Value Error: Type was ${Dashing.typeOf(type)} `);
+                console.error(`Value Error: options was ${Dashing.typeOf(options.name)} `);
+                return false;
+            }
+            else if (typeof option.name === "string" && Dashing.typeOf(options) === "object") {
+                Dashing.iconography.add();
+            }
+
+        }
+
+        pen(name, fn) { }
+        set penTip(ptip) {
+            let name = null;
+            if (typeof ptip.name === "string") { name = ptip.name; }
+            else { return false; }
+            this.PenTips[name] = typeof ptio.snippet === "string" ? ptio.snippet : "Pen tip Type Error";
+        }
+        get penTip() { return function GetTip(name) { return this.PenTips[name] ? this.PenTips[name] : false; } }
+        set penFill(pcolor) { this.PenFill = pcolor; }
+        get penFill() { return this.PenFill }
+        set penStroke(scolor) { this.PenStroke = scolor; }
+        get penStroke() { return this.PenStroke; }
+
+        stamp(name, fn) { }
+        set stampPattern(spattern) {
+            let name = null;
+            if (typeof spattern.name === "string") { name = spattern.name; }
+            else { return false; }
+            this.patterns[name] = typeof spattern.snippet === "string" ? spattern.snippet : "Pattern Type Error";
+        }
+        get stampPattern() { return function GetStampPattern(name) { return this.patterns[name] ? this.patterns[name] : false; } }
+
+    }
+
+    // Shadow class
+    class Shadow {
+        constructor() {
+            this.extension = false;
+        }
+    }
+
+    // Create the HTML Element Prototype Mixin 
+    class DashingElement extends Dashing.htmlElement() {
+        constructor() {
+            super();
+        }
+        connectedCallback() {
+            //
+        }
+
+        // Dashing is for the Dashing Components Build Package
+        disconnectedCallback(Dashing) {
+            //
+        }
+
+        attributeChangedCallback() {
+            // 
+        }
     }
 
     // Pseudos
@@ -597,91 +720,6 @@ ____________________ **/
         }
     }
 
-    class CCSyntax {
-        constructor(options) {
-            this.commandCache = [];
-            merge(this, options || {});
-        }
-        parseCCSLine(line) {
-            let ln = "",
-                paramln = "",
-                arr = [],
-                paramarr = [],
-                stoken = false,
-                istoken = "",
-                _tokens = { "[": "arrays", "{": "literals", "(": "strings", "|": "numbers" };
-
-            for (let z = 0; z < line.length; z++) {
-                let chr = line[z];
-                if (/\;/.test(chr)) {
-                    arr.push({
-                        cmd: ln,
-                        params: paramarr,
-                        token: istoken
-                    });
-                    ln = "";
-                    paramarr = [];
-                }
-                else if (/[\{\[\(\|]/.test(chr) && stoken === false) {
-                    stoken = true;
-                    istoken = _tokens[chr];
-                }
-                else if (/[\}\]\)\|]/.test(chr)) {
-                    paramarr.push(paramln);
-                    paramln = "";
-                    stoken = false;
-                }
-                else if (stoken === true && /\,/.test(chr) === true) {
-                    paramarr.push(paramln);
-                    paramln = "";
-                }
-                else if (stoken === true) { paramln += chr; }
-                else { ln += chr; }
-            }
-            return arr;
-        }
-        compileCCSLine(_ccs, data) {
-            let arr = [];
-            for (let n = 0; n < data.length; n++) {
-                let ccsobj = _ccs[data[n].token];
-                arr.push({
-                    cmd: this[data[n].cmd],
-                    params: data[n].params
-                });
-            }
-            return arr;
-        }
-        executeCCSStack(_ccs) {
-            for (let z = 0; z < _ccs.length; z++) {
-                _ccs[z].cmd.apply(this, [_ccs[z].params]);
-            }
-            return true;
-        }
-        // Command keys start
-        write(args) { }
-        create(args) {
-            let _case = args[0];
-            switch (_case) {
-                case "databook":
-                    let dbupdate = Dashing.pioDB.upgrade.apply(this, [Dashing.rootElement.jsonSchema[this.pluginTitle]]);
-
-                    break;
-                case "datasheet":
-                    break;
-                case "datalist":
-                    break;
-                case "datacell":
-                    break;
-            }
-        }
-        remove(args) { }
-        edit(args) { }
-        merge(args) { }
-        sum(args) { }
-        pow(args) { }
-    }
-    const ccs = new CCSyntax();
-
     class pioDB extends Validator {
         constructor(data) {
             super();
@@ -842,6 +880,10 @@ ____________________ **/
             this.startscreen = dashed.startscreen === undefined ? false : dashed.startscreen;
             // set the extension
             this.extension = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
+            // set the images
+            this.writer = new Writer();
+            // set the iconography
+            this.iconography = iconography;
 
                 // Set added properties
                 protokeys = Dashing.setAddedProps(dashed);
@@ -947,34 +989,6 @@ ____________________ **/
             comps = def.elements(comps);
             return comps;
         }
-        write(msg, target, frag) {
-            // frag must be a function that return a HTMLElement
-            let _frag = frag(msg);
-            target.appendChild(_frag);
-            return _frag;
-        }
-        writeJSON(type, data) {
-            if (!this.templates[type.type]) {
-                throw "Error Draw(type.type): The type of JSON you want to write doesn't exist.";
-            }
-            let templating = xtag.createFragment(`<template></template>`),
-                _keyrootinput = document.createElement("input");
-
-                _keyrootinput.setAttribute("json-root", type.keyName);
-                _keyrootinput.setAttribute("column-span", "1 2");
-                _keyrootinput.setAttribute("row-span", "1");
-                _keyrootinput.type = "text";
-                _keyrootinput.value = type.keyName;
-                _keyrootinput.className = type.keyRootClass;
-
-                type.keyClassName = "text-centered item-title";
-                type.valueClassName = "text-centered item-title";
-
-                templating = this.writer.draw({ name: type.type, target: templating }, { parent: data, child: type });
-                templating.appendChild(_keyrootinput);
-
-            return templating;
-        }
         setAddedProps(dashed) {
             let keys = Object.keys(dashed),
                 protokeys = [];
@@ -1064,7 +1078,19 @@ ____________________ **/
                 }
             };
         }
-        get templates() { return dashboard.prototype.writer.templated || false; }
+        register(name, options) {
+            //
+        }
+        get iconography() { return this.Iconography || false; }
+        set iconography(value) {
+            if (this.Iconography !== false) { return true; }
+            this.Iconography = this.typeOf(value) === "function" ? value.name === "Iconography" ? new value() : false : false;
+        }
+        get images() { return this.Images || false; }
+        set images(value) {
+            if (this.Images !== false) { return true; }
+            this.Images = this.typeOf(value) === "function" ? value.name === "Images" ? new value() : false : false;
+        }
         set bounded(elem) {
             elem.bounds = {
                 top: elem.getBoundingClientRect().top,
@@ -1082,32 +1108,11 @@ ____________________ **/
         }
         get platform() { return this.themed.platform || false; }
         get writer() {
-            return {
-                templated: {
-                    "_blank": function _Blank(template, details) {
-                        let parent = template.fragment || xtag.createFragment(`div`);
-                            parent.firstElementChild.innerHTML = details.omsg || "";
-                        return parent;
-                    },
-                    length: 1
-                },
-                templater: function templater(named, templatee) {
-                    this.templated.length++;
-                    this.templated[named] = templatee;
-                },
-                draw: function draw(type, attrs, frags, hasTypeCallback) {
-                    let _frag = this.templated[type.name](attrs.parent, attrs.child).firstElementChild;
-                    // check for hasTypeCallback parameter callback must be named [not anonymouse] [Needs Implementation] 
-                    if (typeof hasTypeCallback === "object") { this[type.name] = hasTypeCallback; }
-                    frags ? _frag.appendChild(frags) : null;
-                    // check for template callback that accompanies the template type 
-                    if (this[type.name] && typeof this[type.name].creator === "function") { this[type.name].creator(_frag, attrs || false); }
-                    // append node to type target root 
-                    type.target.appendChild(_frag);
-                    if (this[type.name] && typeof this[type.name].events === "object") { Dashing.on(type.target, this[type.name].events); }
-                    return _frag;
-                }
-            };
+            //
+        }
+        set writer(value) {
+            if (this.Writer !== false) { return true; }
+            this.Writer = this.typeOf(value) === "function" ? new value() : false;
         }
     }
 
@@ -1197,24 +1202,6 @@ ____________________ **/
                             switch (isInNeedOf) {
                                 case "prompt":
                                     let _dbid = xtag.uid().toString();
-                                    Dashing.writer.draw({ name: "_blank", target: target },
-                                        {
-                                            parent: {
-                                                fragment: xtag.createFragment(`<x-table id="${_dbid}" type="indexed-database" theme="db-responses" database-active="PioDashed" allow-pagination="true" allow-menu="DB Menu" menu-position="top" allow-refresh="true"></x-table>`)
-                                            },
-                                            child: {
-                                                omsg: assistant
-                                            }
-                                        },
-                                        xtag.createFragment(
-                                            `<svg width="25px" height="25px" class="rel spinner-1" data-svg-icon="hourglass-start">
-                                                <use class="database-hourglass" width="25px" height="25px" xlink:href="#hourglass-start" />
-                                            </svg>`),
-                                        {
-                                            creator: function Creator(doc) {
-                                                // To do
-                                            }
-                                        }
                                     );
                                     return true;
                                 case "camera":
@@ -1402,7 +1389,8 @@ ____________________ **/
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
                             this.model = true;
-                            this.icons = new Iconography();
+                            this.css = css;
+                            this.icons = Dashing.iconography;
                         },
                         inserted: function InsertedXExtension() {
                             //
@@ -1541,6 +1529,15 @@ ____________________ **/
                     this.Book = value;
                 }
                 get book() { }
+
+                get writer() { return Dashing.writer.draw; }
+                set writer(options) {
+                    if (Dashing.typeOf(options) === "object") {
+                        Dashing.writer.add("", {
+
+                        });
+                    }
+                }
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
@@ -2279,47 +2276,6 @@ ____________________ **/
                             if (section && box.tapclose) {
                                 section[fn](box.xtag.tapoverlay);
                             }
-                        },
-                        pluginmenu: function Pluginmenu(e) {
-                            console.warn("Type[pluginmenu]: Needs enhancement.");
-                        },
-                        add: function Add(type, target, options) {
-                            if (type === "fragment") {
-                                Dashing.writer.draw({
-                                    name: options.name || "_blank",
-                                    target: target || this
-                                }, {
-                                        parent: options.parent || {},
-                                        child: options.child || {}
-                                    },
-                                    options.fragment || false,
-                                    {
-                                        creator: options.creator || noop,
-                                        events: options.events || {}
-                                    });
-                            }
-                            else if (type === "template") {
-                                let keystest = this.templates.keys.some(function TestTemplateKeys(item, c) {
-                                    return item === target;
-                                });
-                                // Check to see if its a new key being added to the shiftbox template cache
-                                if (keystest === false) { this.templates.keys.push(target); }
-
-                                // This will overwrite the target type you have previously added to the shiftbox. 
-                                this.templates[`_${target}`] = {
-                                    type: "templates",
-                                    keys: [target]
-                                };
-
-                                // Attach fragment callback
-                                this.templates[`_${target}`][target] = function ShiftBoxTempalte(node, data) {
-                                    return xtag.createFragment(options.fragment);
-                                };
-                                // Add it the Dashing templates
-                                Dashing.add(this.templates[`_${target}`]);
-
-                            }
-
                         }
                     };
                 }
@@ -2530,8 +2486,7 @@ ____________________ **/
                 }
             };
 
-            elems.xTable = class xTable extends HTMLElement {
-                static mixins() { return ["typed", "themed", "dashed"]; }
+            elems.xTable = class xTable extends HTMLElement { 
 
                 static methods() {
                     return {
@@ -2567,41 +2522,13 @@ ____________________ **/
                             return obj;
                         },
                         writeTableMessage: function WriteTableMessage(val) {
-                            return Dashing.writer.draw({ name: "_blank", target: this.databook || this }, {
-                                parent: {
-                                    fragment: xtag.createFragment(`<x-message message-display="${this.id}" transition-end="fade-up"></x-message>`)
-                                },
-                                child: {
-                                    omsg: val
-                                }
-                            }, undefined, {
-                                    creator: function _Creator_(node, data) {
-                                        window.setTimeout(function () { node.setAttribute("transitioning", "fade-up"); }, 100);
-                                    }
-                                });
+                            return "";
                         },
                         cellResponse: function CellResponse(msgs) {
-                            return Dashing.writer.draw({ name: "_blank", target: this.databook || this }, {
-                                parent: {
-                                    fragment: xtag.createFragment(`<ul is="data-list"></ul>`)
-                                },
-                                child: msgs
-                            }, undefined, {
-                                    creator: function _Creator_(node, data) {
-                                        let _msgs = data.child;
-                                        for (let z = 0; z < _msgs.length; z++) {
-                                            let _msg = document.createElement("li");
-                                            _msg.setAttribute("is", "data-node");
-                                            _msg.innerHTML = _msgs[z];
-                                            node.appendChild(_msg);
-                                        }
-                                    }
-                                });
+                            return "";
                         },
                         removeCell: function RemoveCell(_cell) {
-                            window.removeEventListener(_cell, "keydown");
-                            window.removeEventListener(this.tableConfirm, "click");
-                            this.tableForm.innerHTML = "";
+                            // 
                         }
                     };
                 }
@@ -2641,68 +2568,26 @@ ____________________ **/
                         },
                         'database-active': {
                             set: function SetActiveDB(val) {
-                                Dashing.writer.draw({ name: "_blank", target: this }, {
-                                    parent: {
-                                        fragment: xtag.createFragment(`<div class="alert database-opened"></div>`)
-                                    },
-                                    child: {
-                                        omsg: `Database Active: ${val}`
-                                    }
-                                }, undefined, {});
                                 this.setAttribute("database-active", this.databaseActive);
                             },
                             get: function GetActiveDB() { return this.getAttribute("database-active"); }
                         },
                         'allow-menu': {
                             set: function SetMenu(val) {
-                                this.table.menu = Dashing.writer.draw({ name: "_blank", target: this }, {
-                                    parent: {
-                                        fragment: xtag.createFragment(`<menu class="IDB-table-menu"></menu>`)
-                                    },
-                                    child: {
-                                        omsg: `<svg width="25" height="25" data-svg-icon="database" grid-columns="2 1"><use xlink:href="#database" height="25" width="25" grid-rows="1 1" /></svg>${val || "<strong>Menu</strong>"}`
-                                    }
-                                }, undefined, {
-                                        creator: function RefreshDrawer(doc) {
-                                            // 
-                                        }
-                                    });
+                                
                                 this.setAttribute("allow-menu", "true");
                             },
                             get: function GetMenu() { return this.getAttribute("allow-menu"); }
                         },
                         'allow-pagination': {
                             set: function SetPagination(_target) {
-                                if (/Element\]$/i.test((_target || this).toString()) === false) { console.error(`Pagination controls parameter requires an element node target: ${this.nodeName.toLowerCase()}.${this.id}.${this.clasName}`); }
-                                this.pagination = Dashing.writer.draw({ name: "_blank", target: _target || this }, {
-                                    parent: { fragment: xtag.createFragment(`<div type="controls" grid-rows="1 1" grid-columns="4 1"></div>`) },
-                                    child: {
-                                        omsg: `<button type="button"><svg width="25px" height="25px"><use xlink:href="#caret-circle-up" height='25px' width='25px' /></svg></button>
-                                               <button type="button"><svg width="25px" height="25px"><use xlink:href="#caret-circle-down" height='25px' width='25px' /></svg></button>`
-                                    }
-                                }, undefined, {
-                                        creator: function RefreshDrawer(doc) {
-                                            // console.log(doc);
-                                        }
-                                    });
                                 this.setAttribute("allow-pagination", this.allowPagination);
                             },
                             get: function () { return this.getAttribute("allow-pagination"); }
                         },
                         'allow-refresh': {
                             set: function SetRefresh(_tar) {
-                                this.table.refresh = Dashing.writer.draw({ name: "_blank", target: _tar }, {
-                                    parent: {
-                                        fragment: xtag.createFragment(`<button data-svg-icon="sync-alt" type="button"></button>`)
-                                    },
-                                    child: {
-                                        omsg: `<svg width="25px" height="25px" data-svg-icon="sync-alt"><use xlink:href="#sync-alt" height='20px' width='20px' /></svg>`
-                                    }
-                                }, undefined, {
-                                        creator: function RefreshDrawer(doc) {
-                                            // console.log(doc);
-                                        }
-                                    });
+                                //
                             },
                             get: function GetAllowRefresh() {
                                 return this.getAttribute("allow-refresh");
@@ -2721,17 +2606,7 @@ ____________________ **/
                                 return this.hasAttribute("table-confirm");
                             },
                             set: function SetTableConfirm(opts) {
-
-                                Dashing.writer.draw({
-                                    name: opts.name || "_blank",
-                                    target: opts.target || this
-                                }, {
-                                        parent: opts.parent || { fragment: xtag.createFragment(`<button type="button" value="Save to database"></button>`) },
-                                        child: opts.child || { omsg: `<svg class="fill-13px"><use xlink:href="#database" width="auto" height="auto"></use></svg>` }
-                                    }, undefined, {
-                                        creator: opts.creator || noop,
-                                        events: opts.events || {}
-                                    });
+                                //
                             }
                         },
                         'cell-value': {
@@ -2893,24 +2768,6 @@ ____________________ **/
                                 Dashing.platform = { type: this.parentNode.querySelector('select').value };
 
                                 this.parentNode.outerHTML = "";
-
-                                Dashing.writer.draw({ name: "prompter", target: document.querySelector("x-modal[type='startup']") }, {
-                                    parent: {
-                                        id: "platform-found-prompt",
-                                        class: 'prompt-fadeOut',
-                                        message: `Congratulations!`
-                                    },
-                                    child: {
-                                        confirm: false,
-                                        message: `You chose the, ${Dashing.platform.type} platform.`
-                                    }
-                                }, undefined, {
-                                        creator: function PromptDrawerCallback(doc) {
-                                            window.setTimeout(function PromptRemoveTimeout() {
-                                                doc.parentNode.removeChild(doc);
-                                            }, 3000);
-                                        }
-                                    });
 
                             }
                         },
@@ -3112,16 +2969,7 @@ ____________________ **/
                         switch (name) {
                             // 
                             case "fragment":
-                                Dashing.writer.draw({
-                                    name: options.name || "_blank",
-                                    target: options.target
-                                }, {
-                                        parent: options.parent,
-                                        child: options.child
-                                    }, undefined, {
-                                        creator: options.creator,
-                                        events: options.events
-                                    });
+                                //
                                 break;
                             // 
                             case "templates":

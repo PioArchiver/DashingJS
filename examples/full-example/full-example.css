@@ -46,7 +46,7 @@ x-book#main-display {
         left: 0px;
         width: 150px;
         height: 100%;
-        background-color: rgb(78, 125, 155);
+        background-color: rgb(35, 45, 55);
     }
     x-book#main-display > x-page[active] {
         width: calc(100% - 150px);
