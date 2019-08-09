@@ -357,7 +357,7 @@ ____________________ **/
             this.width = "auto";
             this.height = "auto";
 
-            this.svg = New Svg();
+            this.svg = new Svg();
             this.canvas = new Canvas();
 
             this.css = css;
@@ -407,9 +407,9 @@ ____________________ **/
     }
 
     // Create the HTML Element Prototype Mixin 
-    class DashingElement extends Dashing.htmlElement() {
+    class DashingElement {
         constructor() {
-            super();
+            //
         }
         connectedCallback() {
             //
@@ -881,9 +881,9 @@ ____________________ **/
             // set the extension
             this.extension = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
             // set the images
-            this.writer = new Writer();
+            this.writer = Writer;
             // set the iconography
-            this.iconography = iconography;
+            this.iconography = Iconography;
 
                 // Set added properties
                 protokeys = Dashing.setAddedProps(dashed);
@@ -1083,12 +1083,12 @@ ____________________ **/
         }
         get iconography() { return this.Iconography || false; }
         set iconography(value) {
-            if (this.Iconography !== false) { return true; }
-            this.Iconography = this.typeOf(value) === "function" ? value.name === "Iconography" ? new value() : false : false;
+            if (this.Iconography) { return true; }
+            this.Iconography = this.typeOf(value) === "function" ? new value() : false;
         }
         get images() { return this.Images || false; }
         set images(value) {
-            if (this.Images !== false) { return true; }
+            if (this.Image) { return true; }
             this.Images = this.typeOf(value) === "function" ? value.name === "Images" ? new value() : false : false;
         }
         set bounded(elem) {
@@ -1108,10 +1108,10 @@ ____________________ **/
         }
         get platform() { return this.themed.platform || false; }
         get writer() {
-            //
+            return this.Writer;
         }
         set writer(value) {
-            if (this.Writer !== false) { return true; }
+            if (this.Writer) { return true; }
             this.Writer = this.typeOf(value) === "function" ? new value() : false;
         }
     }
@@ -1202,7 +1202,7 @@ ____________________ **/
                             switch (isInNeedOf) {
                                 case "prompt":
                                     let _dbid = xtag.uid().toString();
-                                    );
+                                    
                                     return true;
                                 case "camera":
                                     return;
