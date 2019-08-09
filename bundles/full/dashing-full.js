@@ -407,7 +407,7 @@ ____________________ **/
     }
 
     // Create the HTML Element Prototype Mixin 
-    class DashingElement extends Dashing.htmlElement() {
+    class DashingElement {
         constructor() {
             super();
         }
