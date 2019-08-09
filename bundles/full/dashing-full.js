@@ -1084,7 +1084,7 @@ ____________________ **/
         get iconography() { return this.Iconography || false; }
         set iconography(value) {
             if (this.Iconography !== false) { return true; }
-            this.Iconography = this.typeOf(value) === "function" ? value.name === "Iconography" ? new value() : false : false;
+            this.Iconography = this.typeOf(value) === "function" ? new value() : false;
         }
         get images() { return this.Images || false; }
         set images(value) {
