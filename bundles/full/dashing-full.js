@@ -409,7 +409,7 @@ ____________________ **/
     // Create the HTML Element Prototype Mixin 
     class DashingElement {
         constructor() {
-            super();
+            //
         }
         connectedCallback() {
             //
