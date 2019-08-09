@@ -1083,12 +1083,12 @@ ____________________ **/
         }
         get iconography() { return this.Iconography || false; }
         set iconography(value) {
-            if (this.Iconography !== false) { return true; }
+            if (this.Iconography) { return true; }
             this.Iconography = this.typeOf(value) === "function" ? new value() : false;
         }
         get images() { return this.Images || false; }
         set images(value) {
-            if (this.Images !== false) { return true; }
+            if (this.Image) { return true; }
             this.Images = this.typeOf(value) === "function" ? value.name === "Images" ? new value() : false : false;
         }
         set bounded(elem) {
@@ -1111,7 +1111,7 @@ ____________________ **/
             return this.Writer;
         }
         set writer(value) {
-            if (this.Writer !== false) { return true; }
+            if (this.Writer) { return true; }
             this.Writer = this.typeOf(value) === "function" ? new value() : false;
         }
     }
