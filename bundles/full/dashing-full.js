@@ -236,7 +236,7 @@ ____________________ **/
         add(name, image) {
             this.query(name) === false ? this.library[name] = image : true;
         }
-        get library { return this.Library || false; }
+        get library() { return this.Library || false; }
         set library(value) {
             if (this.Library !== false) { return true; }
             this.Library = Dashing.typeOf(value) === "array" ? value : [];
