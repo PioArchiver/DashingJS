@@ -2650,14 +2650,10 @@ ____________________ **/
                     return {
                         created: function CreatedModal() {
                             this.overlayElement = document.createElement('x-modal-overlay');
-                            this.formStartup = this.formStartup;
                             this.buttonToggle = this.buttonToggle;
-                            this.messagesAllowed = this.hasAttribute("messages-allowed");
                         },
                         inserted: function InsertedModal() {
                             if (Dashing.BrowserInfo.oldiOS || Dashing.BrowserInfo.oldDroid) { setTop(this); }
-                            // Pass the 'this' element target to the 'database-table setter' to append the db table if needed.
-                            if (this.databaseTable === "true") { this.databaseTable = "insert"; }
                         },
                         removed: function RemoveModal() {
                             if (this.type === "startup") {
@@ -2701,18 +2697,6 @@ ____________________ **/
 
                 static attrs() {
                     return {
-                        'messages-allowed': {
-                            get: function GetMsgsAllowed() { return this.getAttribute("messages-allowed"); },
-                            set: function SetMsgsAllowed(val) {
-                                this.setAttribute("messages-allowed", val);
-                                this.msgsAllowed = val;
-                                if (val === true) {
-                                    this.messages = {
-                                        length: 0
-                                    };
-                                }
-                            }
-                        },
                         focus: {
                             set: function SetFocus(val) {
                                 if (this.hasAttribute("focus")) {
@@ -2724,31 +2708,6 @@ ____________________ **/
                             },
                             get: function GetFocus() { return this.getAttribute("focus"); }
                         },
-                        'response-target': {
-                            set: function (val) {
-                                this.setAttribute("response-target", val);
-                                this.display = document.getElementById(val);
-                            },
-                            get: function () { return this.getAttribute("response-target"); }
-                        },
-                        'database-table': {
-                            get: function GetDBTable() { return this.getAttribute("database-table") || false; },
-                            set: function SetDBTable(val) {
-                                if (val === "true") { this.hasDBTable = true; }
-                                else if (/insert$/.test(val.toString()) === true) {
-                                    this.setAttribute("database-table", "true");
-                                    Dashing.rootElement.userRequestServices("DBTable", this, `<key class="memory">AwaitingStart</key><value>Awaiting web application database startup.</value>`);
-                                }
-                                else { console.error(`Error: Setter option not available for, ${this.nodeName.toLowerCase()}#${this.id}.${this.className}`); }
-                            }
-                        },
-                        'form-startup': {
-                            get: function GetStartupForm() { return this.getAttribute("form-startup") || false; },
-                            set: function SetStartupForm(val) {
-                                this.setAttribute("form-startup", val);
-                                this.mform = document.getElementById(val);
-                            }
-                        },
                         'button-toggle': {
                             get: function GetButtonCreate() {
                                 return this.getAttribute("button-toggle") || false;
@@ -2757,31 +2716,6 @@ ____________________ **/
                                 this.setAttribute("button-toggle", val);
                                 this.Toggle = document.getElementById(val);
                             }
-                        },
-                        'button-create': {
-                            get: function GetButtonCreate() {
-                                return this.getAttribute("button-create") || false;
-                            },
-                            set: function SetButtonCreate(val) {
-                                this.setAttribute("button-create", val);
-                                this.Create = document.getElementById(val);
-                            }
-                        },
-                        'button-confirm': {
-                            set: function SetSubmitEvent(val) {
-                                this.Confirm = document.getElementById(val);
-                                if (this.Confirm === undefined) {
-                                    let frag = document.createElement("button");
-                                    frag.type = "button";
-                                    frag.innerHTML = "Confirm";
-                                    frag.value = "Confirm";
-
-                                    this.appendChild(frag);
-                                    this.Confirm = document.getElementById(val);
-                                }
-                                this.setAttribute("button-confirm", val);
-                            },
-                            get: function GetSubmitEvent() { return this.getAttribute("button-confirm"); }
                         },
                         'escape-hide': {
                             get: function () { return this.hasAttribute("escape-hide"); },

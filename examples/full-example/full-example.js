@@ -9,7 +9,11 @@ window.addEventListener("load", function LoadExample() {
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
-            let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "default", {
+            Dashing.writer.stampPattern = {
+                name: `start-modal`,
+                snippet: `<x-modal click-hide=""></x-modal>`
+            };
+            let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "start-modal", {
                 width: "88%",
                 height: "66%"
             });
