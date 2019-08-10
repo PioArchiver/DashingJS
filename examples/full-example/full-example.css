@@ -1,3 +1,9 @@
+body {
+    opacity: 0;
+    animation-name: application-startup;
+    animation-fill-mode: forwards;
+    animation-duration: 3s;
+}
 x-extension[grid-template] {
     position: fixed;
 }
