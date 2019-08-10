@@ -53,3 +53,15 @@ x-book#main-display {
         height: 100%;
         overflow-y: scroll;
     }
+    x-book > x-modal {
+        display: none;
+    }
+    x-book > x-modal[active] {
+        display: grid;
+        position: absolute;
+        top: 4%;
+        left: 2%;
+        width: 96%;
+        height: 92%;
+        background-color: rgba(65,65,65,.65);
+    }
