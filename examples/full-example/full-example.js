@@ -13,7 +13,7 @@ window.addEventListener("load", function LoadExample() {
                 name: `start-modal`,
                 snippet: `<x-modal click-hide=""></x-modal>`
             };
-            let w = Dashing.MainDisplay.writer.stamp.apply(Dashing.MainDisplay, "start-modal", {
+            let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "start-modal", {
                 width: "88%",
                 height: "66%"
             });
