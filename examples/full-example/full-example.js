@@ -22,7 +22,7 @@ window.addEventListener("load", function LoadExample() {
                 node.innerHTML = `<div>
                         <h1>About: ${val.meta.name}</h1>
                         <p>${val.meta.description}</p>
-                        <p>Version" ${val.meta.version}</p>
+                        <p>Version: ${val.version}</p>
                     </div>`;
             });
             w.catch(function RejectMainDsiplay(name, opts) { });
