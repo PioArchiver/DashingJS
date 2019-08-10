@@ -1,12 +1,24 @@
+@keyframes application-startup {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 body {
     margin: 0px;
 }
 body:not([allow-scroll-x]) {
     overflow-x: hidden;
 }
-body * {
-    display: none;
-    transition: display 2s;
+body {
+    opacity: 0;
+    animation-name: application-startup;
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier();
 }
 
 /** *****
