@@ -410,8 +410,9 @@ ____________________ **/
                     doc.innerHTML = snippet;
                 r.appendChild(doc.firstElementChild);
                 r.firstElementChild.setAttribute("data-stamp", name);
+                console.log(opts);
                 context.appendChild(r.firstElementChild);
-                res ? res(context.querySelector(`[data-stamp="${name}"]`), opts) : false;
+                res ? res(context.querySelector(`[data-stamp="${name}"]`)) : false;
             });
         }
         set stampPattern(spattern) {
@@ -2702,16 +2703,14 @@ ____________________ **/
 
                 static attrs() {
                     return {
-                        focus: {
-                            set: function SetFocus(val) {
-                                if (this.hasAttribute("focus")) {
-                                    this.show();
+                        active: {
+                            set: function SetActive(val) {
+                                if (Dashing.typeOf(val) === "string" || val === true) {
+                                    this.setAttribute("active", val);
                                 }
-                                else {
-                                    this.hide();
-                                }
+                                else if (val === false) { this.removeAttribute("active"); }
                             },
-                            get: function GetFocus() { return this.getAttribute("focus"); }
+                            get: function GetActive() { return this.hasAttribute("active") || null; }
                         },
                         'button-toggle': {
                             get: function GetButtonCreate() {
