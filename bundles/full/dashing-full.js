@@ -393,18 +393,20 @@ ____________________ **/
                 context = this;
             }
             else { return false; }
-            if (Dashing.writer.stampPattern(name)) {
-                snippet = Dashing.writer.stampPattern(name);
-            }
-            else { return false; }
-            let opts = null;
-            if (Dashing.typeOf(options) === "object") {
-                opts = options;
-            }
-            else { return false; }
-            let r = document.createDocumentFragment();
+ 
+            return new Promise() {
+                if (Dashing.writer.stampPattern(name)) {
+                    snippet = Dashing.writer.stampPattern(name);
+                }
+                else { return false; }
+                let opts = null;
+                if (Dashing.typeOf(options) === "object") {
+                    opts = options;
+                }
+                else { return false; }
+                let r = document.createDocumentFragment();
                 r.innerHTML = snippet;
-            return r;
+            };
         }
         set stampPattern(spattern) {
             let name = null;
