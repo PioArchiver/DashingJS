@@ -1057,6 +1057,7 @@ ____________________ **/
         set writer(value) {
             if (this.Writer) { return true; }
             this.Writer = this.typeOf(value) === "function" ? new value() : false;
+            this.writer.extension = this.extension;
         }
         set bounded(options) {
             // 
