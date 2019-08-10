@@ -398,27 +398,20 @@ x-page {
 }
 
 /**
-	* @name x-modal[type='startup']
+	* @name x-modal
 	*
 **/
-x-modal[type="startup"] {
-    background-color: rgba(255, 100, 0, 0);
+
+x-modal[active="true"] {
     display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-}
-
-    x-modal[type="startup"] > form.co-form {
-        padding: 10px;
-        height: 0%;
-        width: 0%;
-        overflow-Y: scroll;
-        overflow-X: hidden;
-    }
-
-x-modal[focus="true"] {
-    overflow: visible;
-    visibility: visible;
+    overflow: auto;
+    z-index: 1;
+    opacity: 1;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 x-modal[modal-index="1"] {
@@ -452,60 +445,12 @@ x-modal[modal-index="3"] + x-modal-overlay {
 x-modal[modal-index="4"] + x-modal-overlay {
     z-index: 7;
 }
-
-x-modal[type="startup"][focus="false"] {
-    visibility: hidden;
-}
-
-/** @name x-modal[type='selection'] **/
-x-modal[type="selection"] {
-    position: relative;
-    display: flex;
-    padding: 100px 15px 15px 15px;
-}
-
-    x-modal[type="selection"] + x-modal-overlay {
-        background-color: rgba(25,25,125,.125);
-        border-bottom: rgba(25,125,25,.25) dotted 4px;
-        height: 100px;
-    }
-
-/** *****
- * @name x-modal
- **
- **
- ***** **/
 x-modal {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    max-width: 100%;
-    max-height: 100%;
-    overflow: auto;
-    z-index: 1;
-    opacity: 1;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    display: hidden;
 }
 
-x-modal-overlay {
+x-modal + x-modal-overlay {
     display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(30, 30, 35, 1);
-    opacity: 0.93;
 }
 
 x-modal[hidden], 
@@ -514,47 +459,20 @@ x-modal:not([overlay]) + x-modal-overlay {
     display: none;
 }
 
-x-modal[transition] {
-    -webkit-transform: translate(-50%, -50%) scale(0.9);
-    -moz-transform: translate(-50%, -50%) scale(0.9);
-    -o-transform: translate(-50%, -50%) scale(0.9);
-    transform: translate(-50%, -50%) scale(0.9);
-}
-
-    x-modal[transition], x-modal[transition] + x-modal-overlay {
-        opacity: 0;
-        -webkit-transition: opacity 0.3s ease, -webkit-transform ease 0.35s;
-        -moz-transition: opacity 0.3s ease, -moz-transform ease 0.35s;
-        -o-transition: opacity 0.3s ease, -o-transform ease 0.35s;
-        transition: opacity 0.3s ease, transform ease 0.35s;
-    }
-
-x-modal[transition="show"] {
-    opacity: 1;
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    -moz-transform: translate(-50%, -50%) scale(1);
-    -o-transform: translate(-50%, -50%) scale(1);
-    transform: translate(-50%, -50%) scale(1);
-}
-
-    x-modal[transition="show"] + x-modal-overlay {
-        opacity: 0.5;
-    }
-
 @media only screen and (max-width: 1628px) {
-    x-modal[focus="true"][type="startup"] {
+    x-modal[active] {
         width: 80%;
     }
 }
 
 @media only screen and (max-width: 1314px) {
-    x-modal[focus="true"][type="startup"] {
+    x-modal[active] {
         width: 90%;
     }
 }
 
 @media only screen and (max-width: 1024px) {
-    x-modal[focus="true"][type="startup"] {
+    x-modal[active] {
         width: 100%;
     }
 }
