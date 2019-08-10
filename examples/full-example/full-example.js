@@ -20,8 +20,9 @@ window.addEventListener("load", function LoadExample() {
             w.then(function ResolveMainDisplay(node) {
                 node.active = "true";
                 node.innerHTML = `<div>
-                        <h1>${val.meta.name}</h1>
+                        <h1>About: ${val.meta.name}</h1>
                         <p>${val.meta.description}</p>
+                        <p>Version" ${val.meta.version}</p>
                     </div>`;
             });
             w.catch(function RejectMainDsiplay(name, opts) { });
