@@ -209,10 +209,6 @@ ____________________ **/
         }
     };
 
-    // Create new CssWriter
-    const css = new CssWriter("ApplicationInlineStyleElement"),
-        sheet = css.sheet;
-
     // Svg class
     class Svg {
         constructor() {
@@ -426,159 +422,80 @@ ____________________ **/
     }
 
     // Pseudos
-    (function _Pseudos_() {
-        // Transitions
-        class Transitions {
-            constructor(options) { merge(this, options); this.allowed = []; }
 
-            update(name, elem) {
-                let delta = this[name];
-                if (delta !== undefined && delta.ready === false) {
-                    delta.ready = true;
-                    this.attrs(this, name, {
 
-                    });
+    xtag.pseudos.transition = {
+        onCompiled: function OnCompiled(fn, pseudo) {
+            let args = pseudo.arguments;
+
+            this.style = pseudo.listener() || {
+                delta: {}
+            };
+            this.style.keys = Object.keys(this.style.delta);
+            this.state = args[1];
+            this.attrs = {};
+            for (let c = 2; c < args.length; c++) {
+                this.attrs[args[c]] = { name: args[c], type: args[0] };
+            }
+            this.attrs.keys = Object.keys(this.attrs);
+            this.show = `[show="${this.keys}"]`;
+            this.hide = ``;
+        },
+        action: function (a, n) {
+            // Execute action only if n is defined. 
+            if (n === undefined) { return false; }
+            let args = a.arguments;
+
+            let _sat = this.getAttribute("transition-show") || "fade-in",
+                _hat = this.getAttribute("transition-hide") || "fade-out",
+                _st = transitions[_sat],
+                _ht = transitions[_hat];
+            // loop through attrs keys
+            for (let i = 0; i < a.attrs.keys.length; i++) {
+                let _attr = this.hasAttribute(a.attrs.keys[i]) === true ? a.attrs[a.attrs.keys[i]].name : false,
+                    _cstate = this.hasAttribute(a.attrs.keys[i]) === true ? true : false;
+
+                a.validated = a.attrs[a.attrs.keys[i]].type === "boolean" ? {
+                    boolean: true,
+                    string: false,
+                    name: a.attrs[a.attrs.keys[i]].name,
+                    value: this.getAttribute(a.attrs[a.attrs.keys[i]].name) || "",
+                    duration: this.getAttribute("transition-duration") || "1s"
+                } : {
+                        boolean: false,
+                        string: a.attrs[a.attrs.keys[i]].type,
+                        name: a.attrs[a.attrs.keys[i]].name,
+                        value: this.getAttribute(a.attrs[a.attrs.keys[0]].name) || "",
+                        duration: this.getAttribute("transition-duration") || "1s"
+                    };
+
+                if (a.validated.boolean === true) {
+                    transitions[a.validated.name] === undefined ? transitions[a.validated.name] = { initState: _cstate } : true;
+
+                    a.state = _cstate === true ? "show" : args[1] === "show" ? ("show") : "hide";
                 }
-                else if (delta !== undefined && delta.ready === true) {
-                    delta.ready = false;
-                    delta.hide(elem);
+                else {
+                    transitions[a.attrs.keys[i].name] !== undefined ? transitions[a.attrs.keys[i].name] = { initState: _cstate } : true;
+                    a.state = _cstate === true ? "show" : args[1] === "show" ? ("show") : "hide";
                 }
-            }
-            // allows overrides
-            add(name, options) {
-                this[name] = { id: name, attributes: options.attrs };
-            }
 
-            get attrs() {
-                return function ApplyAttr(init, attr, state, override) {
-                    if (state === "show") {
-                        let val = null;
-
-                        if (override !== undefined) { val = override; }
-                        else { val = "true"; };
-                        init === false ? this.removeAttribute(attr) : this.setAttribute(attr, val);
-                    }
-                    else if (state === "hide") {
-                        let val = null;
-
-                        if (override !== undefined) { val = override; }
-                        else { val = "true"; };
-
-                        init === false ? this.setAttribute(attr, val) : this.removeAttribute(attr);
-                    }
+                a.transitions = {
+                    hide: transitions[_hat],
+                    show: transitions[_sat]
                 };
-            }
-            get style() {
-                return function ApplyStyle(pseudo, state) {
-                    let _style = pseudo.style;
 
-                    css.transitions(this, _style, state);
-                };
+                if (a.transitions[a.state].attributes[a.attrs.keys[i]] === args[0]) {
+                    transitions[args[1]].apply(this, [a]);
+                }
+                else {
+                    a.override = a.validated.value;
+                    transitions[args[1]].apply(this, [a]);
+                }
+
             }
 
         }
-        let transitions = new Transitions({
-            show: function Show(pseudo) {
-                if (pseudo.override === undefined) {
-                    transitions.attrs.apply(this, [transitions[pseudo.validated.name].initState, pseudo.validated.name, "show"]);
-                    transitions.style.apply(this, [pseudo, "show"]);
-                }
-                else if (typeof pseudo.override === "string") {
-                    transitions.attrs.apply(this, [pseudo.initState, pseudo.validated.name, "show"]);
-                    transitions.style.apply(this, [pseudo, "show"]);
-                }
-                return true;
-            },
-            hide: function Hide(pseudo) {
-                if (pseudo.override === undefined) {
-                    transitions.attrs.apply(this, [transitions[pseudo.validated.name].initState, pseudo.validated.name, "hide"]);
-                    transitions.style.apply(this, [pseudo, "hide"]);
-                }
-                else if (typeof pseudo.override === "string") {
-                    console.log(pseudo);
-                    transitions.attrs.apply(this, [pseudo.initState, pseudo.validated.name, "hide"]);
-                    transitions.style.apply(this, [pseudo, "hide"]);
-                }
-                return true;
-            }
-        });
-
-        xtag.addTransition = function AddTransition(name, options) { transitions.add(name, options); };
-
-        xtag.pseudos.transition = {
-            onCompiled: function OnCompiled(fn, pseudo) {
-                let args = pseudo.arguments;
-
-                this.style = pseudo.listener() || {
-                    delta: {}
-                };
-                this.style.keys = Object.keys(this.style.delta);
-                this.state = args[1];
-                this.attrs = {};
-                for (let c = 2; c < args.length; c++) {
-                    this.attrs[args[c]] = { name: args[c], type: args[0] };
-                }
-                this.attrs.keys = Object.keys(this.attrs);
-                this.show = `[show="${this.keys}"]`;
-                this.hide = ``;
-            },
-            action: function (a, n) {
-                // Execute action only if n is defined. 
-                if (n === undefined) { return false; }
-                let args = a.arguments;
-
-                let _sat = this.getAttribute("transition-show") || "fade-in",
-                    _hat = this.getAttribute("transition-hide") || "fade-out",
-                    _st = transitions[_sat],
-                    _ht = transitions[_hat];
-                // loop through attrs keys
-                for (let i = 0; i < a.attrs.keys.length; i++) {
-                    let _attr = this.hasAttribute(a.attrs.keys[i]) === true ? a.attrs[a.attrs.keys[i]].name : false,
-                        _cstate = this.hasAttribute(a.attrs.keys[i]) === true ? true : false;
-
-                    a.validated = a.attrs[a.attrs.keys[i]].type === "boolean" ? {
-                        boolean: true,
-                        string: false,
-                        name: a.attrs[a.attrs.keys[i]].name,
-                        value: this.getAttribute(a.attrs[a.attrs.keys[i]].name) || "",
-                        duration: this.getAttribute("transition-duration") || "1s"
-                    } : {
-                            boolean: false,
-                            string: a.attrs[a.attrs.keys[i]].type,
-                            name: a.attrs[a.attrs.keys[i]].name,
-                            value: this.getAttribute(a.attrs[a.attrs.keys[0]].name) || "",
-                            duration: this.getAttribute("transition-duration") || "1s"
-                        };
-
-                    if (a.validated.boolean === true) {
-                        transitions[a.validated.name] === undefined ? transitions[a.validated.name] = { initState: _cstate } : true;
-
-                        a.state = _cstate === true ? "show" : args[1] === "show" ? ("show") : "hide";
-                    }
-                    else {
-                        transitions[a.attrs.keys[i].name] !== undefined ? transitions[a.attrs.keys[i].name] = { initState: _cstate } : true;
-                        a.state = _cstate === true ? "show" : args[1] === "show" ? ("show") : "hide";
-                    }
-
-                    a.transitions = {
-                        hide: transitions[_hat],
-                        show: transitions[_sat]
-                    };
-
-                    if (a.transitions[a.state].attributes[a.attrs.keys[i]] === args[0]) {
-                        transitions[args[1]].apply(this, [a]);
-                    }
-                    else {
-                        a.override = a.validated.value;
-                        transitions[args[1]].apply(this, [a]);
-                    }
-
-                }
-
-            }
-        };
-
-    })();
+    };
 
     let _setprog = 0;
     function noop(n) { return n || false; }
@@ -880,7 +797,9 @@ ____________________ **/
             this.startscreen = dashed.startscreen === undefined ? false : dashed.startscreen;
             // set the extension
             this.extension = document.querySelector(dashed.rootElement) || document.querySelector("x-extension");
-            // set the images
+            // set the css 
+            this.stylesheet = CssWriter;
+            // set the writer
             this.writer = Writer;
             // set the iconography
             this.iconography = Iconography;
@@ -1078,41 +997,33 @@ ____________________ **/
                 }
             };
         }
-        register(name, options) {
-            //
-        }
+        register(name, chlass) {
+            customElements.define(name, chlass);
+        } 
         get iconography() { return this.Iconography || false; }
         set iconography(value) {
             if (this.Iconography) { return true; }
             this.Iconography = this.typeOf(value) === "function" ? new value() : false;
         }
+        get stylesheet() { }
+        set stylesheet(value) {
+            if (this.Stylesheet) { return true; }
+            this.Stylesheet = this.typeOf(value) === "function" ? new value() : false;
+        }
         get images() { return this.Images || false; }
         set images(value) {
             if (this.Image) { return true; }
-            this.Images = this.typeOf(value) === "function" ? value.name === "Images" ? new value() : false : false;
+            this.Images = this.typeOf(value) === "function" ? new value() : false;
         }
-        set bounded(elem) {
-            elem.bounds = {
-                top: elem.getBoundingClientRect().top,
-                left: elem.getBoundingClientRect().left,
-                bottom: elem.getBoundingClientRect().bottom,
-                right: elem.getBoundingClientRect().right,
-                width: elem.getBoundingClientRect().width,
-                height: elem.getBoundingClientRect().height
-            };
-        }
-        set platform(Platform) {
-            // Enhancement: create a theme class with getters and setters for platform and other properties
-            this.themed ? true : this.themed = {};
-            this.themed.platform = Platform;
-        }
-        get platform() { return this.themed.platform || false; }
         get writer() {
             return this.Writer;
         }
         set writer(value) {
             if (this.Writer) { return true; }
             this.Writer = this.typeOf(value) === "function" ? new value() : false;
+        }
+        set bounded(options) {
+            // 
         }
     }
 
