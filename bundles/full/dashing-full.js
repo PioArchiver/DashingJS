@@ -386,7 +386,7 @@ ____________________ **/
         set penStroke(scolor) { this.PenStroke = scolor; }
         get penStroke() { return this.PenStroke; }
 
-        stamp(name, options, prom) {
+        stamp(name, options) {
             let context = null,
                 snippet = null;
             if (Dashing.typeOf(this) === "htmlelement") {
