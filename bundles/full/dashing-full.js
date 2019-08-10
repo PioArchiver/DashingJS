@@ -1440,14 +1440,7 @@ ____________________ **/
                 }
                 get book() { }
 
-                get writer() { return Dashing.writer.draw; }
-                set writer(options) {
-                    if (Dashing.typeOf(options) === "object") {
-                        Dashing.writer.add("", {
-
-                        });
-                    }
-                }
+                get writer() { return Dashing.writer; }
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
@@ -1952,6 +1945,7 @@ ____________________ **/
                 get drawer() {
                     return this.extension.icons.drawer;
                 }
+                get writer() { return Dashing.writer; }
 
             };
 
