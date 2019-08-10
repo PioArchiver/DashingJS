@@ -1,8 +1,8 @@
-body *:not(x-modal), body *:not(x-page), body *:not(x-book) {
+body {
     opacity: 0;
     animation-name: application-startup;
     animation-fill-mode: forwards;
-    animation-duration: 5s;
+    animation-duration: 3s;
     animation-timing-function: ease-in;
 }
 x-extension[grid-template] {
