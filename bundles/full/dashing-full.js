@@ -393,8 +393,8 @@ ____________________ **/
                 context = this;
             }
             else { return false; }
- 
-            return new Promise() {
+
+            return new Promise(function () {
                 if (Dashing.writer.stampPattern(name)) {
                     snippet = Dashing.writer.stampPattern(name);
                 }
@@ -406,7 +406,7 @@ ____________________ **/
                 else { return false; }
                 let r = document.createDocumentFragment();
                 r.innerHTML = snippet;
-            };
+            });
         }
         set stampPattern(spattern) {
             let name = null;
