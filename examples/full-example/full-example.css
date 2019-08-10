@@ -74,6 +74,7 @@ x-book#main-display {
     }
     x-book > x-modal[active] > div {
         color: rgba(235, 235, 249, 1);
+        font-family: calibri;
     }
         x-book > x-modal[active] > div > h1 {
             margin-left: 1em;
