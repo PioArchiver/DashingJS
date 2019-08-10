@@ -338,13 +338,11 @@ ____________________ **/
 
     // Shadow class
     class Shadow {
-        constructor() {
-            this.extension = false;
-        }
+
     }
 
     // Writer class
-    class Writer {
+    class Writer extends Shadow {
         constructor() {
             this.PenTip = {};
             this.patterns = {};
@@ -361,26 +359,6 @@ ____________________ **/
             this.svg = new Svg();
             this.canvas = new Canvas();
 
-        }
-
-        add(type, options) {
-            if (!options.name || !type) {
-                console.error(`Value Error: Type was ${Dashing.typeOf(type)} `);
-                console.error(`Value Error: options was ${Dashing.typeOf(options.name)} `);
-                return false;
-            }
-            else if (Dashing.typeOf(options) === "object") {
-                switch (option.name) {
-                    case "stamp":
-                        break;
-                    case "inkart":
-                        break;
-                    case "borderart":
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
         set borderArt(value) {
@@ -407,9 +385,10 @@ ____________________ **/
         stamp(name, options) {
             let context = null,
                 snippet = null;
-            if (Dashing.typeOf(this)) {
-                //
+            if (Dashing.typeOf(this) === "htmlelement") {
+                context = this;
             }
+            else { return false; }
             if (Dashing.writer.stampPattern(name)) {
                 snippet = Dashing.writer.stampPattern(name);
             }
@@ -419,6 +398,7 @@ ____________________ **/
                 opts = options;
             }
             else { return false; }
+
 
         }
         set stampPattern(spattern) {
@@ -430,10 +410,8 @@ ____________________ **/
         get stampPattern() { return function GetStampPattern(name) { return this.patterns[name] ? this.patterns[name] : false; } }
 
         set extension(value) {
-            console.log(Dashing.typeOf(value));
             if (this.Extension) { return true; }
-            console.log(Dashing.typeOf(value)); 
-            this.Extension = Dashing.typeOf(value) === "object HTMLElement" ? value : false; 
+            this.Extension = Dashing.typeOf(value) === "htmlelement" ? value : false; 
         }
 
     }
