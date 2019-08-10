@@ -345,8 +345,11 @@ ____________________ **/
     class Writer extends Shadow {
         constructor() {
             super();
-            this.PenTip = {};
-            this.patterns = {};
+            this.inkart = {};
+            this.borderart = {};
+            this.patterns = {
+                default: `<div default-stamp="true"></div>`
+            };
 
             this.PenStroke = "black";
             this.PenFill = "black";
