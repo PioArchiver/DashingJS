@@ -658,7 +658,7 @@ ____________________ **/
         }
     }
 
-    class pioDB extends Validator {
+    class localDB extends Validator {
         constructor(data) {
             super();
             this.status = {
@@ -3132,7 +3132,7 @@ ____________________ **/
             }
         },
         'add(prototype=toggle)': Toggle,
-        'add(prototype=localDB)': pioDB,
+        'add(prototype=localDB)': localDB,
         'add(prototype=model)': Model,
         'add(prototype=validator)': Validator
     });
