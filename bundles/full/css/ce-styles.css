@@ -18,7 +18,6 @@ body:not(x-modal) {
     animation-name: application-startup;
     animation-fill-mode: forwards;
     animation-duration: 1s;
-    animation-timing-function: cubic-bezier();
 }
 
 /** *****
