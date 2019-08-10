@@ -402,8 +402,9 @@ ____________________ **/
                 opts = options;
             }
             else { return false; }
-            let r = false;
-            return ( r = document.createDocumentFragment(), r.innerHTML = snippet, r );
+            let r = document.createDocumentFragment();
+                r.innerHTML = snippet;
+            return r;
         }
         set stampPattern(spattern) {
             let name = null;
