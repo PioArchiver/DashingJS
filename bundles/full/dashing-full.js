@@ -2723,10 +2723,13 @@ ____________________ **/
                                 let n = document.getElementById(val);
                                 if (!n) {
                                     n = document.createElement("button");
-                                        n.setAttribute("id", val);
-                                        n.innerHTML = "|O|";
+                                    n.setAttribute("id", val);
+                                    n.innerHTML = "|O|";
                                     this.appendChild(n);
                                     this.Toggle = this.querySelector(`#${val}`);
+                                }
+                                else {
+                                    //
                                 }
                             }
                         },
