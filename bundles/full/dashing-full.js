@@ -1299,7 +1299,7 @@ ____________________ **/
                         created: function CreatedXExtension() {
                             this.jsonSchema = [];
                             this.model = true;
-                            this.css = css;
+                            this.stylesheet = Dashing.stylesheet;
                             this.icons = Dashing.iconography;
                         },
                         inserted: function InsertedXExtension() {
@@ -1381,7 +1381,7 @@ ____________________ **/
                             connected: true,
                             get: function GetStyleSheet() { return this.getAttribute("stylesheet") || false; },
                             set: function SetSyleSheet(value) {
-                                this.styles = new CssWriter(value);
+                                if (this.Stylesheet) { return true; }
                             }
                         },
                         "main-menu": {
@@ -2324,12 +2324,6 @@ ____________________ **/
                             tab.setAttribute('selected', '');
                             let index = xtag.toArray(tab.parentNode.children).indexOf(tab);
                             if (index !== this.selectedIndex) { this.selectedIndex = index; }
-                            
-                            if (!rules[index]) {
-                                rules[index] = 1;
-                                let transform = 'transform: translateX(' + (index * -100) + '%);';
-                                sheet.insertRule('x-tabbox[selected-index="' + index + '"] > ul > li:nth-of-type(' + (index + 1) + '){ opacity: 1; z-index: 1; ' + xtag.prefix.css  + '}', sheet.cssRules.length);
-                            }
                             
                             let panel = xtag.queryChildren(this, 'ul > li')[e.detail.index];
                             if (panel) { panel.setAttribute('selected', ''); }
