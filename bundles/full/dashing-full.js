@@ -2616,7 +2616,7 @@ ____________________ **/
                             //
                         },
                         'tap:delegate(button[toggler])': function ChangePlatform(e) {
-                            Dashing.extension.setAttribute("platform", this.selectedOptions[0].value.toLowerCase());
+                            //
                         }
                     };
                 }
@@ -2631,6 +2631,16 @@ ____________________ **/
                                 else if (val === false) { this.removeAttribute("active"); }
                             },
                             get: function GetActive() { return this.hasAttribute("active") || null; }
+                        },
+                        overlay: {
+                            connected: true,
+                            get: function GetOverlay() { return this.hasAttribute("overlay"); },
+                            set: function SetOverlay(value) {
+                                if (value === true && this.overlayElement === true) {
+                                    this.imsertAdjacentElement("afterend", this.overlayElement);
+                                    this.overlayElement = true;
+                                }
+                            }
                         },
                         'toggle': {
                             connected: true,
