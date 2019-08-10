@@ -68,3 +68,9 @@ x-book#main-display {
     x-book > x-modal[active] > div {
         color: rgba(235, 235, 249, 1);
     }
+        x-book > x-modal[active] > div > p {
+            margin-left: 2em;
+        }
+        x-book > x-modal[active] > div > ol {
+            list-style: none;
+        }
