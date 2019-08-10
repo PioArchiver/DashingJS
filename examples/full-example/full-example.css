@@ -1,4 +1,4 @@
-body {
+body:not(x-modal) {
     opacity: 0;
     animation-name: application-startup;
     animation-fill-mode: forwards;
