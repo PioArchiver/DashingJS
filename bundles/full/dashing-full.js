@@ -356,7 +356,6 @@ ____________________ **/
             this.svg = new Svg();
             this.canvas = new Canvas();
 
-            this.css = css;
         }
 
         add(type, options) {
