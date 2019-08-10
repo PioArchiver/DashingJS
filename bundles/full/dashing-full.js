@@ -393,8 +393,6 @@ ____________________ **/
                 context = this;
             }
             else { return false; }
-            let res = prom.resolve || false,
-                rej = prom.reject|| false;
             return new Promise(function (res, rej) {
                 if (Dashing.writer.stampPattern(name)) {
                     snippet = Dashing.writer.stampPattern(name);
