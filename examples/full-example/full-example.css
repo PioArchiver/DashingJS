@@ -2,7 +2,8 @@ body:not(x-modal) {
     opacity: 0;
     animation-name: application-startup;
     animation-fill-mode: forwards;
-    animation-duration: 3s;
+    animation-duration: 5s;
+    animation-timing-function: ease-in;
 }
 x-extension[grid-template] {
     position: fixed;
