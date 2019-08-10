@@ -406,8 +406,8 @@ ____________________ **/
             }
             else { return false; }
             console.log(opts);
-
-            return ( let r = document.createDocumentFragment().innerHTML = snippet, r );
+            let r = false;
+            return ( r = document.createDocumentFragment().innerHTML = snippet, r );
         }
         set stampPattern(spattern) {
             let name = null;
