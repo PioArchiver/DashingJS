@@ -2718,11 +2718,12 @@ ____________________ **/
                                 return this.getAttribute("toggle") || false;
                             },
                             set: function SetToggle(val) {
-                                console.log(val);
                                 if (val === false) { this.removeAttribute("toggle"); }
+                                console.log(val);
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
                                 if (!n) {
+                                    console.log(val);
                                     n = document.createElement("button");
                                     n.setAttribute("id", val);
                                     n.innerHTML = "|O|";
