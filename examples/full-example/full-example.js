@@ -10,7 +10,7 @@ window.addEventListener("load", function LoadExample() {
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
             let w = Dashing.MainDisplay.writer;
-            console.log(writer);
+            console.log(w);
             return val;
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
