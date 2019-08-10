@@ -14,7 +14,7 @@ window.addEventListener("load", function LoadExample() {
                 snippet: `<x-modal click-hide=""></x-modal>`
             };
             let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "start-modal", {
-                width: "98%",
+                width: "94%",
                 height: "92%"
             });
             w.then(function ResolveMainDisplay(node) {
