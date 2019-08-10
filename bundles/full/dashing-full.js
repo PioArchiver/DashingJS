@@ -309,14 +309,14 @@ ____________________ **/
                 case "afterend":
                 case "afterbegin":
                 case "beforeend":
-                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild, css)) :
+                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild)) :
                         this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
                     break;
                 case "atIndex":
-                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild, css)) :
-                        this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
+                    opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild)) :
+                        this.drawer !== false ? this.fireDrawer(ico.firstElementChild) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.elements[opts.insertIndex].insertAdjacentElement("afterend", ico.firstElementChild);
                     break;

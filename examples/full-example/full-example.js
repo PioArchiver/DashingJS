@@ -34,7 +34,7 @@ window.addEventListener("load", function LoadExample() {
                 insertAt: "afterbegin",
                 overwrite: true,
                 type: "svg",
-                drawer: function UploadBookMenuIcons(icons, css) {
+                drawer: function UploadBookMenuIcons(icons) {
                     //
                 }
             };
@@ -44,7 +44,7 @@ window.addEventListener("load", function LoadExample() {
                 insertAt: "afterbegin",
                 type: "svg",
                 name: "*",
-                drawer: function BuilderPanelDrawIconography(icons, css) {
+                drawer: function BuilderPanelDrawIconography(icons) {
                     //
                 }
             };
