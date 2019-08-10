@@ -411,7 +411,7 @@ ____________________ **/
                 r.appendChild(doc.firstElementChild);
                 r.firstElementChild.setAttribute("data-stamp", name);
                 context.appendChild(r.firstElementChild);
-                res ? res(context.querySelector(`[dashing-stamp="${name}"]`), opts) : false;
+                res ? res(context.querySelector(`[data-stamp="${name}"]`), opts) : false;
             });
         }
         set stampPattern(spattern) {
