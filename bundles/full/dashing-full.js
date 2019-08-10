@@ -2719,16 +2719,16 @@ ____________________ **/
                             },
                             set: function SetToggle(val) {
                                 if (val === false) { this.removeAttribute("toggle"); }
-                                console.log(val);
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
                                 if (!n) {
-                                    console.log(val);
+                                    console.log(this);
                                     n = document.createElement("button");
                                     n.setAttribute("id", val);
                                     n.innerHTML = "|O|";
                                     this.appendChild(n);
                                     this.Toggle = this.querySelector(`#${val}`);
+                                    console.log(this.Toggle);
                                 }
                                 else {
                                     //
