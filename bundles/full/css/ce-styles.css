@@ -4,6 +4,9 @@ body {
 body:not([allow-scroll-x]) {
     overflow-x: hidden;
 }
+body * {
+    transition: display 2s;
+}
 
 /** *****
  * @name x-extension
