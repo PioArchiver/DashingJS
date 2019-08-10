@@ -389,6 +389,9 @@ ____________________ **/
         stamp(name, options) {
             let context = null,
                 snippet = null;
+            console.log(this);
+            console.log(name);
+            console.log(options);
             if (Dashing.typeOf(this) === "htmlelement") {
                 context = this;
             }
