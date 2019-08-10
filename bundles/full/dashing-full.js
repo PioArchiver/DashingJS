@@ -2647,6 +2647,7 @@ ____________________ **/
                                     n.setAttribute("toggler", "true");
                                     n.innerHTML = "|O|";
                                     this.appendChild(n);
+                                    console.log(this);
                                 }
                                 else {
                                     //
