@@ -23,6 +23,12 @@ window.addEventListener("load", function LoadExample() {
                         <h1>About: ${val.meta.name}</h1>
                         <p>${val.meta.description}</p>
                         <p>Version: ${val.version}</p>
+                        <ol>
+                         <li>Website: ${val.meta.website}</li>
+                         <li>GitHub: ${val.meta.github}</li>
+                         <li>Issues: ${val.meta.issues}</li>
+                         <li>E-Mail: ${val.meta.email}</li>
+                        </ol>
                     </div>`;
             });
             w.catch(function RejectMainDsiplay(name, opts) { });

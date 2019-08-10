@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "meta": {
     "name": "Demo App",
-    "description": "A demo application using DashingJS's full set of custom elements."
+    "description": "A demo application using DashingJS's full set of custom elements.",
+    "website": "https://pioarchiver.github.io/DashingJS/examples/full-example/full-example.html",
+    "github": "https://github.com/PioArchiver/DashingJS",
+    "issues": "https://github.com/PioArchiver/DashingJS/issues",
+    "e-mail": "stevenvansant@kippikio.com"
   },
   "database": {
     "name": "pio-demo-app",
