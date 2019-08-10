@@ -369,26 +369,58 @@ ____________________ **/
                 console.error(`Value Error: options was ${Dashing.typeOf(options.name)} `);
                 return false;
             }
-            else if (typeof option.name === "string" && Dashing.typeOf(options) === "object") {
-                Dashing.iconography.add();
+            else if (Dashing.typeOf(options) === "object") {
+                switch (option.name) {
+                    case "stamp":
+                        break;
+                    case "inkart":
+                        break;
+                    case "borderart":
+                        break;
+                    default:
+                        break;
+                }
             }
-
         }
 
-        pen(name, fn) { }
+        set borderArt(value) {
+            let name = null;
+            if (typeof ptip.name === "string") { name = ptip.name; }
+            else { return false; }
+            this.borderart[name] = typeof ptio.snippet === "string" ? ptio.snippet : "Pen tip Type Error";
+        }
+        get borderArt() { return function GetBorderArt(name) { return this.borderart[name] ? this.borderart[name] : false; } }
+
+        pen(name, options) { }
         set penTip(ptip) {
             let name = null;
             if (typeof ptip.name === "string") { name = ptip.name; }
             else { return false; }
-            this.PenTips[name] = typeof ptio.snippet === "string" ? ptio.snippet : "Pen tip Type Error";
+            this.inkart[name] = typeof ptio.snippet === "string" ? ptio.snippet : "Pen tip Type Error";
         }
-        get penTip() { return function GetTip(name) { return this.PenTips[name] ? this.PenTips[name] : false; } }
+        get penTip() { return function GetTip(name) { return this.inkart[name] ? this.inkart[name] : false; } }
         set penFill(pcolor) { this.PenFill = pcolor; }
         get penFill() { return this.PenFill }
         set penStroke(scolor) { this.PenStroke = scolor; }
         get penStroke() { return this.PenStroke; }
 
-        stamp(name, fn) { }
+        stamp(name, options) {
+            let context = null,
+                snippet = null;
+            if (Dashing.typeOf(this)) {
+                //
+            }
+            if (this.stampPattern(name)) {
+                snippet = this.stampPattern(name);
+            }
+            else { return false; }
+            let opts = null;
+            if (Dashing.typeOf(options) === "object") {
+                opts = options;
+            }
+            else { return false; }
+
+        }
         set stampPattern(spattern) {
             let name = null;
             if (typeof spattern.name === "string") { name = spattern.name; }
@@ -398,6 +430,7 @@ ____________________ **/
         get stampPattern() { return function GetStampPattern(name) { return this.patterns[name] ? this.patterns[name] : false; } }
 
         set extension(value) {
+            console.log(Dashing.typeOf(value));
             if (this.Extension) { return true; }
             console.log(Dashing.typeOf(value));
             this.Extension = Dashing.typeOf(value) === "object HTMLElement" ? value : false;
