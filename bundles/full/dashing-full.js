@@ -410,8 +410,8 @@ ____________________ **/
             if (Dashing.typeOf(this)) {
                 //
             }
-            if (this.stampPattern(name)) {
-                snippet = this.stampPattern(name);
+            if (Dashing.writer.stampPattern(name)) {
+                snippet = Dashing.writer.stampPattern(name);
             }
             else { return false; }
             let opts = null;
