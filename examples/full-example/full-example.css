@@ -66,5 +66,5 @@ x-book#main-display {
         background-color: rgba(65,65,65,.95);
     }
     x-book > x-modal[active] > div {
-        color: rgba(15, 15, 89, 1);
+        color: rgba(235, 235, 249, 1);
     }
