@@ -336,11 +336,16 @@ ____________________ **/
         get uploader() { return this.Uploader; }
     }
 
+    // Shadow class
+    class Shadow {
+        constructor() {
+            this.extension = false;
+        }
+    }
+
     // Writer class
     class Writer {
         constructor() {
-            this.extension = false;
-
             this.PenTip = {};
             this.patterns = {};
 
@@ -392,13 +397,12 @@ ____________________ **/
         }
         get stampPattern() { return function GetStampPattern(name) { return this.patterns[name] ? this.patterns[name] : false; } }
 
-    }
-
-    // Shadow class
-    class Shadow {
-        constructor() {
-            this.extension = false;
+        set extension(value) {
+            if (this.Extension) { return true; }
+            console.log(Dashing.typeOf(value));
+            this.Extension = Dashing.typeOf(value) === "object HTMLElement" ? value : false;
         }
+
     }
 
     // Create the HTML Element Prototype Mixin 
