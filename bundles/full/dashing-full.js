@@ -2637,7 +2637,7 @@ ____________________ **/
                             get: function GetOverlay() { return this.hasAttribute("overlay"); },
                             set: function SetOverlay(value) {
                                 if (value === true && this.overlayElement !== true) {
-                                    this.imsertAdjacentElement("afterend", this.overlayElement);
+                                    this.insertAdjacentElement("afterend", this.overlayElement);
                                     this.overlayElement = true;
                                 }
                             }
