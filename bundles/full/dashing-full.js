@@ -2713,13 +2713,20 @@ ____________________ **/
                             },
                             get: function GetActive() { return this.hasAttribute("active") || null; }
                         },
-                        'button-toggle': {
-                            get: function GetButtonCreate() {
-                                return this.getAttribute("button-toggle") || false;
+                        'toggle': {
+                            get: function GetToggle() {
+                                return this.getAttribute("toggle") || false;
                             },
-                            set: function SetButtonCreate(val) {
-                                this.setAttribute("button-toggle", val);
-                                this.Toggle = document.getElementById(val);
+                            set: function SetToggle(val) {
+                                this.setAttribute("toggle", val);
+                                let n = document.getElementById(val);
+                                if (!n) {
+                                    n = document.createElement("button");
+                                        n.setAttribute("id", val);
+                                        n.innerHTML = "|O|";
+                                    this.appendChild(n);
+                                    this.Toggle = this.querySelector(`#${val}`);
+                                }
                             }
                         },
                         'escape-hide': {
