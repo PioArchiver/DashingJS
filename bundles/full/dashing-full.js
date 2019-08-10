@@ -389,25 +389,21 @@ ____________________ **/
         stamp(name, options) {
             let context = null,
                 snippet = null;
-            console.log(this);
             if (Dashing.typeOf(this) === "htmlelement") {
                 context = this;
             }
             else { return false; }
-            console.log(this);
             if (Dashing.writer.stampPattern(name)) {
                 snippet = Dashing.writer.stampPattern(name);
             }
             else { return false; }
-            console.log(snippet);
             let opts = null;
             if (Dashing.typeOf(options) === "object") {
                 opts = options;
             }
             else { return false; }
-            console.log(opts);
             let r = false;
-            return ( r = document.createDocumentFragment().innerHTML = snippet, r );
+            return ( r = document.createDocumentFragment(), r.innerHTML = snippet, r );
         }
         set stampPattern(spattern) {
             let name = null;
