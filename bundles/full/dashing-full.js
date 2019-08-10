@@ -344,6 +344,7 @@ ____________________ **/
     // Writer class
     class Writer extends Shadow {
         constructor() {
+            super();
             this.PenTip = {};
             this.patterns = {};
 
