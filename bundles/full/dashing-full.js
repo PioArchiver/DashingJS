@@ -386,26 +386,30 @@ ____________________ **/
         set penStroke(scolor) { this.PenStroke = scolor; }
         get penStroke() { return this.PenStroke; }
 
-        stamp(name, options) {
+        stamp(name, options, prom) {
             let context = null,
                 snippet = null;
             if (Dashing.typeOf(this) === "htmlelement") {
                 context = this;
             }
             else { return false; }
-
-            return new Promise(function () {
+            let res = prom.resolve || false,
+                rej = prom.reject|| false;
+            return new Promise(function (res, rej) {
                 if (Dashing.writer.stampPattern(name)) {
                     snippet = Dashing.writer.stampPattern(name);
                 }
-                else { return false; }
+                else { rej ? rej(name, options) : false; }
                 let opts = null;
                 if (Dashing.typeOf(options) === "object") {
                     opts = options;
+
+
                 }
-                else { return false; }
+                else { rej ? rej(name, options) : false; }
                 let r = document.createDocumentFragment();
-                r.innerHTML = snippet;
+                    r.innerHTML = snippet;
+                res ? res(r.firstElementChild, options) : false;
             });
         }
         set stampPattern(spattern) {

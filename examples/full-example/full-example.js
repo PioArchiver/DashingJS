@@ -17,7 +17,11 @@ window.addEventListener("load", function LoadExample() {
                 width: "88%",
                 height: "66%"
             });
-            console.log(w);
+            w.then(function ResolveMainDisplay(node, opts) {
+                console.log(node);
+                console.log(opts);
+            });
+            w.catch(function RejectMainDsiplay(name, opts) { });
             return val;
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
