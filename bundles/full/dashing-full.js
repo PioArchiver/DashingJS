@@ -2657,7 +2657,6 @@ ____________________ **/
                     return {
                         created: function CreatedModal() {
                             this.overlayElement = document.createElement('x-modal-overlay');
-                            this.buttonToggle = this.buttonToggle;
                         },
                         inserted: function InsertedModal() {
                             if (Dashing.BrowserInfo.oldiOS || Dashing.BrowserInfo.oldDroid) { setTop(this); }
@@ -2714,10 +2713,12 @@ ____________________ **/
                             get: function GetActive() { return this.hasAttribute("active") || null; }
                         },
                         'toggle': {
+                            connected: true,
                             get: function GetToggle() {
                                 return this.getAttribute("toggle") || false;
                             },
                             set: function SetToggle(val) {
+                                if (val === false) { this.removeAttribute("toggle"); }
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
                                 if (!n) {
