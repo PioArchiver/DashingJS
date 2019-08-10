@@ -410,7 +410,7 @@ ____________________ **/
                     doc.innerHTML = snippet;
                 r.appendChild(doc.firstElementChild);
                 r.firstElementChild.setAttribute("data-stamp", name);
-                this.appendChild(r.firstElementChild);
+                context.appendChild(r.firstElementChild);
                 res ? res(this.querySelector(`[dashing-stamp="${name}"]`), opts) : false;
             });
         }
