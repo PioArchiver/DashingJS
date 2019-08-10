@@ -409,9 +409,10 @@ ____________________ **/
                     doc = document.createElement("div");
                     doc.innerHTML = snippet;
                 r.appendChild(doc.firstElementChild);
-                r.firstElementChild.setAttribute("data-stamp", name);
-                console.log(opts);
-                context.appendChild(r.firstElementChild);
+                    r.firstElementChild.setAttribute("data-stamp", name);
+                    opts.width ? r.firstElementChild.style.width = opts.width : false;
+                    opts.height ? r.firstElementChild.style.height = opts.height : false;
+                    context.appendChild(r.firstElementChild);
                 res ? res(context.querySelector(`[data-stamp="${name}"]`)) : false;
             });
         }
