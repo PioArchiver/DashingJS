@@ -5,6 +5,7 @@ body:not([allow-scroll-x]) {
     overflow-x: hidden;
 }
 body * {
+    display: none;
     transition: display 2s;
 }
 
