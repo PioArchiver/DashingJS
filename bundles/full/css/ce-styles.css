@@ -13,7 +13,7 @@ body {
 body:not([allow-scroll-x]) {
     overflow-x: hidden;
 }
-body {
+body:not(x-modal) {
     opacity: 0;
     animation-name: application-startup;
     animation-fill-mode: forwards;
