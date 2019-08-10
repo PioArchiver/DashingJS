@@ -2587,66 +2587,6 @@ ____________________ **/
                             let next = modal.nextElementSibling;
                             if (next) { modal.parentNode.insertBefore(modal.overlayElement, next); }
                             else { modal.parentNode.appendChild(modal.overlayElement); }
-                        },
-                        'show:transition(boolean,show,focus,hidden)': function ShowModal(fn) {
-                            if (fn === undefined || fn === false) {
-                                return {
-                                    height: "2s",
-                                    width: "2s",
-                                    left: "2s",
-                                    opacity: "2s",
-                                    delta: {
-                                        right: "25%",
-                                        height: "80%",
-                                        width: "90%",
-                                        opacity: "1"
-                                    },
-                                    initial: {
-                                        right: "0%",
-                                        height: "80%",
-                                        width: "90%",
-                                        opacity: "1"
-                                    }
-                                };
-                            }
-                            else {
-                                let r = typeof fn === "function" ? fn() : false;
-                                if (this.Toggle) this.Toggle.setAttribute("active", "true");
-                                return r;
-                            }
-                        },
-                        'hide:transition(boolean,hide,focus,hidden)': function HideModal(fn) {
-                            if (fn === undefined || fn === false) {
-                                return {
-                                    height: "1s",
-                                    width: "1s",
-                                    opacity: "1s",
-                                    left: "2s",
-                                    top: "1s",
-                                    "background-color": "2s",
-                                    delta: {
-                                        height: "0%",
-                                        width: "0%",
-                                        "background-color": "rgba(0,0,0,1)",
-                                        left: "95%",
-                                        top: "1%",
-                                        opacity: "1"
-                                    },
-                                    initial: {
-                                        height: "0%",
-                                        width: "0%",
-                                        "background-color": "rgba(0,0,0,1)",
-                                        left: "95%",
-                                        top: "1%",
-                                        opacity: "1"
-                                    }
-                                };
-                            }
-                            else {
-                                let r = typeof fn === "function" ? fn() : false;
-                                if (this.Toggle) this.Toggle.removeAttribute("active");
-                                return r;
-                            }
                         }
                     };
                 }
@@ -2672,31 +2612,11 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'tap:outer': function TapOuterModal(e) {
-                            if (e.target.nodeName !== "X-MODAL-OVERLAY") {
-                                return false;
-                            }
-
-                            // Check modal type 
-                            if (this.type === "startup" || this.type === "modal") {
-                                this.hide();
-                            }
-                        },
-                        'tap:delegate(input[value="Create"])': function SubmitModal(e) {
-                            let checking = Dashing.conditioned.StartupFormConditions(e, Dashing.conditioned["StartupFormConditions"]),
-                                parentModal = this.parentNode.parentNode.parentNode.parentNode.parentNode;
-
-                        },
                         'tap:delegate(button[value="Confirm"])': function ConfirmPlatform(e) {
-                            if (this.parentNode.type === "selection") {
-                                Dashing.platform = { type: this.parentNode.querySelector('select').value };
-
-                                this.parentNode.outerHTML = "";
-
-                            }
+                            //
                         },
-                        'change:delegate(select)': function ChangePlatform(e) {
-                            Dashing.rootElement.setAttribute("platform", this.selectedOptions[0].value.toLowerCase());
+                        'tap:delegate(button[toggler])': function ChangePlatform(e) {
+                            Dashing.extension.setAttribute("platform", this.selectedOptions[0].value.toLowerCase());
                         }
                     };
                 }
@@ -2722,13 +2642,11 @@ ____________________ **/
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
                                 if (!n) {
-                                    console.log(this);
                                     n = document.createElement("button");
                                     n.setAttribute("id", val);
+                                    n.setAttribute("toggler", "true");
                                     n.innerHTML = "|O|";
                                     this.appendChild(n);
-                                    this.Toggle = this.querySelector(`#${val}`);
-                                    console.log(this.Toggle);
                                 }
                                 else {
                                     //
