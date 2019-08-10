@@ -390,21 +390,22 @@ ____________________ **/
             let context = null,
                 snippet = null;
             console.log(this);
-            console.log(name);
-            console.log(options);
             if (Dashing.typeOf(this) === "htmlelement") {
                 context = this;
             }
             else { return false; }
+            console.log(this);
             if (Dashing.writer.stampPattern(name)) {
                 snippet = Dashing.writer.stampPattern(name);
             }
             else { return false; }
+            console.log(snippet);
             let opts = null;
             if (Dashing.typeOf(options) === "object") {
                 opts = options;
             }
             else { return false; }
+            console.log(opts);
 
 
         }
