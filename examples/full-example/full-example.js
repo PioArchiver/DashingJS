@@ -14,12 +14,15 @@ window.addEventListener("load", function LoadExample() {
                 snippet: `<x-modal click-hide=""></x-modal>`
             };
             let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "start-modal", {
-                width: "88%",
-                height: "66%"
+                width: "98%",
+                height: "92%"
             });
             w.then(function ResolveMainDisplay(node) {
                 node.active = "true";
-                console.log(node);
+                node.innerHTML = `<div>
+                        <h1>${val.meta.name}</h1>
+                        <p>${val.meta.description}</p>
+                    </div>`;
             });
             w.catch(function RejectMainDsiplay(name, opts) { });
             return val;
