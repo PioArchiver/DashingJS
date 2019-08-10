@@ -2718,6 +2718,7 @@ ____________________ **/
                                 return this.getAttribute("toggle") || false;
                             },
                             set: function SetToggle(val) {
+                                console.log(val);
                                 if (val === false) { this.removeAttribute("toggle"); }
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
