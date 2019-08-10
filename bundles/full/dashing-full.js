@@ -432,8 +432,8 @@ ____________________ **/
         set extension(value) {
             console.log(Dashing.typeOf(value));
             if (this.Extension) { return true; }
-            console.log(Dashing.typeOf(value));
-            this.Extension = Dashing.typeOf(value) === "object HTMLElement" ? value : false;
+            console.log(Dashing.typeOf(value)); 
+            this.Extension = Dashing.typeOf(value) === "object HTMLElement" ? value : false; 
         }
 
     }
