@@ -408,8 +408,10 @@ ____________________ **/
                 let r = document.createDocumentFragment(),
                     doc = document.createElement("div");
                     doc.innerHTML = snippet;
-                        r.appendChild(doc.firstElementChild);
-                res ? res(r.firstElementChild, opts) : false;
+                r.appendChild(doc.firstElementChild);
+                r.firstElementChild.setAttribute("data-stamp", name);
+                this.appendChild(r.firstElementChild);
+                res ? res(this.querySelector(`[dashing-stamp="${name}"]`), opts) : false;
             });
         }
         set stampPattern(spattern) {
