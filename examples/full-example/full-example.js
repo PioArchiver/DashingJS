@@ -9,7 +9,7 @@ window.addEventListener("load", function LoadExample() {
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
-            let w = Dashing.MainDisplay.writer.stamp.call(this, "default", {
+            let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "default", {
                 width: "88%",
                 height: "66%"
             });
