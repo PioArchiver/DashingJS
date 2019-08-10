@@ -405,9 +405,11 @@ ____________________ **/
 
                 }
                 else { rej ? rej(name, options) : false; }
-                let r = document.createDocumentFragment();
-                    r.innerHTML = snippet;
-                res ? res(r.firstElementChild, options) : false;
+                let r = document.createDocumentFragment(),
+                    doc = document.createElement("div");
+                    doc.innerHTML = snippet;
+                        r.appendChild(doc.firstElementChild);
+                res ? res(r.firstElementChild, opts) : false;
             });
         }
         set stampPattern(spattern) {
