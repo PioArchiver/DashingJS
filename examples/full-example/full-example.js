@@ -11,7 +11,7 @@ window.addEventListener("load", function LoadExample() {
         qpromise.then(function SchemaDemoQuery(val) {
             Dashing.writer.stampPattern = {
                 name: `start-modal`,
-                snippet: `<x-modal click-hide="" toggle="startup-toggle"></x-modal>`
+                snippet: `<x-modal toggle="startup-toggle"></x-modal>`
             };
             let w = Dashing.MainDisplay.writer.stamp.call(Dashing.MainDisplay, "start-modal", {
                 width: "95%",
