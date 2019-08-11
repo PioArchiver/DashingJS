@@ -1934,7 +1934,7 @@ ____________________ **/
                             if (index <= 1) {
                                 this.parentNode.page = pages.length;
                                 _nodes[0].active = false;
-                                _nodes[pages.length - 1].active = true;
+                                _nodes[pages - 1].active = true;
                             }
                             else {
                                 this.parentNode.page = Number(index - 1);
@@ -1950,8 +1950,8 @@ ____________________ **/
                             console.log(index);
                             console.log(pages);
                             if (index >= pages) {
-                                n.page = pages.length;
-                                _nodes[pages.length - 1].active = false;
+                                n.page = 1;
+                                _nodes[pages - 1].active = false;
                                 _nodes[0].active = true;
                             }
                             else {
