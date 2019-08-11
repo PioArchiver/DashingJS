@@ -1753,7 +1753,7 @@ ____________________ **/
             };
 
             elems.xBook = class xBook extends HTMLElement {
-                static mixins() { return ["resizer", "iconography"]; }
+                static mixins() { return ["iconography", "resizer"]; }
 
                 static lifecycle() {
                     return {
@@ -2183,9 +2183,6 @@ ____________________ **/
             };
 
             elems.xFooter = class xFooter extends HTMLElement {
-                static mixins() { return ["dashed"]; }
-
-
             };
 
             elems.xShiftbox = class extends HTMLElement {
