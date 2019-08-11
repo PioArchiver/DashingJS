@@ -2963,6 +2963,7 @@ ____________________ **/
                         set: function SetMinimized(val) {
                             if (val === true || val === "true") {
                                 this.setAttribute("minimized", "true");
+                                console.log(this.xMenu);
                                 this.xMenu.display.style.display = "none";
                                 this.normalized = false;
                             }
