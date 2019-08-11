@@ -27,7 +27,7 @@ window.addEventListener("load", function LoadExample() {
                          <li>Website: <a href="${val.meta.website}">DashingJS Site</a></li>
                          <li>GitHub: <a href="${val.meta.github}">DashingJS Repo</a></li>
                          <li>Issues: <a href="${val.meta.issues}">DashingJS Issues</a></li>
-                         <li>E-Mail: <a href="${val.meta.email}">E-Mail</a></li>
+                         <li>E-Mail: ${val.meta.email}</li>
                         </ol>
                     </div>`;
             });
