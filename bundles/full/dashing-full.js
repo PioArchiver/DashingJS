@@ -1953,7 +1953,7 @@ ____________________ **/
                                 _nodes[0].active = true;
                             }
                             else {
-                                this.parentNode.page = Number(index - 1);
+                                n.page = Number(index - 1);
                                 _nodes[index - 1].active = false;
                                 _nodes[index].active = true;
                             }
