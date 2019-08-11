@@ -2588,8 +2588,7 @@ ____________________ **/
                             if (next) { modal.parentNode.insertBefore(modal.overlayElement, next); }
                             else { modal.parentNode.appendChild(modal.overlayElement); }
                         },
-                        activeToggle: function ToggleModal(opts) {
-                            let n = document.getElementById(this.getAttribute("toggler"));
+                        activeToggle: function ToggleModal(n) {
                             n.active = n.active === false ?
                                 m.active = true :
                                 n.active = false;
@@ -2619,7 +2618,8 @@ ____________________ **/
                             //
                         },
                         'tap:delegate(button[toggler])': function ChangePlatform(e) {
-                            this.activeToggle.call(this, e);
+                            let n = document.getElementById(this.getAttribute("toggler"));
+                            n.activeToggle.call(this, n);
                         }
                     };
                 }
