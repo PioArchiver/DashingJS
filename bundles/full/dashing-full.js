@@ -1998,7 +1998,7 @@ ____________________ **/
                         },
                         active: {
                             connected: true,
-                            set: function SetActive(val) { val === false this.removeAttribute("active") : this.setAttribute("active", val); },
+                            set: function SetActive(val) { val === false ? this.removeAttribute("active") : this.setAttribute("active", val); },
                             get: function GetActive() { return this.hasAttribute("active"); }
                         }
                         },
