@@ -1844,10 +1844,13 @@ ____________________ **/
                             },
                             set: function SetBookControls(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    Dashing.fnQuery.call(this, `[control-menu]`, function BookControlsFn(controls) {
+                                    Dashing.fnQuery.call(this, `${val}]`, function BookControlsFn(controls) {
                                         // 
                                     }, function BookControlsNullFn() {
-                                            
+                                            let ctls = document.createElement("div");
+                                                ctls.setAttribute("control-menu", "true");
+                                            ctls.innerHTML = `<button book-icon="page-decrement">-</button><button book-icon="page-increment">+</button><aside page-counter="true"></aside>`;
+                                            (this.xMenu || this).appendChild(ctls);
                                         });
                                 }
                             }

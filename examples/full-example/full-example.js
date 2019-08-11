@@ -57,6 +57,7 @@ window.addEventListener("load", function LoadExample() {
 
             Dashing.MainDisplay.bookMenu = "left";
             Dashing.MainDisplay.bookResizer = "x-menu";
+            Dashing.MainDisplay.bookControls = "[control-menu]";
 
 
             // Use the Dashing.MainDisplay at access x-book's bookTitle attribute setter
