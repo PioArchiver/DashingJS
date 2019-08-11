@@ -2616,6 +2616,7 @@ ____________________ **/
                             //
                         },
                         'tap:delegate(button[toggler])': function ChangePlatform(e) {
+                            console.log(this);
                             this.active = false;
                         }
                     };
@@ -2657,7 +2658,6 @@ ____________________ **/
                                     n.setAttribute("toggler", "true");
                                     n.innerHTML = "|O|";
                                     this.appendChild(n);
-                                    console.log(this);
                                 }
                                 else {
                                     //
