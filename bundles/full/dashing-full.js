@@ -2940,6 +2940,7 @@ ____________________ **/
                 return {
                     "click:delegate(div[panel-resizer] > button[icon])": function ResizePanel(e) {
                         let _panel = this.parentNode.parentNode.parentNode;
+                        console.log(this);
                         switch (this.getAttribute("icon")) {
                             case "minimize":
                                 _panel.minimized = true;
