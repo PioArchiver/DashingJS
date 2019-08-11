@@ -9,6 +9,8 @@ window.addEventListener("load", function LoadExample() {
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
+
+            // Use the writer.stampPattern setter to create a X-MODAL
             Dashing.writer.stampPattern = {
                 name: `start-modal`,
                 snippet: `<x-modal toggle="startup-toggle" overlay="true"></x-modal>`
@@ -33,6 +35,7 @@ window.addEventListener("load", function LoadExample() {
             });
             w.catch(function RejectMainDsiplay(name, opts) { });
 
+            // Create and insert a Toggle button for the X-MODAL just created above.
             let n = document.createElement("button");
                 n.innerHTML = "|O|";
                 n.setAttribute("toggler", "project-info");

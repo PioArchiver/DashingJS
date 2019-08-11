@@ -1123,7 +1123,7 @@ ____________________ **/
 
             elems.xExtension = class xExtension extends HTMLElement {
                 // Mixins 
-                static mixins() { return ["dashed", "typed", "themed"]; }
+                static mixins() { return ["dashed"]; }
                 // Methods 
                 static methods() {
                     return {
@@ -1598,7 +1598,7 @@ ____________________ **/
                     return this.extension.icons.drawer;
                 }
 
-                static mixins() { return ["iconography"]; }
+                static mixins() { return ["iconography", "resizer"]; }
 
                 static lifecycle() {
                     return {
@@ -1747,28 +1747,13 @@ ____________________ **/
                                 // Need to validate data for print before we set the current display.
                                 _menu.displayCurrent = _panel;
                             }
-                        },
-                        "click:delegate(div[panel-resizer] > button[icon])": function ResizePanel(e) {
-                            let _panel = this.parentNode.parentNode.parentNode.nodeName === "X-PANEL" ?
-                                this.parentNode.parentNode.parentNode : this.parentNode.parentNode;
-                            switch (this.getAttribute("icon")) {
-                                case "minimize":
-                                    _panel.minimized = true;
-                                    break;
-                                case "normal":
-                                    _panel.normalized = true;
-                                    break;
-                                case "maximize":
-                                    _panel.maximized = true;
-                                    break;
-                            }
                         }
                     };
                 }
             };
 
             elems.xBook = class xBook extends HTMLElement {
-                static mixins() { return ["dashed", "iconography"]; }
+                static mixins() { return ["resizer", "iconography"]; }
 
                 static lifecycle() {
                     return {
@@ -1954,6 +1939,21 @@ ____________________ **/
                                 pages[index]._show();
 
                             }
+                        },
+                        'click:delegate(div[book-resizer] > button)': function BookResize(e) {
+                            let n = this.parentNode.parentNode.parentNode.nodeName === "X-BOOK" ?
+                                this.parentNode.parentNode.parentNode : this.parentNode.parentNode;
+                            switch (this.getAttribute("icon")) {
+                                case "minimize":
+                                    n.minimized = true;
+                                    break;
+                                case "normal":
+                                    n.normalized = true;
+                                    break;
+                                case "maximize":
+                                    n.maximized = true;
+                                    break;
+                            }
                         }
                     };
                 }
@@ -1970,7 +1970,6 @@ ____________________ **/
             };
 
             elems.xPage = class xPage extends HTMLElement {
-                static mixins() { return ["typed", "themed"]; }
 
                 static lifecycle() {
                     return {
@@ -2181,17 +2180,15 @@ ____________________ **/
             };
 
             elems.xHeader = class xHeader extends HTMLElement {
-                static mixins() { return ["dashed", "typed", "themed"]; }
             };
 
             elems.xFooter = class xFooter extends HTMLElement {
-                static mixins() { return ["dashed", "typed", "themed"]; }
+                static mixins() { return ["dashed"]; }
 
 
             };
 
             elems.xShiftbox = class extends HTMLElement {
-                static mixins() { return ["typed"]; }
 
                 static methdos() {
                     return {
@@ -2585,8 +2582,6 @@ ____________________ **/
                     };
                 }
 
-                static mixins() { return ["dashed", "typed", "themed"]; }
-
                 static lifecycle() {
                     return {
                         created: function CreatedModal() {
@@ -2958,58 +2953,75 @@ ____________________ **/
                 };
             }
         },
-        'add(mixin=typed)': class Typed {
-            static methods() {
+        'add(mixin=resizer)': class Themed {
+            static events() {
                 return {
-                    default: function DefaultContainer(e) {
-                        let detail = e.detail;
-
-
-                        console.log(detail);
+                    "click:delegate(div[panel-resizer] > button[icon])": function ResizePanel(e) {
+                        let _panel = this.parentNode.parentNode.parentNode.nodeName === "X-PANEL" ?
+                            this.parentNode.parentNode.parentNode : this.parentNode.parentNode;
+                        switch (this.getAttribute("icon")) {
+                            case "minimize":
+                                _panel.minimized = true;
+                                break;
+                            case "normal":
+                                _panel.normalized = true;
+                                break;
+                            case "maximize":
+                                _panel.maximized = true;
+                                break;
+                        }
                     }
                 };
             }
             static attrs() {
-                return {
-                    type: {
-                        connected: true,
-                        set: function SetType(val) {
-                            // Enhancement for type condition callback events
-                            
+                return
+                minimized: {
+                    connected: true,
+                        get: function GetMinimized() { return this.hasAttribute("minimized") ? true : null; },
+                    set: function SetMinimized(val) {
+                        if (val === true || val === "true") {
+                            this.setAttribute("minimized", "true");
+                            this.xMenu.display.style.display = "none";
+                            this.normalized = false;
+                        }
+                        else if (val === false || val === "false") {
+                            this.removeAttribute("minimized");
+                            this.xMenu.display.removeAttribute("style");
                         }
                     }
-                };
-            }
-        },
-        'add(mixin=themed)': class Themed {
-            static methods() {
-                return {
-                    "default": function DefaultJsonSchema(e) {
-                        return true;
+                },
+                normalized: {
+                    connected: true,
+                        get: function GetEnlarged() { return this.hasAttribute("normalized") ? true : null; },
+                    set: function SetEnlarged(val) {
+                        if (val === true || val === "true") {
+                            this.setAttribute("normalized", "true");
+                            this.maximized = false;
+                            this.minimized = false;
+                        }
+                        else if (val === false || val === "false") {
+                            this.removeAttribute("normalize");
+                        }
                     }
-                };
-            }
-            static attrs() {
-                return {
-                    theme: {
-                        connected: true,
-                        get: function GetTheme() { return this.getAttribute("theme"); },
-                        set: function SetTheme(val) {
-                            //
+                },
+                maximized: {
+                    connected: true,
+                        get: function GetMaximized() { return this.hasAttribute("maximized") ? true : null; },
+                    set: function SetMaximized(val) {
+                        if (val === true || val === "true") {
+                            this.setAttribute("maximized", "true");
+                            this.normalized = false;
+                            this.minimized = false;
+                            this.setAttribute("style", "position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100000; background-color: white;");
                         }
-                    },
-                    gridTemplate: {
-                        get: function () {
-                            return this.getAttribute("grid-template");
-                        },
-                        set: function (val) {
-                            this.setAttribute("grid-template", val);
+                        else if (val === false || val === "false") {
+                            this.removeAttribute("maximized");
+                            this.removeAttribute("style");
                         }
-                    },
-                    columnSpan: {},
-                    rowSpan: {}
-                };
-            }
+                    }
+                }
+
+            };
         },
         'add(prototype=toggle)': Toggle,
         'add(prototype=localDB)': localDB,
