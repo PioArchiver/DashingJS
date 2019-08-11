@@ -1858,7 +1858,7 @@ ____________________ **/
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
-                                            ctls.innerHTML = `<button book-icon="page-decrement">-</button><button book-icon="page-increment">+</button><aside page-counter="1">1/${this.pages}</aside>`;
+                                            ctls.innerHTML = `<button book-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                         });
                                 }
@@ -1925,9 +1925,10 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'click:delegate(button[page-left="true"])': function PageLeft(e) {
-                            let index = Number(this.parentNode.page),
-                                pages = this.parentNode.querySelectorAll("x-page");
+                        'click:delegate(button[book-icon="page-decrement"])': function PageLeft(e) {
+                            let n = document.querySelector(this.getAttribute("for-book")),
+                                index = n.page,
+                                pages = n.pages;
                             if (index <= 1) {
                                 this.parentNode.page = pages.length;
                                 pages[0]._hide();
@@ -1939,9 +1940,9 @@ ____________________ **/
                                 pages[index - 2]._show();
                             }
                         },
-                        'click:delegate(button[page-right="true"])': function PageRight(e) {
+                        'click:delegate(button[book-icon="page-increment"])': function PageRight(e) {
                             let index = Number(this.parentNode.page),
-                                pages = this.parentNode.querySelectorAll("x-page");
+                                pages = document.querySelectorAll("x-page");
                             if (index >= pages.length) {
                                 this.parentNode.page = 1;
                                 pages[pages.length - 1]._hide();
