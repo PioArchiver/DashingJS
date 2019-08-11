@@ -159,9 +159,9 @@
 
         }
         for (var ekey in events) {
-            var _psdo = xtag.applyPseudos(_key, methods[_key], pseudoArray, proto);
+            var _psdo = xtag.applyPseudos(ekey, methods[ekey], pseudoArray, proto);
             xtag.addEvents(proto, events);
-            _key.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = _key.match(regexPseudoCapture) : null;
+            ekey.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = ekey.match(regexPseudoCapture) : null;
         }
 
         for (let akey in attrs) {
