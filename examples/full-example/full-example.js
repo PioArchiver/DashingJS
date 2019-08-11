@@ -32,7 +32,13 @@ window.addEventListener("load", function LoadExample() {
                     </div>`;
             });
             w.catch(function RejectMainDsiplay(name, opts) { });
-            return val;
+
+            let n = document.createElement("button");
+                n.innerHTML = "|O|";
+                n.setAttribute("toggler", "project-info");
+                n.addEventListener("click", function ToggleProjectInfo(e) { let m = this.querySelector("x-modal"); m === null ? false : m.active = m.active === true ? true : false; });
+            Dashing.MainMenu.insertAdjacentElement("afterbegin", n);
+
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
 
