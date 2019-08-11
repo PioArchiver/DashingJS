@@ -1932,7 +1932,7 @@ ____________________ **/
                                 _nodes = n.querySelectorAll("x-page"),
                                 pages = n.pages;
                             if (index <= 1) {
-                                n.page = pages.length;
+                                n.page = pages;
                                 _nodes[0].active = false;
                                 _nodes[pages - 1].active = true;
                             }
