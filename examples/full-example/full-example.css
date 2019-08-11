@@ -46,6 +46,7 @@ x-book#main-display {
     left: 0px;
     top: 151px;
     display: flex;
+    width: 100%;
     height: calc(100% - 151px);
 }
     x-book#main-display > x-menu[main-book-menu] {
