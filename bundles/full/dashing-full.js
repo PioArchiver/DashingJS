@@ -2049,8 +2049,9 @@ ____________________ **/
                             get: function GetPluginPage() { return this.getAttribute("plugin-title"); }
                         },
                         active: {
-                            set: function SetActive(val) { this._show(); },
-                            get: function GetActive() { return this.getAttribute("active"); }
+                            connected: true,
+                            set: function SetActive(val) { val === false this.removeAttribute("active") : this.setAttribute("active", val); },
+                            get: function GetActive() { return this.hasAttribute("active"); }
                         },
                         activeContent: {
                             get: function GetActivePluginContent() { return this.getAttribute("active-content") || false; },
