@@ -24,10 +24,10 @@ window.addEventListener("load", function LoadExample() {
                         <p>${val.meta.description}</p>
                         <p>Version: ${val.version}</p>
                         <ol>
-                         <li>Website: ${val.meta.website}</li>
-                         <li>GitHub: ${val.meta.github}</li>
-                         <li>Issues: ${val.meta.issues}</li>
-                         <li>E-Mail: ${val.meta.email}</li>
+                         <li>Website: <a href="${val.meta.website}">DashingJS Site</a></li>
+                         <li>GitHub: <a href="${val.meta.github}">DashingJS Repo</a></li>
+                         <li>Issues: <a href="${val.meta.issues}">DashingJS Issues</a></li>
+                         <li>E-Mail: <a href="${val.meta.email}">E-Mail</a></li>
                         </ol>
                     </div>`;
             });

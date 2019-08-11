@@ -1,18 +1,7 @@
-/** ____________________ X-TAG COMPONENTS ____________________ **/
-/** ____________________
- * @message: 
- * - This document is commented all the way through if you would like to find a method or object try pressing
- * - `control + f`, if your on windows and doing a search for the name of the method or object, ect you need or want to 
- * - modify.  
- * -
- * - Comments written on this page will be provided as often as possible, please see the github wiki for more info on
- * - x-components.js and its commenting system. ___
- * 
+/** ____________________ Custom Element Components ____________________ **/
+/* Steven Van Sant 
  * Copyright 2018,
  * Licencse MIT 
- * 
- * 
- * @THANKS TO EVERY ONE WHO HAS CONTRIBUTED CODE TO THE CORE OF THIS OPEN SOURCE PROJECT.
 ____________________ **/
 
 (function DashioFull() {
