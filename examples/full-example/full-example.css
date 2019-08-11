@@ -55,6 +55,12 @@ x-book#main-display {
         height: 100%;
         background-color: rgb(35, 45, 55);
     }
+        x-book#main-display > x-menu[main-book-menu] > div[resizer-menu] {
+            display: flex;
+        }
+            x-book#main-display > x-menu[main-book-menu] > div[resizer-menu] > button {
+                width: 33%;
+            }
     x-book#main-display > x-page[active] {
         width: calc(100% - 125px);
         height: 100%;
