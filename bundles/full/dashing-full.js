@@ -2615,8 +2615,7 @@ ____________________ **/
                         'tap:delegate(button[value="Confirm"])': function ConfirmPlatform(e) {
                             //
                         },
-                        'tap:delegate(button[toggler])': function ChangePlatform(e) {
-                            console.log((this || this.parentNode || this.parentNode.parentNode).active);
+                        'tap:delegate(x-modal > button[toggler])': function ChangePlatform(e) {
                             this.parentNode.active = false;
                         }
                     };
@@ -2657,6 +2656,8 @@ ____________________ **/
                                     n.setAttribute("id", val);
                                     n.setAttribute("toggler", "true");
                                     n.innerHTML = "|O|";
+                                    this.Toggle = n;
+
                                     this.appendChild(n);
                                 }
                                 else {
