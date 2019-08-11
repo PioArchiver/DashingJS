@@ -1947,7 +1947,7 @@ ____________________ **/
                                 pages = n.pages,
                                 _nodes = n.querySelectorAll("x-page");
                             if (index >= pages.length) {
-                                this.parentNode.page = pages.length;
+                                n.page = pages.length;
                                 _nodes[pages.length - 1].active = false;
                                 _nodes[0].active = true;
                             }
