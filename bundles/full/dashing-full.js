@@ -1939,21 +1939,6 @@ ____________________ **/
                                 pages[index]._show();
 
                             }
-                        },
-                        'click:delegate(div[book-resizer] > button)': function BookResize(e) {
-                            let n = this.parentNode.parentNode.parentNode.nodeName === "X-BOOK" ?
-                                this.parentNode.parentNode.parentNode : this.parentNode.parentNode;
-                            switch (this.getAttribute("icon")) {
-                                case "minimize":
-                                    n.minimized = true;
-                                    break;
-                                case "normal":
-                                    n.normalized = true;
-                                    break;
-                                case "maximize":
-                                    n.maximized = true;
-                                    break;
-                            }
                         }
                     };
                 }
