@@ -1937,7 +1937,7 @@ ____________________ **/
                                 _nodes[pages - 1].active = true;
                             }
                             else {
-                                n.page = Number(index - 1);
+                                n.page = index - 1;
                                 _nodes[index - 1].active = false;
                                 _nodes[index - 2].active = true;
                             }
