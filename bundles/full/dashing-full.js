@@ -2616,7 +2616,10 @@ ____________________ **/
                             //
                         },
                         'tap:delegate(x-modal > button[toggler])': function ChangePlatform(e) {
-                            this.parentNode.active = false;
+                            let n = document.getElementById(this.getAttribute("toggler"));
+                                n.active = n.active === false ?
+                                m.active = true :
+                                n.active = false;
                         }
                     };
                 }
@@ -2656,7 +2659,8 @@ ____________________ **/
                                 if (!n) {
                                     n = document.createElement("button");
                                     n.setAttribute("id", val);
-                                    n.setAttribute("toggler", "true");
+                                    this.id = this.id ? this.id : `xmodal-${document.getElementsByTagName("x-modal").length}`;
+                                    n.setAttribute("toggler", this.id);
                                     n.innerHTML = "|O|";
                                     this.Toggle = n;
 
