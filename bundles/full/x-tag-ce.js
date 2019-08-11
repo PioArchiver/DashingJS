@@ -158,18 +158,15 @@
             }
 
         }
-        for (var ekey in events) {
-            var _psdo = xtag.applyPseudos(ekey, methods[ekey], pseudoArray, _proto);
-            xtag.addEvents(_proto, events);
-            ekey.match(regexPseudoCapture) !== null ? _proto.pseudoCaptures = ekey.match(regexPseudoCapture) : null;
-        }
 
         for (let akey in attrs) {
             setElemAttr(proto, akey, attrs[akey]);
         }
         return true;
     }
-
+    function getMixinEvents(name) {
+        return xtag.mixins[name].events() || false;
+    }
     function addMixins(mixinClass, names, mixins) {
         mixinClass = mixinClass === undefined ? class { } : mixinClass;
         if (names[0] === "self") {
@@ -281,6 +278,14 @@
                 } :
                 _this.lifecycle();
 
+            // Create the mixins.
+            let mixins = _this.mixins === undefined ? [] : _this.mixins();
+                addMixins(_this, mixins, xtag.mixins);
+            let em = {};
+            for (let _m = 0; _m < mixins.length; _m++) {
+                xtag.merge(em, getMixinEvents(mixins[i]));
+            }
+            console.log(em);
             // Get the methods and attrs 
             let _hasAttributes = _this.attrs === undefined ? {} : _this.attrs(),
                 ckeys = Object.keys(_hasAttributes),
@@ -292,6 +297,7 @@
                 constructor() {
                     super();
                     let hasEvents = _this.events === undefined ? false : _this.events();
+                    xtag.merge(hasEvents, em);
                     xtag.addEvents(this, hasEvents);
                     (lifecycle.created || noop).apply(this); 
                 } 
@@ -325,11 +331,6 @@
                     static methods() { return _method; }
                 };
             }
-
-            // Create the mixins.
-            let mixins = _this.mixins === undefined ? [] : _this.mixins();
-                addMixins(_this, mixins, xtag.mixins);
-                addMixins(_this, ["self"], xtag.mixins);
 
             xtag.merge(XTagElement.prototype, _methods);
 
