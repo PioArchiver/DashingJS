@@ -299,7 +299,7 @@ ____________________ **/
                 case "afterbegin":
                 case "beforeend":
                     opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild)) :
-                        this.drawer !== false ? this.fireDrawer(ico.firstElementChild, css) : false;
+                        this.drawer !== false ? this.fireDrawer(ico.firstElementChild) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
                     target.insertAdjacentElement(opts.insertAt, ico.firstElementChild);
                     break;
