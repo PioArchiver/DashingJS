@@ -1947,6 +1947,8 @@ ____________________ **/
                                 index = n.page,
                                 pages = n.pages,
                                 _nodes = n.querySelectorAll("x-page");
+                            console.log(index);
+                            console.log(pages.length);
                             if (index >= pages.length) {
                                 n.page = pages.length;
                                 _nodes[pages.length - 1].active = false;
