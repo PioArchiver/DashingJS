@@ -64,8 +64,9 @@ window.addEventListener("load", function LoadExample() {
                 snippets: ["title-documentation"],
                 insertAt: "afterbegin",
                 overwrite: true,
-                type: "svg",
-                drawer: false
+                drawer: function UploadBookTitle(icons) {
+                    //
+                }
             };
             Dashing.MainDisplay.iconography = {
                 name: "resizer",
