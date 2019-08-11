@@ -1801,8 +1801,8 @@ ____________________ **/
                         },
                         page: {
                             connected: true,
-                            set: function SetBookPage(val) { val ? this.setAttribute("page", val) : this.setAttribute("1"); },
-                            get: function GetBookPage() { return this.getAttribute("page"); }
+                            set: function SetBookPage(val) { val ? this.setAttribute("page", val) : this.setAttribute("page", "1"); },
+                            get: function GetBookPage() { return Number(this.getAttribute("page")); }
                         },
                         "book-menu": {
                             connected: true,
