@@ -71,7 +71,7 @@ window.addEventListener("load", function LoadExample() {
             });
 
             // Use the Dashing.icons.insertIcons to display title page icon for doc examples
-            Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`[book-icon="title-documentation"]`), {
+            Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`[book-icon="documentation-examples"]`), {
                 snippet: "documentation-examples",
                 insertAt: "afterbegin",
                 overwrite: true,
