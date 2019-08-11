@@ -1657,7 +1657,7 @@ ____________________ **/
                             set: function SetPanelMenu(val) {
                                 if (xtag.typeOf(val) === "string" && this.querySelector(val)) {
                                     this.setAttribute("menu", val);
-                                    this.xMenu = this.querySelector(`val`);
+                                    this.xMenu = this.querySelector(val);
                                 }
                             }
                         }, 
