@@ -37,7 +37,7 @@ window.addEventListener("load", function LoadExample() {
                 n.innerHTML = "|O|";
                 n.setAttribute("toggler", "project-info");
                 n.addEventListener("click", function ToggleProjectInfo(e) { let m = Dashing.querySelector("x-modal"); m === null ? false : m.active = m.active === null ? true : false; });
-            Dashing.MainMenu.insertAdjacentElement("afterbegin", n);
+            Dashing.MainMenu.firstElementChild.insertAdjacentElement("afterbegin", n);
 
         });
         qpromise.catch(function CatchSchemaDemoQuery(val) { console.log(val); });
