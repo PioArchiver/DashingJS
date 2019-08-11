@@ -1782,9 +1782,10 @@ ____________________ **/
                         createPageTabs: function CreatePageTabs(page) {
                             //
                         },
-                        createBookControls: function CreateBookControl() {
-                            //
+                        progressPageCounter: function ProgressPageCounter() {
+                            this.pageCounter.innerHTML = `${this.page}/${this.pages}`;
                         }
+
                     };
                 }
 
@@ -1861,6 +1862,8 @@ ____________________ **/
                                                 ctls.setAttribute("control-menu", val);
                                             ctls.innerHTML = `<button book-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
+                                            this.pageControls = this.querySelector("[control-menu]");
+                                            this.pageCounter = this.querySelector("[page-counter]");
                                         });
                                 }
                             }
@@ -1941,6 +1944,7 @@ ____________________ **/
                                 _nodes[index - 1].active = false;
                                 _nodes[index - 2].active = true;
                             }
+                            n.progressPageCounter();
                         },
                         'click:delegate(button[book-icon="page-increment"])': function PageRight(e) {
                             let n = document.querySelector(this.getAttribute("for-book")),
@@ -1957,6 +1961,7 @@ ____________________ **/
                                 _nodes[index - 1].active = false;
                                 _nodes[index].active = true;
                             }
+                            n.progressPageCounter();
                         }
                     };
                 }
