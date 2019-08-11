@@ -1763,6 +1763,7 @@ ____________________ **/
                                 if (Number(book.page) - 1 === i) { node.active = true; }
                             });
                             this.extension = Dashing.extension;
+                            this.id = this.id ? this.id : "xbook" + document.getElementsByTagName("x-book").length;
                         },
                         inserted: function Insert() {
                             this.extension.book = this.extension.book ? this.extension.book : {
@@ -1813,7 +1814,7 @@ ____________________ **/
                                             node.setAttribute("main-book-menu", "true");
                                             this.insertAdjacentElement("afterbegin", node);
                                         this.xMenu = this.querySelector(`[main-book-menu]`);
-                                        this.xMenu.displayTarget = "main-display";
+                                        this.xMenu.displayTarget = this.id;
                                     }
                                     switch (val) {
                                         case "left":
