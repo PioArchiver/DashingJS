@@ -2944,7 +2944,7 @@ ____________________ **/
                 return {
                     "click:delegate(x-menu > div[resizer-menu] > button[icon])": function ResizePanel(e) {
                         let _parent = this.parentNode.parentNode.parentNode;
-                        console.log(this);
+                        
                         switch (this.getAttribute("icon")) {
                             case "minimize":
                                 _parent.minimized = true;
