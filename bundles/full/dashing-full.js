@@ -1716,7 +1716,7 @@ ____________________ **/
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = this.querySelector(`#${val}`),
-                                        _panelresizer = xtag.createFragment(`<div panel-resizer="true">
+                                        _panelresizer = xtag.createFragment(`<div resizer-menu="true">
                                             <button icon="minimize" title="Minimize">${"_"}</button>
                                             <button icon='normal' title="Normal">${"[]"}</button>
                                             <button icon='maximize' title="Maximize">${"[-]"}</button>
@@ -1727,7 +1727,7 @@ ____________________ **/
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
-                                    _container.setAttribute("panel-resizer", val);
+                                    _container.setAttribute("resizer-menu", val);
                                     _container.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
                                             <button icon='normal' title="Normal">${"[]"}</button>
                                             <button icon='maximize' title="Maximize">${"[-]"}</button>`;
@@ -2938,7 +2938,7 @@ ____________________ **/
         'add(mixin=resizer)': class Themed {
             static events() {
                 return {
-                    "click:delegate(div[panel-resizer] > button[icon])": function ResizePanel(e) {
+                    "click:delegate(div[resizer-menu] > button[icon])": function ResizePanel(e) {
                         let _panel = this.parentNode.parentNode.parentNode;
                         console.log(this);
                         switch (this.getAttribute("icon")) {
