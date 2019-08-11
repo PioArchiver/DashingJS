@@ -165,6 +165,7 @@
         return true;
     }
     function getMixinEvents(name) {
+        console.log(xtag.mixins[name].events);
         return xtag.mixins[name].events() || false;
     }
     function addMixins(mixinClass, names, mixins) {
