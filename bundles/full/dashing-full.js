@@ -2899,6 +2899,7 @@ ____________________ **/
                                 });
                                 break;
                             default:
+                                console.log(opts.snippets);
                                 this.extension.icons.insertIcon(this, {
                                     overwrite: opts.overwrite || false,
                                     insertAt: opts.insertAt || "afterbegin",
