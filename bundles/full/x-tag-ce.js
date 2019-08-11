@@ -283,7 +283,7 @@
                 addMixins(_this, mixins, xtag.mixins);
             let em = {};
             for (let _m = 0; _m < mixins.length; _m++) {
-                xtag.merge(em, getMixinEvents(mixins[i]));
+                xtag.merge(em, getMixinEvents(mixins[_m]));
             }
             console.log(em);
             // Get the methods and attrs 
