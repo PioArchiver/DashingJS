@@ -10,7 +10,7 @@ x-extension[grid-template] {
 }
 x-tabbox.main-menu {
     border-bottom: 1px solid rgb(78, 78, 78);
-    height: 200px;
+    height: 150px;
 }
 
 x-panel > x-menu {
@@ -44,19 +44,19 @@ x-panel > x-menu > div[panel-resizer] {
 x-book#main-display {
     position: absolute;
     left: 0px;
-    top: 201px;
+    top: 176px;
     display: flex;
-    height: calc(100% - 200px);
+    height: calc(100% - 175px);
 }
     x-book#main-display > x-menu[main-book-menu] {
         top: 0px;
         left: 0px;
-        width: 150px;
+        width: 125px;
         height: 100%;
         background-color: rgb(35, 45, 55);
     }
     x-book#main-display > x-page[active] {
-        width: calc(100% - 150px);
+        width: calc(100% - 125px);
         height: 100%;
         overflow-y: scroll;
     }
