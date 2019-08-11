@@ -17,7 +17,7 @@ x-panel > x-menu {
     display: flex;
     flex-direction: row;
 }
-x-panel > x-menu > div[panel-resizer] {
+x-panel > x-menu > div[resizer-menu] {
     position: absolute;
     right: 10px;
 }
@@ -25,7 +25,7 @@ x-panel > x-menu > div[panel-resizer] {
         padding: 0px;
         font-size: 0px;
     }
-    x-panel > x-menu > div[panel-resizer] > [icon="maximize"] {
+    x-panel > x-menu > div[-menu] > [icon="maximize"] {
         width: 30px;
         padding: 0px;
     }
