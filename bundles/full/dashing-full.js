@@ -1814,7 +1814,7 @@ ____________________ **/
                                             node.setAttribute("main-book-menu", "true");
                                             this.insertAdjacentElement("afterbegin", node);
                                         this.xMenu = this.querySelector(`[main-book-menu]`);
-                                        this.xMenu.displayTarget = this.id;
+                                        this.xMenu.displayTarget = `x-page[active]`;
                                     }
                                     switch (val) {
                                         case "left":
