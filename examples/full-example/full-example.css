@@ -60,7 +60,8 @@ x-book#main-display {
         height: 100%;
         overflow-y: scroll;
     }
-    x-book > x-modal {
+    x-book > x-modal,
+    x-book > x-modal + x-modal-overlay {
         display: none;
     }
     x-book > x-modal[active] {

@@ -2616,7 +2616,7 @@ ____________________ **/
                             //
                         },
                         'tap:delegate(button[toggler])': function ChangePlatform(e) {
-                            //
+                            this.active = false;
                         }
                     };
                 }
