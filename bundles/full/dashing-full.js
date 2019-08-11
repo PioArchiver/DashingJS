@@ -1928,32 +1928,33 @@ ____________________ **/
                         'click:delegate(button[book-icon="page-decrement"])': function PageLeft(e) {
                             let n = document.querySelector(this.getAttribute("for-book")),
                                 index = n.page,
-                                pages = n.pages;
+                                pages = n.pages,
+                                _nodes = n.querySelectorAll("x-page");
                             if (index <= 1) {
                                 this.parentNode.page = pages.length;
-                                pages[0]._hide();
-                                pages[pages.length - 1]._show();
+                                _nodes[0].active = false;
+                                _nodes[pages.length - 1].active = true;
                             }
                             else {
                                 this.parentNode.page = Number(index - 1);
-                                pages[index - 1]._hide();
-                                pages[index - 2]._show();
+                                _nodes[index - 1].active = false;
+                                _nodes[index - 2].active = true;
                             }
                         },
                         'click:delegate(button[book-icon="page-increment"])': function PageRight(e) {
-                            let index = Number(this.parentNode.page),
-                                pages = document.querySelectorAll("x-page");
+                            let n = document.querySelector(this.getAttribute("for-book")),
+                                index = n.page,
+                                pages = n.pages,
+                                _nodes = n.querySelectorAll("x-page");
                             if (index >= pages.length) {
-                                this.parentNode.page = 1;
-                                pages[pages.length - 1]._hide();
-                                pages[0]._show();
-
+                                this.parentNode.page = pages.length;
+                                _nodes[pages.length - 1].active = false;
+                                _nodes[0].active = true;
                             }
                             else {
-                                this.parentNode.page = Number(index + 1);
-                                pages[index - 1]._hide();
-                                pages[index]._show();
-
+                                this.parentNode.page = Number(index - 1);
+                                _nodes[index - 1].active = false;
+                                _nodes[index].active = true;
                             }
                         }
                     };
