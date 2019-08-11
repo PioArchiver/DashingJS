@@ -60,14 +60,15 @@ window.addEventListener("load", function LoadExample() {
 
 
             // Use the Dashing.MainDisplay at access x-book's bookTitle attribute setter
-            Dashing.MainDisplay.iconography = {
+            Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`"book-icon="title-documentation"]`), {
                 snippets: ["title-documentation"],
                 insertAt: "afterbegin",
                 overwrite: true,
+                type: "svg",
                 drawer: function UploadBookTitle(icons) {
                     //
                 }
-            };
+            });
             Dashing.MainDisplay.iconography = {
                 name: "resizer",
                 snippets: ["minimize", "normal", "maximize"],
