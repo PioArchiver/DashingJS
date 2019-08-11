@@ -2636,9 +2636,11 @@ ____________________ **/
                             connected: true,
                             get: function GetOverlay() { return this.hasAttribute("overlay"); },
                             set: function SetOverlay(value) {
-                                if (value === true && this.overlayElement !== true) {
+                                if (value === true && !this.overlayReady) {
                                     this.insertAdjacentElement("afterend", this.overlayElement);
-                                    this.overlayElement = true;
+                                    this.overlayReady = true
+                                    this.overlayElement = this.nextElementSibling;
+
                                 }
                             }
                         },
@@ -2671,7 +2673,9 @@ ____________________ **/
                         },
                         'click-hide': {
                             get: function ClickHide() { return this.hasAttribute("click-hide"); },
-                            set: function ClickHide(val) { this.setAttribute("click-hide", "true"); }
+                            set: function ClickHide(val) {
+                                this.setAttribute("click-hide", "true");
+                            }
                         }
                     };
                 }
