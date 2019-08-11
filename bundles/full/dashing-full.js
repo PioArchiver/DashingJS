@@ -1800,8 +1800,9 @@ ____________________ **/
                             }
                         },
                         page: {
-                            set: function (val) { val ? this.setAttribute("page", val) : false; },
-                            get: function () { return this.getAttribute("page"); }
+                            connected: true,
+                            set: function SetBookPage(val) { val ? this.setAttribute("page", val) : this.setAttribute("1"); },
+                            get: function GetBookPage() { return this.getAttribute("page"); }
                         },
                         "book-menu": {
                             connected: true,
