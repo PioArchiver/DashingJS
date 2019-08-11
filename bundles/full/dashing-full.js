@@ -1790,6 +1790,15 @@ ____________________ **/
 
                 static attrs() {
                     return {
+                        pages: {
+                            connected: true,
+                            get: function GetPages() { return this.querySelectorAll("x-page").length; },
+                            set: function SetPages(value) {
+                                let val = this.querySelectorAll("x-page").length;
+                                if (typeof value === "number") { val = value; }
+                                this.setAttribute("pages", val);
+                            }
+                        },
                         page: {
                             set: function (val) { val ? this.setAttribute("page", val) : false; },
                             get: function () { return this.getAttribute("page"); }
@@ -1849,7 +1858,7 @@ ____________________ **/
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
-                                            ctls.innerHTML = `<button book-icon="page-decrement">-</button><button book-icon="page-increment">+</button><aside page-counter="1"></aside>`;
+                                            ctls.innerHTML = `<button book-icon="page-decrement">-</button><button book-icon="page-increment">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                         });
                                 }
