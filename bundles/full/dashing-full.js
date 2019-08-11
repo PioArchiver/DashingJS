@@ -2939,8 +2939,7 @@ ____________________ **/
             static events() {
                 return {
                     "click:delegate(div[panel-resizer] > button[icon])": function ResizePanel(e) {
-                        let _panel = this.parentNode.parentNode.parentNode.nodeName === "X-PANEL" ?
-                            this.parentNode.parentNode.parentNode : this.parentNode.parentNode;
+                        let _panel = this.parentNode.parentNode.parentNode;
                         switch (this.getAttribute("icon")) {
                             case "minimize":
                                 _panel.minimized = true;
