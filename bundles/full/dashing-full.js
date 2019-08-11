@@ -2587,6 +2587,12 @@ ____________________ **/
                             let next = modal.nextElementSibling;
                             if (next) { modal.parentNode.insertBefore(modal.overlayElement, next); }
                             else { modal.parentNode.appendChild(modal.overlayElement); }
+                        },
+                        activeToggle: function ToggleModal(opts) {
+                            let n = document.getElementById(this.getAttribute("toggler"));
+                            n.active = n.active === false ?
+                                m.active = true :
+                                n.active = false;
                         }
                     };
                 }
@@ -2602,10 +2608,7 @@ ____________________ **/
                             if (Dashing.BrowserInfo.oldiOS || Dashing.BrowserInfo.oldDroid) { setTop(this); }
                         },
                         removed: function RemoveModal() {
-                            if (this.type === "startup") {
-                                (this.parentElement || document.body).removeChild(this.overlayElement);
-                                this.xtag.lastParent = null;
-                            }
+                            //
                         }
                     };
                 }
@@ -2615,11 +2618,8 @@ ____________________ **/
                         'tap:delegate(button[value="Confirm"])': function ConfirmPlatform(e) {
                             //
                         },
-                        'tap:delegate(x-modal > button[toggler])': function ChangePlatform(e) {
-                            let n = document.getElementById(this.getAttribute("toggler"));
-                                n.active = n.active === false ?
-                                m.active = true :
-                                n.active = false;
+                        'tap:delegate(button[toggler])': function ChangePlatform(e) {
+                            this.activeToggle.call(this, e);
                         }
                     };
                 }
@@ -2667,7 +2667,7 @@ ____________________ **/
                                     this.appendChild(n);
                                 }
                                 else {
-                                    //
+                                    this.Toggle = n;
                                 }
                             }
                         },
