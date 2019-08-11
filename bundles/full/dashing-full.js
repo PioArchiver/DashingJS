@@ -1929,8 +1929,8 @@ ____________________ **/
                         'click:delegate(button[book-icon="page-decrement"])': function PageLeft(e) {
                             let n = document.querySelector(this.getAttribute("for-book")),
                                 index = n.page,
-                                pages = n.pages,
-                                _nodes = n.querySelectorAll("x-page");
+                                _nodes = n.querySelectorAll("x-page"),
+                                pages = _nodes.pages;
                             if (index <= 1) {
                                 this.parentNode.page = pages.length;
                                 _nodes[0].active = false;
@@ -1945,8 +1945,8 @@ ____________________ **/
                         'click:delegate(button[book-icon="page-increment"])': function PageRight(e) {
                             let n = document.querySelector(this.getAttribute("for-book")),
                                 index = n.page,
-                                pages = n.pages,
-                                _nodes = n.querySelectorAll("x-page");
+                                _nodes = n.querySelectorAll("x-page"),
+                                pages = _nodes.pages;
                             console.log(index);
                             console.log(pages.length);
                             if (index >= pages.length) {
