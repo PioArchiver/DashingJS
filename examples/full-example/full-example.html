@@ -28,11 +28,11 @@
             <ul>
                 <li selected>
                     <x-panel id="builder-panel" 
-                             menu="dashingjs-builder-menu" 
-                             resizer-options="dashingjs-builder-menu">
+                             menu="#dashingjs-builder-menu" 
+                             resizer-options="#dashingjs-builder-menu">
                         <x-menu id="dashingjs-builder-menu"
                                 display-current="dashing-js-builder"
-                                display-target="builder-display"
+                                display-target="#builder-display"
                                 display-items='["dashing-js-builder"]'>
                         </x-menu>
                         <div id="builder-display">
@@ -52,7 +52,7 @@
                              resizer-options="demo-panel-menu">
                         <x-menu id="demo-panel-menu"
                                 display-current="x-extension-demo"
-                                display-target="demo-display"
+                                display-target="#demo-display"
                                 display-items='["x-extension-demo", "x-panel-demo", "x-canvas-demo", "x-form-demo", "x-table-demo"]'></x-menu>
                         <div id="demo-display">
                             <x-form>

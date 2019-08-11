@@ -1540,8 +1540,8 @@ ____________________ **/
                                 return this.getAttribute("display-target");
                             },
                             set: function SetActiveDisplay(val) {
-                                if (document.getElementById(val)) {
-                                    this.display = document.getElementById(val);
+                                if (document.querySelector(val)) {
+                                    this.display = document.querySelector(val);
                                 }
                             }
                         },
@@ -1655,9 +1655,9 @@ ____________________ **/
                                 return this.getAttribute("menu") || false;
                             },
                             set: function SetPanelMenu(val) {
-                                if (xtag.typeOf(val) === "string") {
+                                if (xtag.typeOf(val) === "string" && this.querySelector(val)) {
                                     this.setAttribute("menu", val);
-                                    this.xMenu = this.querySelector(`#${val}`);
+                                    this.xMenu = this.querySelector(`val`);
                                 }
                             }
                         }, 
@@ -1712,7 +1712,7 @@ ____________________ **/
                                 return this.getAttribute("resizer-options") || false;
                             },
                             set: function SetPanelResizer(val) { 
-                                if (xtag.typeOf(val) === "string" && this.querySelector(`#${val}`)) {
+                                if (xtag.typeOf(val) === "string" && this.querySelector(val)) {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = this.querySelector(`#${val}`),
@@ -2942,18 +2942,18 @@ ____________________ **/
         'add(mixin=resizer)': class Themed {
             static events() {
                 return {
-                    "click:delegate(div[resizer-menu] > button[icon])": function ResizePanel(e) {
-                        let _panel = this.parentNode.parentNode.parentNode;
+                    "click:delegate(x-menu > div[resizer-menu] > button[icon])": function ResizePanel(e) {
+                        let _parent = this.parentNode.parentNode.parentNode;
                         console.log(this);
                         switch (this.getAttribute("icon")) {
                             case "minimize":
-                                _panel.minimized = true;
+                                _parent.minimized = true;
                                 break;
                             case "normal":
-                                _panel.normalized = true;
+                                _parent.normalized = true;
                                 break;
                             case "maximize":
-                                _panel.maximized = true;
+                                _parent.maximized = true;
                                 break;
                         }
                     }
@@ -2966,10 +2966,9 @@ ____________________ **/
                         get: function GetMinimized() { return this.hasAttribute("minimized") ? true : null; },
                         set: function SetMinimized(val) {
                             if (val === true || val === "true") {
-                                this.setAttribute("minimized", "true");
-                                console.log(this.xMenu);
-                                this.xMenu.display.style.display = "none";
-                                this.normalized = false;
+                                this.setAttribute("minimized", "true"); 
+                                this.xMenu.display.style.display = "none"; 
+                                this.normalized = false; 
                             }
                             else if (val === false || val === "false") {
                                 this.removeAttribute("minimized");
