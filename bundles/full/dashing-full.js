@@ -269,7 +269,7 @@ ____________________ **/
                     if (css !== false) {
                         _doc.appendChild(css);
                     }
-                    console.log(_doc);
+
                     if (_doc.firstElementChild.getAttribute("data-icon") === "true") {
                         _doc.firstElementChild
                     }
