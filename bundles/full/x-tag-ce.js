@@ -285,7 +285,7 @@
             for (let _m = 0; _m < mixins.length; _m++) {
                 xtag.merge(em, getMixinEvents(mixins[_m]));
             }
-            console.log(em);
+
             // Get the methods and attrs 
             let _hasAttributes = _this.attrs === undefined ? {} : _this.attrs(),
                 ckeys = Object.keys(_hasAttributes),
