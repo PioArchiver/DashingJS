@@ -59,13 +59,17 @@ x-book#main-display {
         x-book#main-display > x-menu[main-book-menu] > div[resizer-menu] {
             display: flex;
         }
+            x-book#main-display > x-menu[main-book-menu] > div[resizer-menu] > button {
+                width: 33%;
+            }
         x-book#main-display > x-menu[main-book-menu] > div[control-menu] {
             display: flex;
             width: 100%;
             background-color: ghostwhite;
         }
-            x-book#main-display > x-menu[main-book-menu] > div[resizer-menu] > button {
-                width: 33%;
+            x-book#main-display > x-menu[main-book-menu] > div[control-menu] > aside {
+                text-align: center;
+                width: 100%;
             }
     x-book#main-display > x-page[active] {
         width: calc(100% - 125px);
