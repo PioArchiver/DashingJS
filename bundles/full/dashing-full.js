@@ -1715,7 +1715,7 @@ ____________________ **/
                                 if (xtag.typeOf(val) === "string" && this.querySelector(val)) {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
-                                    let _container = this.querySelector(`#${val}`),
+                                    let _container = this.querySelector(val),
                                         _panelresizer = xtag.createFragment(`<div resizer-menu="true">
                                             <button icon="minimize" title="Minimize">${"_"}</button>
                                             <button icon='normal' title="Normal">${"[]"}</button>
