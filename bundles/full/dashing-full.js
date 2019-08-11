@@ -1848,7 +1848,7 @@ ____________________ **/
                                         // 
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
-                                                ctls.setAttribute("control-menu", "true");
+                                                ctls.setAttribute("control-menu", val);
                                             ctls.innerHTML = `<button book-icon="page-decrement">-</button><button book-icon="page-increment">+</button><aside page-counter="1"></aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                         });
