@@ -67,6 +67,11 @@ x-book#main-display {
         height: 100%;
         overflow-y: scroll;
     }
+        x-book#main-display > x-page[active] > header,
+        x-book#main-display > x-page[active] > section,
+        x-book#main-display > x-page[active] > footer {
+            padding-left: 1.5em;
+        }
     x-book > x-modal,
     x-book > x-modal + x-modal-overlay {
         display: none;
