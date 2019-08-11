@@ -1804,13 +1804,16 @@ ____________________ **/
                                     this.setAttribute("book-menu", val);
                                     let bookmenu = this.querySelector("[main-book-menu]");
                                     if (bookmenu) {
+                                        
                                         this.xMenu = bookmenu;
+                                        
                                     }
                                     else {
                                         let node = document.createElement("x-menu");
                                             node.setAttribute("main-book-menu", "true");
                                             this.insertAdjacentElement("afterbegin", node);
                                         this.xMenu = this.querySelector(`[main-book-menu]`);
+                                        this.xMenu.displayTarget = "main-display";
                                     }
                                     switch (val) {
                                         case "left":
