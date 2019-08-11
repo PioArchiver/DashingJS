@@ -61,7 +61,6 @@ window.addEventListener("load", function LoadExample() {
 
             // Use the Dashing.MainDisplay at access x-book's bookTitle attribute setter
             Dashing.MainDisplay.iconography = {
-                name: "resizer",
                 snippets: ["title-documentation"],
                 insertAt: "afterbegin",
                 overwrite: true,

@@ -2930,7 +2930,7 @@ ____________________ **/
                             }
                             else if (Dashing.typeOf(value) === "object") {
                                 this.setAttribute("iconography", "true");
-                                this.insertIcons(value.name, {
+                                this.insertIcons(value.name||"", {
                                     insertAt: value.insertAt,
                                     snippets: value.snippets,
                                     type: value.type,
