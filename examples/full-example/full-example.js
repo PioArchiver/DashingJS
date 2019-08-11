@@ -36,7 +36,7 @@ window.addEventListener("load", function LoadExample() {
             let n = document.createElement("button");
                 n.innerHTML = "|O|";
                 n.setAttribute("toggler", "project-info");
-                n.addEventListener("click", function ToggleProjectInfo(e) { let m = this.querySelector("x-modal"); console.log(m); m === null ? false : m.active = m.active === true ? true : false; });
+                n.addEventListener("click", function ToggleProjectInfo(e) { let m = Dashing.querySelector("x-modal"); console.log(m); m === null ? false : m.active = m.active === true ? true : false; });
             Dashing.MainMenu.insertAdjacentElement("afterbegin", n);
 
         });
