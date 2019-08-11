@@ -1844,7 +1844,7 @@ ____________________ **/
                             },
                             set: function SetBookControls(val) {
                                 if (Dashing.typeOf(val) === "string") {
-                                    Dashing.fnQuery.call(this, `${val}]`, function BookControlsFn(controls) {
+                                    Dashing.fnQuery.call(this, `${val}`, function BookControlsFn(controls) {
                                         // 
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
