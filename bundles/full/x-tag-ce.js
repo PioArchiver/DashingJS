@@ -176,8 +176,7 @@
             writeMixin(mixinClass, mixins.self); return true;
         }
         for (var z = 0; z < names.length; z++) {
-            var name = names[z],
-                _defmethod = mixins[name].methods();
+            var name = names[z]
 
                 writeMixin(mixinClass, mixins[name]);
 
