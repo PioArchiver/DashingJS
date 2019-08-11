@@ -59,8 +59,7 @@ window.addEventListener("load", function LoadExample() {
             Dashing.MainDisplay.bookResizer = "x-menu";
             Dashing.MainDisplay.bookControls = "[control-menu]";
 
-
-            // Use the Dashing.MainDisplay at access x-book's bookTitle attribute setter
+            // Use the Dashing.icons.insertIcons to display title page icon for doc examples
             Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`[book-icon="title-documentation"]`), {
                 snippet: "title-documentation",
                 insertAt: "afterbegin",
@@ -70,6 +69,18 @@ window.addEventListener("load", function LoadExample() {
                     //
                 }
             });
+
+            // Use the Dashing.icons.insertIcons to display title page icon for doc examples
+            Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`[book-icon="title-documentation"]`), {
+                snippet: "title-documentation",
+                insertAt: "afterbegin",
+                overwrite: true,
+                type: "svg",
+                drawer: function UploadBookTitle(icons) {
+                    //
+                }
+            });
+
             Dashing.MainDisplay.iconography = {
                 name: "resizer",
                 snippets: ["minimize", "normal", "maximize"],
