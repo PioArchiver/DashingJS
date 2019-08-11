@@ -1984,58 +1984,6 @@ ____________________ **/
 
                 static methods() {
                     return {
-                        '_hide:transition(boolean,hide,selected,active)': function _Hide(fn) {
-                            if (fn === undefined || fn === false) {
-                                return {
-                                    height: "1s",
-                                    width: "1s",
-                                    left: "1s",
-                                    opacity: "1s",
-                                    delta: {
-                                        left: "0%",
-                                        height: "100%",
-                                        width: "100%",
-                                        opacity: "1"
-                                    },
-                                    initial: {
-                                        left: "100%",
-                                        height: "0%",
-                                        width: "0%",
-                                        opacity: "0"
-
-                                    }
-                                };
-                            }
-                            else {
-                                let r = typeof fn === "function" ? fn() : false;
-                                return r;
-                            }
-                        },
-                        '_show:transition(boolean,show,selected,active)': function _Show(fn) {
-                            if (fn === undefined || fn === false) {
-                                return {
-                                    height: "1s",
-                                    width: "1s",
-                                    left: "1s",
-                                    delta: {
-                                        height: "100%",
-                                        width: "100%",
-                                        left: "0%"
-                                    },
-                                    initial: {
-                                        height: "0%",
-                                        width: "0%",
-                                        left: "100%"
-
-                                    },
-                                    target: `x-page[selected][active][show=""]`
-                                };
-                            }
-                            else {
-                                let r = typeof fn === "function" ? fn() : false;
-                                return r;
-                            }
-                        }
                     };
                 }
 
@@ -2052,55 +2000,10 @@ ____________________ **/
                             connected: true,
                             set: function SetActive(val) { val === false this.removeAttribute("active") : this.setAttribute("active", val); },
                             get: function GetActive() { return this.hasAttribute("active"); }
-                        },
-                        activeContent: {
-                            get: function GetActivePluginContent() { return this.getAttribute("active-content") || false; },
-                            set: function SetActivePluginContent(val) {
-                                if (val === false) { return false; }
-                                this.setAttribute("active-content", val);
-                                this.currentContent = Dashing.model.XHR(val, {
-                                    node: this,
-                                    onload: function Load(e) {
-                                        let frag = xtag.createFragment(`${e.target.response}`),
-                                            _content = frag.firstElementChild.content.firstElementChild,
-                                            _jsn = _content.nextElementSibling,
-                                            _script = null,
-                                            _css = frag.firstElementChild.content.querySelectorAll("style");
-
-                                        try { _jsn = JSON.parse(`${_jsn.innerHTML}`); }
-                                        catch (e) { console.error(e); }
-
-                                        document.querySelector(`#${this.node.pageWorkspace}`).appendChild(_content);
-                                        document.querySelector(`#${this.node.pageWorkspace}`).appendChild(_css[0]);
-
-                                        if (!_jsn) { return true; }
-                                        if (_jsn.scripts) {
-                                            for (let i = 0; i < _jsn.scripts.keys.length; i++) {
-                                                _script = document.createElement("script");
-                                                _script.src = _jsn.scripts[_jsn.scripts.keys[i]];
-                                                document.querySelector(`#${this.node.pageWorkspace}`).appendChild(_script);
-                                            }
-                                        }
-                                        if (_jsn.data) { this.node.DATA = _jsn.data; }
-
-                                    },
-                                    onprogress: function Progress(e) {
-
-                                    },
-                                    onerror: function Error(e) {
-
-                                    }
-                                });
-                            }
+                        }
                         },
                         selected: {
                             get: function GetSelected(val) { return this.getAttribute("selected"); }
-                        },
-                        transitionStart: {
-                            get: function GetTransitionStart() { return this.getAttribute("tranisition-start"); }
-                        },
-                        transitionEnd: {
-                            get: function GetTransitionStart() { return this.getAttribute("tranisition-end"); }
                         },
                         page: {
                             get: function () {
@@ -2136,13 +2039,6 @@ ____________________ **/
                             },
                             get: function GetWorkspace() { return this.getAttribute("page-workspace"); }
                         },
-                        pageSidebar: {
-                            set: function SetPageSidebar(val) {
-                                this.setAttribute("page-sidebar", val);
-                                this.sidebar = document.getElementById(val);
-                            },
-                            get: function GetPageSidebar() { return this.getAttribute("page-sidebar"); }
-                        },
                         workspaces: {
                             set: function SetWorkspaces(val) {
                                 this._workspace ? true : this._workspace = { length: 0 };
@@ -2152,33 +2048,12 @@ ____________________ **/
 
                             },
                             get: function GetWorkspaces() { return function GetWorkspace(val) { return this._workspace[val]; }; }
-                        },
-                        pluginHeader: {
-                            set: function SetPluginHeader(val) {
-                                val === true ? this._pluginHeader = this.querySelector("x-header") || this.querySelector("header") : this._pluginHeader = false;
-                            },
-                            get: function GetPluginHeader() {
-                                return this._pluginHeader;
-                            }
-                        },
-                        pluginFooter: {
-                            set: function SetPluginFooter(val) {
-                                val === true ? this._pluginFooter = this.querySelector("x-header") || this.querySelector("header") : this._pluginFooter = false;
-                            },
-                            get: function GetPluginFooter() { return this._pluginFooter; }
                         }
                     };
                 }
 
                 static events() {
                     return {
-                        "mousedown": function (e) {
-                            if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("sidebar-event") === true) {
-                                let nm = e.target.getAttribute("sidebar-event");
-
-                                this.silo[nm](e);
-                            }
-                        }
                     };
                 }
             };
