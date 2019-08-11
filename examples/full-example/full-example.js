@@ -60,7 +60,7 @@ window.addEventListener("load", function LoadExample() {
 
 
             // Use the Dashing.MainDisplay at access x-book's bookTitle attribute setter
-            Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`["book-icon="title-documentation"]`), {
+            Dashing.icons.insertIcon(Dashing.MainDisplay.querySelector(`[book-icon="title-documentation"]`), {
                 snippets: ["title-documentation"],
                 insertAt: "afterbegin",
                 overwrite: true,
