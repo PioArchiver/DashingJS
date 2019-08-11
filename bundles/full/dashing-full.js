@@ -1930,7 +1930,7 @@ ____________________ **/
                             let n = document.querySelector(this.getAttribute("for-book")),
                                 index = n.page,
                                 _nodes = n.querySelectorAll("x-page"),
-                                pages = _nodes.pages;
+                                pages = n.pages;
                             if (index <= 1) {
                                 this.parentNode.page = pages.length;
                                 _nodes[0].active = false;
@@ -1946,10 +1946,10 @@ ____________________ **/
                             let n = document.querySelector(this.getAttribute("for-book")),
                                 index = n.page,
                                 _nodes = n.querySelectorAll("x-page"),
-                                pages = _nodes.pages;
+                                pages = n.pages;
                             console.log(index);
                             console.log(pages);
-                            if (index >= pages.length) {
+                            if (index >= pages) {
                                 n.page = pages.length;
                                 _nodes[pages.length - 1].active = false;
                                 _nodes[0].active = true;
