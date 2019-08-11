@@ -1932,7 +1932,7 @@ ____________________ **/
                                 _nodes = n.querySelectorAll("x-page"),
                                 pages = n.pages;
                             if (index <= 1) {
-                                this.parentNode.page = pages.length;
+                                n.page = pages.length;
                                 _nodes[0].active = false;
                                 _nodes[pages - 1].active = true;
                             }
@@ -1955,7 +1955,7 @@ ____________________ **/
                                 _nodes[0].active = true;
                             }
                             else {
-                                n.page = Number(index - 1);
+                                n.page = Number(index + 1);
                                 _nodes[index - 1].active = false;
                                 _nodes[index].active = true;
                             }
