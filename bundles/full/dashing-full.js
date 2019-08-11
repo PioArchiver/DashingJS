@@ -1937,7 +1937,7 @@ ____________________ **/
                                 _nodes[pages - 1].active = true;
                             }
                             else {
-                                this.parentNode.page = Number(index - 1);
+                                n.page = Number(index - 1);
                                 _nodes[index - 1].active = false;
                                 _nodes[index - 2].active = true;
                             }
@@ -1947,8 +1947,6 @@ ____________________ **/
                                 index = n.page,
                                 _nodes = n.querySelectorAll("x-page"),
                                 pages = n.pages;
-                            console.log(index);
-                            console.log(pages);
                             if (index >= pages) {
                                 n.page = 1;
                                 _nodes[pages - 1].active = false;
