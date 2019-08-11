@@ -92,6 +92,9 @@ x-book#main-display {
         x-book > x-modal[active] > div > ol {
             list-style: none;
         }
+        x-book > x-modal[active] > div > a:visited {
+            color: aliceblue;
+        }
         x-book > x-modal[active] + x-modal-overlay {
             position: fixed;
             display: block;
