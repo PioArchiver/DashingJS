@@ -1883,7 +1883,7 @@ ____________________ **/
                                 if (Dashing.typeOf(val) === "string") {
                                     let stg = /\<script|onclick|onmouseover|onmouseout|obdblclick/gi.test(val) === true ? "not allowed error" : val
                                     this.setAttribute("book-title", stg);
-                                    Dashing.fnQuery.call(this, `[book-icon="title"]`, function BookTitleFn(title) {
+                                    Dashing.fnQuery.call(this, `[book-icon]`, function BookTitleFn(title) {
                                         title.innerHTML = val;
                                     },
                                         function BookTitleNullfn(title) {
@@ -2798,7 +2798,7 @@ ____________________ **/
             }
         },
         'add(mixin=iconography)': class Drawing {
-            static methods(XTagElement) {
+            static methods() {
                 return {
                     addResizerIcons: function AddResizerIcons(opts) {
                         for (let i = 0; i < opts.snippets.length; i++) {
@@ -2900,7 +2900,12 @@ ____________________ **/
                                 break;
                             default:
                                 this.extension.icons.insertIcon(this, {
-
+                                    overwrite: opts.overwrite || false,
+                                    insertAt: opts.insertAt || "afterbegin",
+                                    type: opts.type || "svg",
+                                    snippets: opts.snippets || [],
+                                    insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
+                                    drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                 });
                                 break;
                         }
