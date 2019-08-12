@@ -39,7 +39,7 @@
                             <x-form id="dashing-js-builder" resource-selection="builder" form-view="Form-Sheet-View">
                                 <strong>DashingJS Builder</strong>
                                 <form name="dashingjs-build">
-                                    <label for="build_name">Name: </label><input type="text" id="build_name" name="build_name" placeholder="Package name" />
+                                    <label for="build_name">Upload: </label><input type="file" id="build_name" name="build_name" placeholder="Upload" />
                                     <input type="button" name="submit_build" value="Build" />
                                 </form>
                             </x-form>
@@ -71,6 +71,15 @@
             -->
         <x-book id="main-display" book-title="Demo App">
             <x-page active="true">
+                <header>
+                    <h1 book-icon="application-documentation"></h1>
+                </header>
+                <section>
+                </section>
+                <footer>
+                </footer>
+            </x-page>
+            <x-page>
                 <header>
                     <h1 book-icon="title-documentation"></h1>
                 </header>
