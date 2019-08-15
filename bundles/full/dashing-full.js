@@ -5,18 +5,11 @@
 ____________________ **/
 
 (function DashioFull() {
+    const camelCaseCE = /\-[aA-zZ]/g,
+          camelCaseToDSV = /[A-Z]/g;
 
-    /** ____________________
-     * @note Methods and variables for tabbox
-     * ** @name rules
-     * ** @name _elements
-     * ** @name _observers
-    ____________________ **/
-    const rules = {},
-        _observers = {},
-        _elements = {},
-        _requests = {},
-        _mod = { initiated: false };
+    const mixins = {},
+          CEvents = {};
 
     // Helper functions from X-Tag V-1
     function typeOf(obj) {
@@ -57,21 +50,54 @@ ____________________ **/
 
     // Helper Functions
     function QueryArray(arr, val) {
-        if (xtag.typeOf(val) === "string") {
+        if (Dashing.typeOf(val) === "string") {
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i] === val) { return i; }
             }
             return false;
         }
     } 
-    function writeSetterGetter(proto, key, obj) {
+    function writeSetterGetter(key, proto, obj) { 
         Object.defineProperty(proto.prototype, key, {
             configurable: false,
             enumerable: true,
-            get: obj.get ? obj.get : function GetAttrDefault() { return false; },
-            set: obj.set ? obj.set : function SetAttrDefault(val) { false; }
+            get: obj.get || function () { return false; },
+            set: obj.set || function () { false; }
         });
-        return k;
+    }
+    function addMethod(name, proto, fn) {
+        Object.defineProperty(proto.prototype, name, {
+            writeable: false,
+            configurable: false,
+            value: fn
+        });
+    }
+    function addAttrSetterGetter(name, proto, prop) {
+        let n = name.replace(camelCaseCE, function AttrCamelCase(stg) { let r = stg[1]; return r.toUpperCase(); });
+        writeSetterGetter(n, proto, {
+            get: prop.get ? prop.get : function noop() { },
+            set: prop.set ? prop.set : function noop(value) { false; }
+        }); 
+        return prop.connected ? n : false;
+    } 
+    function writeCustomEvent(name, data) {
+        let event = new CustomEvent(name, {
+            detail: data || false
+        });
+    }
+    function writeCustomEvents(_events) {
+        if (Dashing.typeOf(_events) === "object") {
+            for (let n in _events) {
+                CEvents[n] ? true : CEvents[n] = _events[n].detail ? _events[n].detail : false;
+                let event = new CustomEvent(n, {
+                    detail: CEvents[n]
+                });
+            }
+            return true;
+        } else { return false; }
+    }
+    function fire(node, _event) {
+        node.dispatchEvent(event);
     }
 
     const states = {},
@@ -326,7 +352,19 @@ ____________________ **/
 
     // Shadow class
     class Shadow {
-
+        constructor() {
+            this.attached = {};
+        }
+        set attach(options) {
+            this.attached[element.id] = {
+                shadow: options.element.elem.attachShadow({ mode: options.mode || "open" })
+            }
+        }
+        get attach() {
+            return function GetAttached(name) {
+                return this.attached[name] || false;
+            };
+        }
     }
 
     // Writer class
@@ -378,9 +416,9 @@ ____________________ **/
             let context = null,
                 snippet = null;
             if (Dashing.typeOf(this) === "htmlelement") {
-                context = this;
-            }
-            else { return false; }
+                if (this.shadow) { context = this.shadow; }
+                else { context = this; }
+            } else { return false; }
             return new Promise(function (res, rej) {
                 if (Dashing.writer.stampPattern(name)) {
                     snippet = Dashing.writer.stampPattern(name);
@@ -389,8 +427,6 @@ ____________________ **/
                 let opts = null;
                 if (Dashing.typeOf(options) === "object") {
                     opts = options;
-
-
                 }
                 else { rej ? rej(name, options) : false; }
                 let r = document.createDocumentFragment(),
@@ -418,101 +454,6 @@ ____________________ **/
         }
 
     }
-
-    // Create the HTML Element Prototype Mixin 
-    class DashingElement {
-        constructor() {
-            //
-        }
-        connectedCallback() {
-            //
-        }
-
-        // Dashing is for the Dashing Components Build Package
-        disconnectedCallback(Dashing) {
-            //
-        }
-
-        attributeChangedCallback() {
-            // 
-        }
-    }
-
-    // Pseudos
-
-
-    xtag.pseudos.transition = {
-        onCompiled: function OnCompiled(fn, pseudo) {
-            let args = pseudo.arguments;
-
-            this.style = pseudo.listener() || {
-                delta: {}
-            };
-            this.style.keys = Object.keys(this.style.delta);
-            this.state = args[1];
-            this.attrs = {};
-            for (let c = 2; c < args.length; c++) {
-                this.attrs[args[c]] = { name: args[c], type: args[0] };
-            }
-            this.attrs.keys = Object.keys(this.attrs);
-            this.show = `[show="${this.keys}"]`;
-            this.hide = ``;
-        },
-        action: function (a, n) {
-            // Execute action only if n is defined. 
-            if (n === undefined) { return false; }
-            let args = a.arguments;
-
-            let _sat = this.getAttribute("transition-show") || "fade-in",
-                _hat = this.getAttribute("transition-hide") || "fade-out",
-                _st = transitions[_sat],
-                _ht = transitions[_hat];
-            // loop through attrs keys
-            for (let i = 0; i < a.attrs.keys.length; i++) {
-                let _attr = this.hasAttribute(a.attrs.keys[i]) === true ? a.attrs[a.attrs.keys[i]].name : false,
-                    _cstate = this.hasAttribute(a.attrs.keys[i]) === true ? true : false;
-
-                a.validated = a.attrs[a.attrs.keys[i]].type === "boolean" ? {
-                    boolean: true,
-                    string: false,
-                    name: a.attrs[a.attrs.keys[i]].name,
-                    value: this.getAttribute(a.attrs[a.attrs.keys[i]].name) || "",
-                    duration: this.getAttribute("transition-duration") || "1s"
-                } : {
-                        boolean: false,
-                        string: a.attrs[a.attrs.keys[i]].type,
-                        name: a.attrs[a.attrs.keys[i]].name,
-                        value: this.getAttribute(a.attrs[a.attrs.keys[0]].name) || "",
-                        duration: this.getAttribute("transition-duration") || "1s"
-                    };
-
-                if (a.validated.boolean === true) {
-                    transitions[a.validated.name] === undefined ? transitions[a.validated.name] = { initState: _cstate } : true;
-
-                    a.state = _cstate === true ? "show" : args[1] === "show" ? ("show") : "hide";
-                }
-                else {
-                    transitions[a.attrs.keys[i].name] !== undefined ? transitions[a.attrs.keys[i].name] = { initState: _cstate } : true;
-                    a.state = _cstate === true ? "show" : args[1] === "show" ? ("show") : "hide";
-                }
-
-                a.transitions = {
-                    hide: transitions[_hat],
-                    show: transitions[_sat]
-                };
-
-                if (a.transitions[a.state].attributes[a.attrs.keys[i]] === args[0]) {
-                    transitions[args[1]].apply(this, [a]);
-                }
-                else {
-                    a.override = a.validated.value;
-                    transitions[args[1]].apply(this, [a]);
-                }
-
-            }
-
-        }
-    };
 
     let _setprog = 0;
     function noop(n) { return n || false; }
@@ -795,7 +736,8 @@ ____________________ **/
         }
     }
 
-    let Dashing = null;
+    let Dashing = null,
+        elements = null;
     class dashboard {
         constructor(dashed) {
             Dashing = this;
@@ -821,8 +763,8 @@ ____________________ **/
             // set the iconography
             this.iconography = Iconography;
 
-                // Set added properties
-                protokeys = Dashing.setAddedProps(dashed);
+            // Set added properties
+            protokeys = Dashing.setAddedProps(dashed);
 
             // Fire keys
             Dashing.fireProps(dashed, keys, protokeys);
@@ -836,18 +778,59 @@ ____________________ **/
             // Set a pio transactions callback for upgrades
             this.onPioUprade = dashed.onPioUgrade;
 
-            // Build Components 
-            let elems = Dashing.build(dashed.namespaces, dashed);
-            Dashing.built = elems;
+            // Set elements variable and build Components 
+            elements = dashed.elements;
+            let elems = Dashing.build(dashed.namespaces, {
+                set: function SetCeClass(definition) {
+                    let name = definition.name.replace(camelCaseToDSV, function (stg) { return `-${stg.toLowerCase()}`; });
+                    if (/^[a-z]+\-/g.test(name)) {
+                        let _methods = definition.methods ? definition.methods() : {};
+                        for (let km in _methods) { addMethod(km, definition, _methods[km]); }
+                        definition.methods ? delete definition.methods : false;
+                        
+                        let _attrs = definition.attrs ? definition.attrs() : {},
+                            _akeys = [];
+                        for (let am in _attrs) { _akeys.push(addAttrSetterGetter(am, definition, _attrs[am])); }
+                        definition.attrs ? delete definition.attrs : false;
 
-            // Register Elements with x-tags if dashed.celements = true 
-            if (dashed.celements === true) {
-                let nms = Object.keys(Dashing.built);
-                // Register the componensts using xtag's registration method. 
-                for (let name = 0; name < nms.length; name++) {
-                    xtag.register(Dashing.namespaces[name], Dashing.built[nms[name]]);
+                        let _events = definition.events ? definition.events() : {};
+                            writeCustomEvents(_events);
+                        definition.events ? delete definition.events : false;
+
+                        let _lc = definition.lifecycle ? definition.lifecycle() : false;
+                        _lc !== false ? (
+                            _lc.removed ? definition.prototype.disconnectedCallback = _lc.removed : false
+                        ) : false;
+
+                        class DashingElement extends definition {
+                            constructor() {
+                                super();
+                                _lc.created ? _lc.created.call(this) : false;
+
+                            }
+                            connectedCallback() {
+                                for (let i = 0; i < _akeys.length; i++) {
+                                    if (_akeys[i].connected !== false) { this[_akeys[i]] = this[_akeys[i]]; }
+                                }
+
+                                for (let em in _events) {
+                                    let en = em.match(/^[aA-zZ]+/g)[0],
+                                        delegate = em.match(/\(.+\)$/g);
+                                    delegate = delegate === null ? false : delegate[0].replace(/[\(\)]/g, "");
+
+                                    let context = delegate ? this.querySelector(delegate) : this,
+                                        fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop;
+
+                                    context === null ? console.log(this) : true;
+                                    context.addEventListener(en, fire);
+                                }
+                                _lc.inserted ? _lc.inserted.call(this) : false;
+                            }
+                        }
+                            Dashing.register(name, DashingElement);
+                    }
                 }
-            }
+            });
         }
         on(node, type, callback) {
             // CustomEvents/Events
@@ -880,10 +863,7 @@ ____________________ **/
                     }
                     break;
                 case "mixin":
-                    xtag.mixins[data.name] = xtag.mixins[data.name] ? xtag.mixins[data.name] : data.value;
-                    break;
-                case "pseudo":
-                    xtag.pseudos[data.name] = xtag.pseudos[data.name] ? xtag.pseudos[data.name] : data.value;
+                    mixins[data.name] = mixins[data.name] ? mixins[data.name] : data.value;
                     break;
                 case "templates":
                     for (let i = 0; i < data.keys.length; i++) {
@@ -911,18 +891,18 @@ ____________________ **/
                     return xhr.response;
             }
         }
-        build(nm, def) {
-            let comps = function elems() { }
+        build(nms, def) {
+            let comps = function elems() { };
             // loop through namespaces
-            for (let i = 0; i < (nm || []).length; i++) {
-                // Parse name space to camel case
-                let nms = nm[i].replace(/\-\w/g, function (stg) {
+            for (let i = 0; i < (nms || []).length; i++) {
+                let nm = nms[i].replace(camelCaseCE, function (stg) {
                     let r = stg.toUpperCase();
                     return r[1];
                 });
-                comps[nms] = {};
+                writeSetterGetter(nm, comps, def);
             }
-            comps = def.elements(comps);
+
+            elements(new comps());
             return comps;
         }
         setAddedProps(dashed) {
@@ -1431,8 +1411,11 @@ ____________________ **/
                 // Events
                 static events() {
                     return {
-                        config: function Config(e) {
-                            // 
+                        config: {
+                            detail: {},
+                            fire: function Config(e) {
+                                // 
+                            }
                         }
                     };
                 }
@@ -1467,9 +1450,9 @@ ____________________ **/
                     return {
                         created: function CreatedXMenu() {
                             this.display = null;
-                            this.content = null;
                             this.templateItems = null;
                             this.currentIndex = 0;
+                            this.template = {};
                         }
                     };
                 }
@@ -1484,17 +1467,6 @@ ____________________ **/
                                 _tabbtn.setAttribute("panel-content", _id);
                                 _tabbtn.innerHTML = _title;
                             this.insertAdjacentElement("beforeend", _tabbtn);
-                        },
-                        addTemplate: function AddTemplate(opts) {
-                            if (xtag.typeOf(opts) === "object") {
-                                if (opts.id && opts.template) {
-                                    /\<script\>/.test(opts.template) === false ?
-                                        this[opts.id] = function () { return opts.template; } :
-                                        this[opts.id] = function () {
-                                            return "<div>No script tags Allowed in templates</div>";
-                                        };
-                                }
-                            }
                         },
                         "x-extension-demo": function XExtensionDemo() {
                             return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
@@ -1524,7 +1496,7 @@ ____________________ **/
                             return `<x-form id="dashing-js-builder" resource-selection="builder" form-view="Form-Sheet-View">
                                 <strong>DashingJS Builder</strong>
                                 <form name="dashingjs-build">
-                                    <label for="build_name">Name: </label><input type="text" id="build_name" name="build_name" placeholder="Package name" />
+                                    <label for="build_name">Upload: </label><input type="file" id="build_name" name="build_name" placeholder="Upload" />
                                     <input type="button" name="submit_build" value="Build" />
                                 </form>
                             </x-form>`;
@@ -1554,14 +1526,14 @@ ____________________ **/
                                 try { this.templateItems = JSON.parse(val); }
                                 catch (e) { throw e; }
                                 finally {
-                                    if (xtag.typeOf(this.templateItems) === "array") {
+                                    if (Dashing.typeOf(this.templateItems) === "array") {
                                         for (let i = 0; i < this.templateItems.length; i++) {
                                             let _doc = document.querySelector(`#${this.templateItems[i]}`);
                                             if (_doc) {
-                                                this.addTemplate({
+                                                this.template = {
                                                     id: this.templateItems[i], 
-                                                    template: _doc.outerHTML 
-                                                });
+                                                    template: function () { return_doc.outerHTML; } 
+                                                };
                                             }
                                             this.createTabButton(this.templateItems[i]);
                                         }
@@ -1586,6 +1558,16 @@ ____________________ **/
                             }
                         }
                     };
+                }
+
+                set template(value) {
+                    this.Template ? true : this.Template = {};
+                    if (Dashing.typeOf(value) === "object" && value.id && value.template && !this.template[value.id]) {
+                        this.Template[value.id] = value.template;
+                    }
+                }
+                get template() {
+                    return function GetTemplate(name) { return this.Template[value.id] ? this.Template[value.id] : false; }
                 }
             };
 
@@ -1624,11 +1606,9 @@ ____________________ **/
                             // In Work
                         },
                         createCaches: function CreateCaches(_items) {
-                            if (xtag.typeOf(_items) === "array") {
+                            if (Dashing.typeOf(_items) === "array") {
                                 for (let i = 0; i < _items.length; i++) {
-                                    this.cached[_items[i]] = this.xContent.firstElementChild.Json || {};
-                                    // Need to cached validated data from what
-                                    // the panel's content is currently displaying.
+                                    this.cached[_items[i]] = this.xDisplay.firstElementChild.caching || {};
                                 }
                             }
                         }
@@ -1636,16 +1616,17 @@ ____________________ **/
                 }
                 static attrs() {
                     return {
-                        content: {
+                        display: {
                             connected: true,
                             get: function GetPanelContent() {
-                                return this.getAttribute("content") || false;
+                                return this.getAttribute("display") || false;
                             },
                             set: function SetPanelContent(val) {
-                                if (xtag.typeOf(val) === "string") {
-                                    this.setAttribute("content", val);
-                                    this.xContent = this.querySelector(`#${val}`);
+                                if (Dashing.typeOf(val) === "string") {
+                                    this.setAttribute("display", val);
+                                    this.xDisplay = this.querySelector(val);
                                 }
+                                else { this.xDisplay = this; }
                             }
                         }, 
                         menu: {
@@ -1654,7 +1635,7 @@ ____________________ **/
                                 return this.getAttribute("menu") || false;
                             },
                             set: function SetPanelMenu(val) {
-                                if (xtag.typeOf(val) === "string" && this.querySelector(val)) {
+                                if (Dashing.typeOf(val) === "string" && this.querySelector(val)) {
                                     this.setAttribute("menu", val);
                                     this.xMenu = this.querySelector(val);
                                 }
@@ -1711,16 +1692,17 @@ ____________________ **/
                                 return this.getAttribute("resizer-options") || false;
                             },
                             set: function SetPanelResizer(val) { 
-                                if (xtag.typeOf(val) === "string" && this.querySelector(val)) {
+                                if (Dashing.typeOf(val) === "string" && this.querySelector(val)) {
                                     this.setAttribute("resize-options", val);
                                     this.resizerBar = true;
                                     let _container = this.querySelector(val),
-                                        _panelresizer = xtag.createFragment(`<div resizer-menu="true">
-                                            <button icon="minimize" title="Minimize">${"_"}</button>
+                                        _panelresizer = document.createElement("div");
+                                        _panelresizer.setAttribute("resizer-menu", "true");
+
+                                    _panelresizer.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
                                             <button icon='normal' title="Normal">${"[]"}</button>
-                                            <button icon='maximize' title="Maximize">${"[-]"}</button>
-                                        </div>`);
-                                    _container.insertAdjacentElement("afterbegin", _panelresizer.firstElementChild);
+                                            <button icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                    _container.insertAdjacentElement("afterbegin", _panelresizer);
                                 }
                                 else if (val === "true") {
                                     this.setAttribute("resize-options", val);
@@ -2201,7 +2183,7 @@ ____________________ **/
 
             };
 
-            elems.xTabbox = class xFooter extends HTMLElement {
+            elems.xTabbox = class xTabbox extends HTMLElement {
                 static events() {
                     return {
                         "selectTab": function selectTab(e) {
@@ -2241,8 +2223,7 @@ ____________________ **/
                         },
                         'tap:delegate(x-tabbox > menu > *)': function TapSelectEvent(e) {
                             xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
-                        },
-                        'keydown:delegate(x-tabbox > menu > *):keypass(13, 32)': function KeySelectEvent(e) { xtag.fireEvent(this, "selectEvent", {}); }
+                        }
                     };
                 }
 
@@ -2250,8 +2231,7 @@ ____________________ **/
                     return {
                         created: function Created() {
                             this.selectedIndex = this.selectedIndex;
-                        },
-                        inserted: function Inserted() { xtag.fireEvent(this, "selectEvent", { detail: { index: Number(this.selectedIndex) } }); }
+                        }
                     };
                 }
 
@@ -2271,9 +2251,7 @@ ____________________ **/
                             set: function (val) {
                                 this.setAttribute("selected-index", val);
                             },
-                            get: function () {
-                                return this.getAttribute("selected-index");
-                            }
+                            get: function () { return this.getAttribute("selected-index"); }
                         },
                         'selected-tab': (function () { return Dashing.createAccessor("menu > [selected]"); })(),
                         'selected-panel': (function () { return Dashing.createAccessor("menu > [selected]"); })()

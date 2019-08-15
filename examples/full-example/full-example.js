@@ -6,6 +6,86 @@
 let Dashing = null;
 window.addEventListener("load", function LoadExample() {
     Dashing = document.querySelector("x-extension");
+    [
+        "x-json",
+        "x-extension",
+        "x-book",
+        "x-panel",
+        "x-page",
+        "x-table",
+        "x-header",
+        "x-footer",
+        "x-menu",
+        "x-shiftbox",
+        "x-tabbox",
+        "x-modal",
+        "x-message",
+        "x-link"
+    ]
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-json-demo",
+        template: function XTableDemo() {
+            return `<x-form><form><textarea><x-table></x-table></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-extension-demo",
+        template: function XFormDemo() {
+            return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-book-demo",
+        template: function XMenuDemo() {
+            return `<x-form><form><textarea><x-book></x-book></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-panel-demo",
+        template: function XTableDemo() {
+            return `<x-form><form><textarea><x-panel></x-panel></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-page-demo",
+        template: function XFormDemo() {
+            return `<x-form><form><textarea><x-page></x-page></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-table-demo",
+        template: function XTableDemo() {
+            return `<x-form><form><textarea><x-table></x-table></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-header-demo",
+        template: function XFormDemo() {
+            return `<x-form><form><textarea><x-header></x-header></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
+
+    Dashing.querySelector("#dashingjs-builder-menu").template = {
+        id: "x-footer-demo",
+        template: function XMenuDemo() {
+            return `<x-form><form><textarea><x-footer></x-footer></textarea></form>
+                            <button>Preview</button><x-form>`;
+        }
+    };
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {

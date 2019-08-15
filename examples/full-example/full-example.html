@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="full-example.css" />
     <link rel="stylesheet" href="grid.css" />
 
-    <script type="text/javascript" src="../../bundles/full/x-tag-ce.js"></script>
-
     <script type="text/javascript" src="../../bundles/full/dashing-full.js" async></script>
     <script type="text/javascript" src="full-example.js"  async></script>
 </head>
@@ -28,10 +26,11 @@
             <ul>
                 <li selected>
                     <x-panel id="builder-panel" 
+                             contenteditable="#dashing-js-builder"
                              menu="#dashingjs-builder-menu" 
                              resizer-options="#dashingjs-builder-menu">
                         <x-menu id="dashingjs-builder-menu"
-                                display-current="dashing-js-builder"
+                                display-current="#dashing-js-builder"
                                 display-target="#builder-display"
                                 display-items='["dashing-js-builder"]'>
                         </x-menu>
@@ -53,7 +52,7 @@
                         <x-menu id="demo-panel-menu"
                                 display-current="x-extension-demo"
                                 display-target="#demo-display"
-                                display-items='["x-extension-demo", "x-panel-demo", "x-canvas-demo", "x-form-demo", "x-table-demo"]'></x-menu>
+                                display-items='["x-extension-demo", "x-panel-demo", "x-canvas-demo", "x-form-demo", "x-table-demo", "x-menu-demo", "x--demo"]'></x-menu>
                         <div id="demo-display">
                             <x-form>
                                 <form>
