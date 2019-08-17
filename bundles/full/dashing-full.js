@@ -836,7 +836,7 @@ ____________________ **/
                                     let context = delegate ? document.querySelector(delegate) : this,
                                         _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop;
 
-                                    context === null ? false : context.addEventListener(en, function (e) { _fire(e); });
+                                    context === null ? false : context.addEventListener(en, function (e) { console.log(e); _fire(e); });
                                 }
                             }
                         }
@@ -2160,7 +2160,7 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'dblclick:delegate(x-shiftbox[tapclose] > aside)': function OpenShiftbox(e) {
+                        'dblclick(x-shiftbox[tapclose] > aside)': function OpenShiftbox(e) {
                             xtag.fireEvent(e.target.parentNode, "toggle", {
                                 detail: {
                                     shiftbox: e.target.parentNode,
@@ -2218,7 +2218,7 @@ ____________________ **/
                                 });
                             }
                         },
-                        'tap:delegate(x-tabbox > menu > *)': function TapSelectEvent(e) {
+                        'tap(x-tabbox > menu > *)': function TapSelectEvent(e) {
                             xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
                         }
                     };
@@ -2453,10 +2453,10 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'tap:delegate(button[value="Confirm"])': function ConfirmPlatform(e) {
+                        'tap(button[value="Confirm"])': function ConfirmPlatform(e) {
                             //
                         },
-                        'tap:delegate(button[toggler])': function ChangePlatform(e) {
+                        'tap(button[toggler])': function ChangePlatform(e) {
                             let n = document.getElementById(this.getAttribute("toggler"));
                             n.activeToggle.call(this, n);
                         }
@@ -2817,7 +2817,7 @@ ____________________ **/
         'add(mixin=resizer)': class Themed {
             static events() {
                 return {
-                    "click:delegate(x-menu > div[resizer-menu] > button[icon])": function ResizePanel(e) {
+                    "click(x-menu > div[resizer-menu] > button[icon])": function ResizePanel(e) {
                         let _parent = this.parentNode.parentNode.parentNode;
                         switch (this.getAttribute("icon")) {
                             case "minimize":
