@@ -270,6 +270,8 @@ ____________________ **/
             let ico = document.createDocumentFragment(),
                 _doc = null;
             snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
+            console.log(this);
+            console.log(this.uploads);
             switch (type) {
                 case "png":
                 case "gif":
