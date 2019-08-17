@@ -1840,7 +1840,6 @@ ____________________ **/
                                     Dashing.fnQuery.call(this, `${val}`, function BookControlsFn(controls) {
                                         // 
                                     }, function BookControlsNullFn() {
-                                            console.log(`hello`);
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
                                             ctls.innerHTML = `<button book-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
