@@ -836,8 +836,7 @@ ____________________ **/
                                     let context = delegate ? document.querySelector(delegate) : this,
                                         _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop;
 
-                                    context === null ? console.log(delegate) : true;
-                                    context.addEventListener(en, function (e) { _fire(e); });
+                                    context === null ? false : context.addEventListener(en, function (e) { _fire(e); });
                                 }
                             }
                         }
