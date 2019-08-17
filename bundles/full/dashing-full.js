@@ -26,10 +26,9 @@ ____________________ **/
         return source;
     }
     function merge(source, k, v) {
-        if (typeOf(k) === 'string') return mergeOne(source, k, v);
+        if (typeOf(k) === 'string') { return mergeOne(source, k, v); }
         for (let i = 1, l = arguments.length; i < l; i++) {
-            let object = arguments[i];
-            for (let key in object) { mergeOne(source, key, object[key]); }
+            for (let key in arguments[i]) { mergeOne(source, key, arguments[i][key]); }
         }
         return source;
     }
@@ -85,7 +84,7 @@ ____________________ **/
             detail: data || false
         });
     }
-    function writeCustomEvents(_events) {
+    function writeCustomEvents(_events) { 
         if (Dashing.typeOf(_events) === "object") {
             for (let n in _events) {
                 CEvents[n] ? true : CEvents[n] = _events[n].detail ? _events[n].detail : false;
@@ -96,8 +95,8 @@ ____________________ **/
             return true;
         } else { return false; }
     }
-    function fire(node, _event) {
-        node.dispatchEvent(event);
+    function fire(name, node) {
+        node.dispatchEvent(CEvents[name]);
     }
 
     const states = {},
@@ -785,22 +784,40 @@ ____________________ **/
                     let name = definition.name.replace(camelCaseToDSV, function (stg) { return `-${stg.toLowerCase()}`; });
                     if (/^[a-z]+\-/g.test(name)) {
                         let _methods = definition.methods ? definition.methods() : {};
-                        for (let km in _methods) { addMethod(km, definition, _methods[km]); }
-                        definition.methods ? delete definition.methods : false;
-                        
+
                         let _attrs = definition.attrs ? definition.attrs() : {},
                             _akeys = [];
-                        for (let am in _attrs) { _akeys.push(addAttrSetterGetter(am, definition, _attrs[am])); }
-                        definition.attrs ? delete definition.attrs : false;
 
                         let _events = definition.events ? definition.events() : {};
-                            writeCustomEvents(_events);
-                        definition.events ? delete definition.events : false;
 
                         let _lc = definition.lifecycle ? definition.lifecycle() : false;
                         _lc !== false ? (
                             _lc.removed ? definition.prototype.disconnectedCallback = _lc.removed : false
                         ) : false;
+
+                        let _mxa = null,
+                            _mxe = null,
+                            _mxm = null,
+                            _mx = definition.mixins ? definition.mixins() : false;
+                        if(_mx !== false) {
+                            for (let m = 0; m < _mx.length; m++) {
+                                let nm = _mx[m];
+                                    mixins[nm].attrs ? merge(_attrs, mixins[nm].attrs()) : false;
+                                    mixins[nm].methods ? merge(_methods, mixins[nm].methods()) : false;
+                                    mixins[nm].events ? merge(_events, mixins[nm].events()) : false;
+
+                            }
+                            delete definition.mixins;
+                        }
+
+                        for (let km in _methods) { addMethod(km, definition, _methods[km]); }
+                        definition.methods ? delete definition.methods : false;
+
+                        for (let am in _attrs) { _akeys.push(addAttrSetterGetter(am, definition, _attrs[am])); }
+                        definition.attrs ? delete definition.attrs : false;
+
+                        writeCustomEvents(_events);
+                        definition.events ? delete definition.events : false;
 
                         class DashingElement extends definition {
                             constructor() {
@@ -812,19 +829,19 @@ ____________________ **/
                                 for (let i = 0; i < _akeys.length; i++) {
                                     if (_akeys[i].connected !== false) { this[_akeys[i]] = this[_akeys[i]]; }
                                 }
+                                _lc.inserted ? _lc.inserted.call(this) : false;
 
                                 for (let em in _events) {
                                     let en = em.match(/^[aA-zZ]+/g)[0],
                                         delegate = em.match(/\(.+\)$/g);
                                     delegate = delegate === null ? false : delegate[0].replace(/[\(\)]/g, "");
 
-                                    let context = delegate ? this.querySelector(delegate) : this,
-                                        fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop;
+                                    let context = delegate ? document.querySelector(delegate) : this,
+                                        _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop;
 
-                                    context === null ? console.log(this) : true;
-                                    context.addEventListener(en, fire);
+                                    context === null ? console.log(delegate) : true;
+                                    context.addEventListener(en, function (e) { _fire(e); });
                                 }
-                                _lc.inserted ? _lc.inserted.call(this) : false;
                             }
                         }
                             Dashing.register(name, DashingElement);
@@ -1468,30 +1485,6 @@ ____________________ **/
                                 _tabbtn.innerHTML = _title;
                             this.insertAdjacentElement("beforeend", _tabbtn);
                         },
-                        "x-extension-demo": function XExtensionDemo() {
-                            return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
-                            <button>Preview</button></x-form>`;
-                        },
-                        "x-panel-demo": function XPanelDemo() {
-                            return `<x-form><form><textarea><x-panel></x-panel></textarea></form>
-                            <button>Preview</button></x-form>`;
-                        },
-                        "x-form-demo": function XFormDemo() {
-                            return `<x-form><form><textarea><x-form></x-form></textarea></form>
-                            <button>Preview</button></x-form>`;
-                        },
-                        "x-table-demo": function XFormDemo() {
-                            return `<x-form><form><textarea><x-table></x-table></textarea></form>
-                            <button>Preview</button><x-form>`;
-                        },
-                        "x-canvas-demo": function XCanvasDemo() {
-                            return `<x-form><form><textarea><x-canvas></x-canvas></textarea></form>
-                            <button>Preview</button><x-form>`;
-                        },
-                        "x-menu-demo": function XMenuDemo() {
-                            return `<x-form><form><textarea><x-menu></x-menu></textarea></form>
-                            <button>Preview</button><x-form>`;
-                        },
                         "dashing-js-builder": function DashingJsBuilder() {
                             return `<x-form id="dashing-js-builder" resource-selection="builder" form-view="Form-Sheet-View">
                                 <strong>DashingJS Builder</strong>
@@ -1531,8 +1524,14 @@ ____________________ **/
                                             let _doc = document.querySelector(`#${this.templateItems[i]}`);
                                             if (_doc) {
                                                 this.template = {
-                                                    id: this.templateItems[i], 
-                                                    template: function () { return_doc.outerHTML; } 
+                                                    id: this.templateItems[i],
+                                                    template: function () { return _doc.outerHTML; }
+                                                };
+                                            }
+                                            else {
+                                                this.template = {
+                                                    id: this.templateItems[i],
+                                                    template: function () { return false; }
                                                 };
                                             }
                                             this.createTabButton(this.templateItems[i]);
@@ -1553,7 +1552,8 @@ ____________________ **/
                                     this.current = val;
                                     this.templateItems[this.currentIndex] === val ? true :
                                         this.currentIndex = QueryArray(this.templateItems, val);
-                                    this.display.innerHTML = this[val] ? this[val]() : "<div>Resource Not Found.</div>";
+                                    let _val = val.match(/[\w\-]+/g)[0]
+                                    this.display.innerHTML = this.template(_val) ? this.template(_val)() : "<div>Resource Not Found.</div>";
                                 }
                             }
                         }
@@ -1561,13 +1561,13 @@ ____________________ **/
                 }
 
                 set template(value) {
-                    this.Template ? true : this.Template = {};
+                    this.Templates ? true : this.Templates = {};
                     if (Dashing.typeOf(value) === "object" && value.id && value.template && !this.template[value.id]) {
-                        this.Template[value.id] = value.template;
+                        this.Templates[value.id] = value.template;
                     }
                 }
                 get template() {
-                    return function GetTemplate(name) { return this.Template[value.id] ? this.Template[value.id] : false; }
+                    return function GetTemplate(name) { return this.Templates[name] ? this.Templates[name] : false; }
                 }
             };
 
@@ -1720,7 +1720,7 @@ ____________________ **/
                 }
                 static events() {
                     return {
-                        "click:delegate(x-menu > button[panel-content])": function ChangePanelContent(e) {
+                        "click(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode; 
                             if (_menu.displayCurrent !== _panel) {
@@ -1840,12 +1840,48 @@ ____________________ **/
                                     Dashing.fnQuery.call(this, `${val}`, function BookControlsFn(controls) {
                                         // 
                                     }, function BookControlsNullFn() {
+                                            console.log(`hello`);
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
                                             ctls.innerHTML = `<button book-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                             this.pageControls = this.querySelector("[control-menu]");
                                             this.pageCounter = this.querySelector("[page-counter]");
+                                            this.pageControls.querySelector(`button[book-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
+                                                console.log(this);
+                                                let n = document.querySelector(this.getAttribute("for-book")),
+                                                    index = n.page,
+                                                    _nodes = n.querySelectorAll("x-page"),
+                                                    pages = n.pages;
+                                                if (index <= 1) {
+                                                    n.page = pages;
+                                                    _nodes[0].active = false;
+                                                    _nodes[pages - 1].active = true;
+                                                }
+                                                else {
+                                                    n.page = index - 1;
+                                                    _nodes[index - 1].active = false;
+                                                    _nodes[index - 2].active = true;
+                                                }
+                                                n.progressPageCounter();
+                                            });
+                                            this.pageControls.querySelector(`button[book-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
+                                                let n = document.querySelector(this.getAttribute("for-book")),
+                                                    index = n.page,
+                                                    _nodes = n.querySelectorAll("x-page"),
+                                                    pages = n.pages;
+                                                if (index >= pages) {
+                                                    n.page = 1;
+                                                    _nodes[pages - 1].active = false;
+                                                    _nodes[0].active = true;
+                                                }
+                                                else {
+                                                    n.page = Number(index + 1);
+                                                    _nodes[index - 1].active = false;
+                                                    _nodes[index].active = true;
+                                                }
+                                                n.progressPageCounter();
+                                            });
                                         });
                                 }
                             }
@@ -1911,40 +1947,6 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'click:delegate(button[book-icon="page-decrement"])': function PageLeft(e) {
-                            let n = document.querySelector(this.getAttribute("for-book")),
-                                index = n.page,
-                                _nodes = n.querySelectorAll("x-page"),
-                                pages = n.pages;
-                            if (index <= 1) {
-                                n.page = pages;
-                                _nodes[0].active = false;
-                                _nodes[pages - 1].active = true;
-                            }
-                            else {
-                                n.page = index - 1;
-                                _nodes[index - 1].active = false;
-                                _nodes[index - 2].active = true;
-                            }
-                            n.progressPageCounter();
-                        },
-                        'click:delegate(button[book-icon="page-increment"])': function PageRight(e) {
-                            let n = document.querySelector(this.getAttribute("for-book")),
-                                index = n.page,
-                                _nodes = n.querySelectorAll("x-page"),
-                                pages = n.pages;
-                            if (index >= pages) {
-                                n.page = 1;
-                                _nodes[pages - 1].active = false;
-                                _nodes[0].active = true;
-                            }
-                            else {
-                                n.page = Number(index + 1);
-                                _nodes[index - 1].active = false;
-                                _nodes[index].active = true;
-                            }
-                            n.progressPageCounter();
-                        }
                     };
                 }
 
@@ -2616,7 +2618,7 @@ ____________________ **/
         platformPrompt: true,
         celements: true,
         'add(mixin=dashed)': class Dashed {
-            static methods(XTagElement) {
+            static methods() {
                 return {
                     add: function AddDashed(name, options) {
                         // Send name through switch default return console warning.
@@ -2651,7 +2653,7 @@ ____________________ **/
                     }
                 };
             }
-            static attrs(XTagElement) {
+            static attrs() {
                 return {
                     templates: {
                         get: function GetTemplate() {

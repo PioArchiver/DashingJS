@@ -6,22 +6,6 @@
 let Dashing = null;
 window.addEventListener("load", function LoadExample() {
     Dashing = document.querySelector("x-extension");
-    [
-        "x-json",
-        "x-extension",
-        "x-book",
-        "x-panel",
-        "x-page",
-        "x-table",
-        "x-header",
-        "x-footer",
-        "x-menu",
-        "x-shiftbox",
-        "x-tabbox",
-        "x-modal",
-        "x-message",
-        "x-link"
-    ]
 
     Dashing.querySelector("#dashingjs-builder-menu").template = {
         id: "x-json-demo",
