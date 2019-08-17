@@ -269,6 +269,7 @@ ____________________ **/
         createIcon(type, snippet) {
             let ico = document.createDocumentFragment(),
                 _doc = null;
+            console.log(snippet);
             snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
             console.log(this);
             console.log(this.uploads);
@@ -308,10 +309,6 @@ ____________________ **/
                         _doc.firstElementChild.hasAttribute("width") ? _doc.setAttribute('width', _doc.firstElementChild.getAttribute("width")) : null;
                         _doc.firstElementChild.hasAttribute("height") ? _doc.setAttribute('height', _doc.firstElementChild.getAttribute("height")) : null;
                         _doc.removeChild(_doc.firstElementChild);
-                    }
-                    else {
-                        console.log(_doc);
-                        _doc.className = "dashing-icon";
                     }
                     break;
             }
