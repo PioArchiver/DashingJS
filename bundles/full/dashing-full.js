@@ -269,10 +269,7 @@ ____________________ **/
         createIcon(type, snippet) {
             let ico = document.createDocumentFragment(),
                 _doc = null;
-            console.log(snippet);
             snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
-            console.log(this);
-            console.log(this.uploads);
             switch (type) {
                 case "png":
                 case "gif":
@@ -299,7 +296,7 @@ ____________________ **/
                     }
 
                     if (_doc.firstElementChild.getAttribute("data-icon") === "true") {
-                        _doc.firstElementChild
+                        _doc.firstElementChild;
                     }
                     else if (_doc.firstElementChild.getAttribute("data-icon") === "symbol") {
                         vbox = _doc.firstElementChild.getAttribute("viewBox");
