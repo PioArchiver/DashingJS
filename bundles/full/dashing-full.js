@@ -308,6 +308,7 @@ ____________________ **/
                         _doc.removeChild(_doc.firstElementChild);
                     }
                     else {
+                        console.log(_doc);
                         _doc.className = "dashing-icon";
                     }
                     break;
