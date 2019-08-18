@@ -2424,6 +2424,10 @@ ____________________ **/
                             n.active = n.active === false ?
                                 m.active = true :
                                 n.active = false;
+                        },
+                        toggle: function _Toggle(btn) {
+                            let n = document.getElementById(btn.getAttribute("toggler"));
+                            n.activeToggle(n);
                         }
                     };
                 }
@@ -2448,8 +2452,7 @@ ____________________ **/
                             //
                         },
                         'click(button[toggler])': function ChangePlatform(e) {
-                            let n = document.getElementById(this.getAttribute("toggler"));
-                            n.activeToggle(n);
+                            this.toggle(this);
                         }
                     };
                 }
@@ -2493,9 +2496,12 @@ ____________________ **/
                                     this.id = this.id ? this.id : `xmodal-${document.getElementsByTagName("x-modal").length}`;
                                     n.setAttribute("toggler", this.id);
                                     n.innerHTML = "|O|";
-                                    this.Toggle = n;
 
                                     this.appendChild(n);
+
+                                    this.Toggle = this.querySelector("button[toggler]");
+
+                                    Dashing.on(this.Toggle, "click", function (e) { this.toggle(this.Toggle) });
                                 }
                                 else {
                                     this.Toggle = n;
