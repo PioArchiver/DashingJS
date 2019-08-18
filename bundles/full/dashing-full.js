@@ -79,24 +79,15 @@ ____________________ **/
         }); 
         return prop.connected ? n : false;
     } 
-    function writeCustomEvent(name, data) {
-        let event = new CustomEvent(name, {
-            detail: data || false
-        });
-    }
-    function writeCustomEvents(_events) { 
-        if (Dashing.typeOf(_events) === "object") {
-            for (let n in _events) {
-                CEvents[n] ? true : CEvents[n] = _events[n].detail ? _events[n].detail : false;
-                let event = new CustomEvent(n, {
-                    detail: CEvents[n]
-                });
-            }
+    function writeCustomEvent(node, name, _detail) { 
+        if (_detail !== false) {
+            let event = new CustomEvent(n, {
+                detail: _detail
+            });
+
+            node.dispatchEvent(event);
             return true;
         } else { return false; }
-    }
-    function fire(name, node) {
-        node.dispatchEvent(CEvents[name]);
     }
 
     const states = {},
@@ -786,6 +777,7 @@ ____________________ **/
                             _akeys = [];
 
                         let _events = definition.events ? definition.events() : {};
+                            definition.events ? delete definition.events : false;
 
                         let _lc = definition.lifecycle ? definition.lifecycle() : false;
                         _lc !== false ? (
@@ -813,9 +805,6 @@ ____________________ **/
                         for (let am in _attrs) { _akeys.push(addAttrSetterGetter(am, definition, _attrs[am])); }
                         definition.attrs ? delete definition.attrs : false;
 
-                        writeCustomEvents(_events);
-                        definition.events ? delete definition.events : false;
-
                         class DashingElement extends definition {
                             constructor() {
                                 super();
@@ -834,9 +823,10 @@ ____________________ **/
                                     delegate = delegate === null ? false : delegate[0].replace(/[\(\)]/g, "");
 
                                     let context = delegate ? document.querySelector(delegate) : this,
-                                        _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop;
+                                        _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop,
+                                        _detail = Dashing.typeOf(_events[em]) === "object" ? _events[em].detail ? _events[em].detail : false : false;
 
-                                    context === null ? false : context.addEventListener(en, function (e) { console.log(e); _fire(e); });
+                                    context === null ? false : Dashing.on(context, en, _fire, _detail);
                                 }
                             }
                         }
@@ -845,8 +835,10 @@ ____________________ **/
                 }
             });
         }
-        on(node, type, callback) {
-            // CustomEvents/Events
+        on(context, type, callback, options) {
+            console.log(context);
+            if (options) { writeCustomEvent(context, type, options.detail ? options.detail : false); }
+            context === null ? false : context.addEventListener(type, callback);
         }
         typeOf(data) { return typeOf(data); }
         add(data) {
@@ -1003,7 +995,7 @@ ____________________ **/
         createAccessor(selector) {
             return {
                 get: function () {
-                    return xtag.queryChildren(this, selector)[0];
+                    return this.querySelector(selector);
                 }
             };
         }
