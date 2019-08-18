@@ -835,8 +835,7 @@ ____________________ **/
                 }
             });
         }
-        on(context, type, callback, options) {
-            console.log(context);
+        on(context, type, callback, options) { 
             if (options) { writeCustomEvent(context, type, options.detail ? options.detail : false); }
             context === null ? false : context.addEventListener(type, callback);
         }
@@ -2445,12 +2444,12 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'tap(button[value="Confirm"])': function ConfirmPlatform(e) {
+                        'click(button[value="Confirm"])': function ConfirmPlatform(e) {
                             //
                         },
-                        'tap(button[toggler])': function ChangePlatform(e) {
+                        'click(button[toggler])': function ChangePlatform(e) {
                             let n = document.getElementById(this.getAttribute("toggler"));
-                            n.activeToggle.call(this, n);
+                            n.activeToggle(n);
                         }
                     };
                 }
@@ -2487,6 +2486,7 @@ ____________________ **/
                                 if (val === false) { this.removeAttribute("toggle"); }
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
+                                console.log(n);
                                 if (!n) {
                                     n = document.createElement("button");
                                     n.setAttribute("id", val);
