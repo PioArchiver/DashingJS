@@ -836,8 +836,8 @@ ____________________ **/
             });
         }
         on(context, type, callback, options) {
-
             console.log(type);
+            console.log(context);
             if (options) { writeCustomEvent(context, type, options.detail ? options.detail : false); }
             context === null ? false : context.addEventListener(type, callback);
         }
