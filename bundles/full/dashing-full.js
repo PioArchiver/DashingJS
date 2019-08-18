@@ -2489,7 +2489,6 @@ ____________________ **/
                                 if (val === false) { this.removeAttribute("toggle"); }
                                 this.setAttribute("toggle", val);
                                 let n = document.getElementById(val);
-                                console.log(n);
                                 if (!n) {
                                     n = document.createElement("button");
                                     n.setAttribute("id", val);
@@ -2500,6 +2499,8 @@ ____________________ **/
                                     this.appendChild(n);
 
                                     this.Toggle = this.querySelector("button[toggler]");
+
+                                    console.log(this.Toggle);
 
                                     Dashing.on(this.Toggle, "click", function (e) { console.log(this); this.toggler(this.Toggle) });
                                 }
