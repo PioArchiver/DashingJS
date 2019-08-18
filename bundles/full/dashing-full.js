@@ -2501,7 +2501,7 @@ ____________________ **/
 
                                     this.Toggle = this.querySelector("button[toggler]");
 
-                                    Dashing.on(this.Toggle, "click", function (e) { this.toggler(this.Toggle) });
+                                    Dashing.on(this.Toggle, "click", function (e) { console.log(this); this.toggler(this.Toggle) });
                                 }
                                 else {
                                     this.Toggle = n;
