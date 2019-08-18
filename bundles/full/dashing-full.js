@@ -2425,7 +2425,7 @@ ____________________ **/
                                 m.active = true :
                                 n.active = false;
                         },
-                        toggle: function _Toggle(btn) {
+                        toggler: function _Toggle(btn) {
                             let n = document.getElementById(btn.getAttribute("toggler"));
                             n.activeToggle(n);
                         }
@@ -2452,7 +2452,7 @@ ____________________ **/
                             //
                         },
                         'click(button[toggler])': function ChangePlatform(e) {
-                            this.toggle(this);
+                            this.toggler(this);
                         }
                     };
                 }
@@ -2501,7 +2501,7 @@ ____________________ **/
 
                                     this.Toggle = this.querySelector("button[toggler]");
 
-                                    Dashing.on(this.Toggle, "click", function (e) { this.toggle(this.Toggle) });
+                                    Dashing.on(this.Toggle, "click", function (e) { this.toggler(this.Toggle) });
                                 }
                                 else {
                                     this.Toggle = n;
