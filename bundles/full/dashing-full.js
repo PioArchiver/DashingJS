@@ -835,7 +835,9 @@ ____________________ **/
                 }
             });
         }
-        on(context, type, callback, options) { 
+        on(context, type, callback, options) {
+
+            console.log(type);
             if (options) { writeCustomEvent(context, type, options.detail ? options.detail : false); }
             context === null ? false : context.addEventListener(type, callback);
         }
@@ -2499,8 +2501,6 @@ ____________________ **/
                                     this.appendChild(n);
 
                                     this.Toggle = this.querySelector("button[toggler]");
-
-                                    console.log(this.Toggle);
 
                                     Dashing.on(this.Toggle, "click", function (e) { console.log(this); this.toggler(this.Toggle) });
                                 }
