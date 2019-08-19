@@ -1413,18 +1413,6 @@ ____________________ **/
                     };
                 }
 
-                // Events
-                static events() {
-                    return {
-                        config: {
-                            detail: {},
-                            fire: function Config(e) {
-                                // 
-                            }
-                        }
-                    };
-                }
-
                 // setters/getters
                 set model(value) {
                     this.Model = this.Model ? this.Model : {
@@ -1932,11 +1920,6 @@ ____________________ **/
                     };
                 }
 
-                static events() {
-                    return {
-                    };
-                }
-
                 // setters/getters
                 set drawer(value) {
                     this.extension.icons.drawer = value;
@@ -2027,10 +2010,6 @@ ____________________ **/
                     };
                 }
 
-                static events() {
-                    return {
-                    };
-                }
             };
 
             elems.xHeader = class xHeader extends HTMLElement {
@@ -2210,7 +2189,7 @@ ____________________ **/
                                 });
                             }
                         },
-                        'tap(x-tabbox > menu > *)': function TapSelectEvent(e) {
+                        'click(x-tabbox > menu > *)': function TapSelectEvent(e) {
                             xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
                         }
                     };
@@ -2226,7 +2205,7 @@ ____________________ **/
 
                 static attrs() {
                     return {
-                        'tab-lements': {
+                        'tab-elements': {
                             get: function TabElements() {
                                 return xtag.queryChildren(this, 'menu > *');
                             }
@@ -2449,9 +2428,6 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'click(button[value="Confirm"])': function ConfirmPlatform(e) {
-                            //
-                        },
                         'click(button[toggler])': function ChangePlatform(e) {
                             this.toggler(this);
                         }
