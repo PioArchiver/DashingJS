@@ -771,7 +771,7 @@ ____________________ **/
                 set: function SetCeClass(definition) {
                     let name = definition.name.replace(camelCaseToDSV, function (stg) { return `-${stg.toLowerCase()}`; });
                     if (/^[a-z]+\-/g.test(name)) {
-                        let _observedEventAttrs = definition.observedAttrs ? definition.observedAttrs() : [];
+                        let _observedEventAttrs = definition.assignedEventAttributes ? definition.assignedEventAttributes() : [];
 
                         let _methods = definition.methods ? definition.methods() : {};
 
