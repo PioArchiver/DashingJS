@@ -771,6 +771,8 @@ ____________________ **/
                 set: function SetCeClass(definition) {
                     let name = definition.name.replace(camelCaseToDSV, function (stg) { return `-${stg.toLowerCase()}`; });
                     if (/^[a-z]+\-/g.test(name)) {
+                        let _observedEventAttrs = definition.observedAttrs ? definition.observedAttrs() : [];
+
                         let _methods = definition.methods ? definition.methods() : {};
 
                         let _attrs = definition.attrs ? definition.attrs() : {},
@@ -806,6 +808,7 @@ ____________________ **/
                         definition.attrs ? delete definition.attrs : false;
 
                         class DashingElement extends definition {
+                            static get observedAttributes() { return _observedEventAttrs; }
                             constructor() {
                                 super();
                                 _lc.created ? _lc.created.call(this) : false;
@@ -829,6 +832,9 @@ ____________________ **/
                                     context === null ? false : Dashing.on(context, en, _fire, _detail);
                                 }
                             }
+                            attributeChangedCallback(name, oldValue, newValue) {
+                                console.log(name);
+                            }
                         }
                             Dashing.register(name, DashingElement);
                     }
@@ -836,7 +842,6 @@ ____________________ **/
             });
         }
         on(context, type, callback, options) { 
-            console.log(context);
             if (options) { writeCustomEvent(context, type, options.detail ? options.detail : false); }
             context === null ? false : context.addEventListener(type, callback);
         }
@@ -1106,6 +1111,9 @@ ____________________ **/
             };
 
             elems.xExtension = class xExtension extends HTMLElement {
+                static assignedEventAttributes() {
+                    return ['icos', `schema`];
+                }
                 // Mixins 
                 static mixins() { return ["dashed"]; }
                 // Methods 
@@ -1439,6 +1447,9 @@ ____________________ **/
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
+                static assignedEventAttributes() {
+                    return ['display-current'];
+                }
                 static lifecycle() {
                     return {
                         created: function CreatedXMenu() {
@@ -1548,11 +1559,8 @@ ____________________ **/
             };
 
             elems.xPanel = class xPanel extends HTMLElement {
-                set drawer (value) {
-                    this.extension.icons.drawer = value;
-                }
-                get drawer() {
-                    return this.extension.icons.drawer;
+                static assignedEventAttributes() {
+                    return ['minimized', `normalized`, `maximized`];
                 }
 
                 static mixins() { return ["iconography", "resizer"]; }
@@ -1696,6 +1704,7 @@ ____________________ **/
                 }
                 static events() {
                     return {
+                        "click": function (e) { this.setAttribute("minimized", "true"); },
                         "click(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode; 
@@ -1706,6 +1715,13 @@ ____________________ **/
                             }
                         }
                     };
+                }
+
+                set drawer(value) {
+                    this.extension.icons.drawer = value;
+                }
+                get drawer() {
+                    return this.extension.icons.drawer;
                 }
             };
 
@@ -2155,6 +2171,7 @@ ____________________ **/
                 static events() {
                     return {
                         "selectTab": function selectTab(e) {
+                            /*
                             let previous = [],
                                 tab = e.detail.tab,
                                 fireSelected = tab && !tab.hasAttribute('selected');
@@ -2168,6 +2185,7 @@ ____________________ **/
                             
                             let panel = xtag.queryChildren(this, 'ul > li')[e.detail.index];
                             if (panel) { panel.setAttribute('selected', ''); }
+
                             if (fireSelected) {
                                 xtag.fireEvent(this, 'tabselected', {
                                     detail: {
@@ -2178,9 +2196,11 @@ ____________________ **/
                                     }
                                 });
                             }
+                            */
                         },
                         'selectEvent': function selectEvent(e) {
-                            if (this.selectedIndex !== Number(e.detail.index)) {
+                            /*
+                             if (this.selectedIndex !== Number(e.detail.index)) {
                                 xtag.fireEvent(e.currentTarget, "selectTab", {
                                     detail: {
                                         index: e.detail.index,
@@ -2188,9 +2208,10 @@ ____________________ **/
                                     }
                                 });
                             }
+                            */
                         },
                         'click(x-tabbox > menu > *)': function TapSelectEvent(e) {
-                            xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
+                            // xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
                         }
                     };
                 }
