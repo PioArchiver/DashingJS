@@ -2767,8 +2767,10 @@ ____________________ **/
                                 this.normalized = false; 
                             }
                             else if (val === false || val === "false") {
+                                console.log(this);
                                 this.removeAttribute("minimized");
                                 this.xMenu.display.removeAttribute("style");
+
                             }
                         }
                     },
