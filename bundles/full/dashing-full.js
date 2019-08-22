@@ -79,15 +79,16 @@ ____________________ **/
         }); 
         return prop.connected ? n : false;
     } 
-    function writeCustomEvent(node, name, _detail) { 
-        if (_detail !== false) {
-            let event = new CustomEvent(n, {
-                detail: _detail
-            });
-
-            node.dispatchEvent(event);
-            return true;
-        } else { return false; }
+    function addEvent(node, name, fn, validate) {
+        // validate: To be completed...needs parseValidation method
+        node.addEventListener(name, fn);
+    }
+    function fire(node, name, options) {
+        let config = {
+            detail: options.detail || false
+        };
+        let e = new CustomEvent(name, config);
+        node.dispatchEvent(e);
     }
 
     const states = {},
@@ -442,7 +443,6 @@ ____________________ **/
 
     }
 
-    let _setprog = 0;
     function noop(n) { return n || false; }
     class Model {
         constructor(data) {
@@ -771,7 +771,8 @@ ____________________ **/
                 set: function SetCeClass(definition) {
                     let name = definition.name.replace(camelCaseToDSV, function (stg) { return `-${stg.toLowerCase()}`; });
                     if (/^[a-z]+\-/g.test(name)) {
-                        let _observedEventAttrs = definition.assignedEventAttributes ? definition.assignedEventAttributes() : [];
+                        let _observedEventAttrs = definition.assignedEventAttributes ? definition.assignedEventAttributes() : [],
+                            attrEvents = {}
 
                         let _methods = definition.methods ? definition.methods() : {};
 
@@ -779,7 +780,7 @@ ____________________ **/
                             _akeys = [];
 
                         let _events = definition.events ? definition.events() : {};
-                            definition.events ? delete definition.events : false;
+                        definition.events ? delete definition.events : false;
 
                         let _lc = definition.lifecycle ? definition.lifecycle() : false;
                         _lc !== false ? (
@@ -796,7 +797,6 @@ ____________________ **/
                                     mixins[nm].attrs ? merge(_attrs, mixins[nm].attrs()) : false;
                                     mixins[nm].methods ? merge(_methods, mixins[nm].methods()) : false;
                                     mixins[nm].events ? merge(_events, mixins[nm].events()) : false;
-
                             }
                             delete definition.mixins;
                         }
@@ -804,15 +804,19 @@ ____________________ **/
                         for (let km in _methods) { addMethod(km, definition, _methods[km]); }
                         definition.methods ? delete definition.methods : false;
 
-                        for (let am in _attrs) { _akeys.push(addAttrSetterGetter(am, definition, _attrs[am])); }
+                        for (let am in _attrs) {
+                            let nm = am.replace(camelCaseCE, function (stg) { return stg[1].toUpperCase() });
+                            _akeys.push(addAttrSetterGetter(am, definition, _attrs[am]));
+                            let f = _attrs[am].fire ? _attrs[am].fire : false;
+                                attrEvents[nm] = f;
+                        }
                         definition.attrs ? delete definition.attrs : false;
 
-                        class DashingElement extends definition {
-                            static get observedAttributes() { return _observedEventAttrs; }
-                            constructor() {
-                                super();
-                                _lc.created ? _lc.created.call(this) : false;
-
+                        class DashingElement extends definition { 
+                            static get observedAttributes() { return _observedEventAttrs; } 
+                            constructor() { 
+                                super(); 
+                                _lc.created ? _lc.created.call(this) : false; 
                             }
                             connectedCallback() {
                                 for (let i = 0; i < _akeys.length; i++) {
@@ -825,25 +829,37 @@ ____________________ **/
                                         delegate = em.match(/\(.+\)$/g);
                                     delegate = delegate === null ? false : delegate[0].replace(/[\(\)]/g, "");
 
-                                    let context = delegate ? document.querySelector(delegate) : this,
-                                        _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop,
-                                        _detail = Dashing.typeOf(_events[em]) === "object" ? _events[em].detail ? _events[em].detail : false : false;
-
-                                    context === null ? false : Dashing.on(context, en, _fire, _detail);
+                                    let context = delegate ? this.querySelectorAll(delegate) : this;
+                                    
+                                    let _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop,
+                                        _opts = Dashing.typeOf(_events[em]) === "object" ? _events[em].detail ? _events[em].detail : false : false;
+                                    if (context !== null) {
+                                        (context.length ? context : [context]).forEach(function OnsLoop(node, i) {
+                                            context === null ? false : Dashing.on(node, en, _fire, _opts);
+                                        });
+                                    }
+                                    else { throw `EventContextError: context returns ${context}`; }
+                                }
+                                for (let x = 0; x < _observedEventAttrs.length; x++) {
+                                    let eat = _observedEventAttrs[x].replace(camelCaseCE, function (stg) { return stg[1].toUpperCase(); });
+                                        _attrs[_observedEventAttrs[x]].fire ? Dashing.on(this, eat, _attrs[_observedEventAttrs[x]].fire) : null;
                                 }
                             }
                             attributeChangedCallback(name, oldValue, newValue) {
-                                console.log(name);
+                                let nm = name.replace(camelCaseCE, function (stg) { return stg[1].toUpperCase(); });
+                                    Dashing.fire(this, nm, {
+                                        detail: {
+                                            name: name,
+                                            value: newValue,
+                                            preValue: oldValue
+                                        }
+                                    });
                             }
                         }
                             Dashing.register(name, DashingElement);
                     }
                 }
             });
-        }
-        on(context, type, callback, options) { 
-            if (options) { writeCustomEvent(context, type, options.detail ? options.detail : false); }
-            context === null ? false : context.addEventListener(type, callback);
         }
         typeOf(data) { return typeOf(data); }
         add(data) {
@@ -1030,9 +1046,10 @@ ____________________ **/
             this.Writer = this.typeOf(value) === "function" ? new value() : false;
             this.writer.extension = this.extension;
         }
-        set bounded(options) {
-            // 
-        }
+
+        // Event getters
+        get on() { return addEvent; }
+        get fire() { return fire; }
     }
 
     Dashing = new dashboard({
@@ -1328,6 +1345,9 @@ ____________________ **/
                     return {
                         icos: {
                             connected: true,
+                            fire: function FireIcoEvent() {
+                                console.log(this);
+                            },
                             set: function SetIcos(val) {
                                 let _this = this;
                                 if (Dashing.typeOf(val) === "string") {
@@ -1625,51 +1645,6 @@ ____________________ **/
                                 }
                             }
                         }, 
-                        minimized: {
-                            connected: true,
-                            get: function GetMinimized() { return this.hasAttribute("minimized") ? true : null; },
-                            set: function SetMinimized(val) {
-                                if (val === true || val === "true") {
-                                    this.setAttribute("minimized", "true");
-                                    this.xMenu.display.style.display = "none";
-                                    this.normalized = false;
-                                }
-                                else if (val === false || val === "false") {
-                                    this.removeAttribute("minimized");
-                                    this.xMenu.display.removeAttribute("style");
-                                }
-                            }
-                        }, 
-                        normalized: {
-                            connected: true,
-                            get: function GetEnlarged() { return this.hasAttribute("normalized") ? true : null; },
-                            set: function SetEnlarged(val) {
-                                if (val === true || val === "true") {
-                                    this.setAttribute("normalized", "true");
-                                    this.maximized = false;
-                                    this.minimized = false;
-                                }
-                                else if(val === false || val === "false") {
-                                    this.removeAttribute("normalize");
-                                }
-                            }
-                        }, 
-                        maximized: {
-                            connected: true,
-                            get: function GetMaximized() { return this.hasAttribute("maximized") ? true : null; },
-                            set: function SetMaximized(val) {
-                                if (val === true || val === "true") {
-                                    this.setAttribute("maximized", "true");
-                                    this.normalized = false;
-                                    this.minimized = false;
-                                    this.setAttribute("style", "position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100000; background-color: white;");
-                                }
-                                else if (val === false || val === "false") {
-                                    this.removeAttribute("maximized");
-                                    this.removeAttribute("style");
-                                }
-                            }
-                        }, 
                         "resizer-options": {
                             connected: true,
                             get: function GetPanelResizer() {
@@ -1704,7 +1679,6 @@ ____________________ **/
                 }
                 static events() {
                     return {
-                        "click": function (e) { this.setAttribute("minimized", "true"); },
                         "click(x-menu > button[panel-content])": function ChangePanelContent(e) {
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode; 
@@ -2168,58 +2142,14 @@ ____________________ **/
             };
 
             elems.xTabbox = class xTabbox extends HTMLElement {
+                static assignedEventAttributes() {
+                    return ['selected-index'];
+                }
                 static events() {
                     return {
-                        "selectTab": function selectTab(e) {
-                            /*
-                            let previous = [],
-                                tab = e.detail.tab,
-                                fireSelected = tab && !tab.hasAttribute('selected');
-                            xtag.queryChildren(this, 'menu > [selected], ul > [selected]').forEach(function (node) {
-                                previous.push(node);
-                                node.removeAttribute('selected');
-                            });
-                            tab.setAttribute('selected', '');
-                            let index = xtag.toArray(tab.parentNode.children).indexOf(tab);
-                            if (index !== this.selectedIndex) { this.selectedIndex = index; }
-                            
-                            let panel = xtag.queryChildren(this, 'ul > li')[e.detail.index];
-                            if (panel) { panel.setAttribute('selected', ''); }
-
-                            if (fireSelected) {
-                                xtag.fireEvent(this, 'tabselected', {
-                                    detail: {
-                                        currentTab: tab,
-                                        currentPanel: panel,
-                                        previousTab: previous[0],
-                                        previousPanel: previous[1]
-                                    }
-                                });
-                            }
-                            */
-                        },
-                        'selectEvent': function selectEvent(e) {
-                            /*
-                             if (this.selectedIndex !== Number(e.detail.index)) {
-                                xtag.fireEvent(e.currentTarget, "selectTab", {
-                                    detail: {
-                                        index: e.detail.index,
-                                        tab: xtag.queryChildren(this, 'menu > *')[e.detail.index]
-                                    }
-                                });
-                            }
-                            */
-                        },
                         'click(x-tabbox > menu > *)': function TapSelectEvent(e) {
-                            // xtag.fireEvent(this, "selectEvent", { detail: { index: Number(e.target.getAttribute("index")) } });
-                        }
-                    };
-                }
-
-                static lifecycle() {
-                    return {
-                        created: function Created() {
-                            this.selectedIndex = this.selectedIndex;
+                            let tbx = this.parentNode.parentNode;
+                                tbx.selectedIndex = this.getAttribute("index");
                         }
                     };
                 }
@@ -2237,6 +2167,18 @@ ____________________ **/
                             }
                         },
                         'selected-index': {
+                            connected: true,
+                            fire: function FireSelectedIndex(e) {
+                                let _bitems = this.querySelectorAll("menu > button"),
+                                    _litems = this.querySelectorAll("ul > li");
+                                console.log(_bitems);
+                                console.log(_litems);
+                                _bitems[Number(e.detail.value)].setAttribute("selected", "true");
+                                _litems[Number(e.detail.value)].setAttribute("selected", "true");
+                                _bitems[Number(e.detail.preValue)].removeAttribute("selected");
+                                _litems[Number(e.detail.preValue)].removeAttribute("selected");
+
+                            },
                             set: function (val) {
                                 this.setAttribute("selected-index", val);
                             },
@@ -2812,17 +2754,16 @@ ____________________ **/
         'add(mixin=resizer)': class Themed {
             static events() {
                 return {
-                    "click(x-menu > div[resizer-menu] > button[icon])": function ResizePanel(e) {
-                        let _parent = this.parentNode.parentNode.parentNode;
-                        switch (this.getAttribute("icon")) {
+                    "click(x-menu > div[resizer-menu]": function ResizePanel(e) {
+                        switch (e.target.getAttribute("icon")) {
                             case "minimize":
-                                _parent.minimized = true;
+                                this.minimized = true;
                                 break;
                             case "normal":
-                                _parent.normalized = true;
+                                this.normalized = true;
                                 break;
                             case "maximize":
-                                _parent.maximized = true;
+                                this.maximized = true;
                                 break;
                         }
                     }
@@ -2855,7 +2796,12 @@ ____________________ **/
                                 this.minimized = false;
                             }
                             else if (val === false || val === "false") {
-                                this.removeAttribute("normalize");
+                                this.removeAttribute("normalized");
+                            }
+                            else {
+                                this.setAttribute("normalized", "true");
+                                this.maximized = false;
+                                this.minimized = false;
                             }
                         }
                     },
