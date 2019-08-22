@@ -1560,8 +1560,8 @@ ____________________ **/
                                     this.current = val;
                                     this.templateItems[this.currentIndex] === val ? true :
                                         this.currentIndex = QueryArray(this.templateItems, val);
-                                    let _val = val.match(/[\w\-]+/g)[0]
-                                    this.display.innerHTML = this.template(_val) ? this.template(_val)() : "<div>Resource Not Found.</div>";
+                                    let _val = val.match(/[\w\-]+/g)[0];
+                                        this.display.innerHTML = this.template(_val) ? this.template(_val)() : "<div>Resource Not Found.</div>";
                                 }
                             }
                         }
@@ -1575,7 +1575,7 @@ ____________________ **/
                     }
                 }
                 get template() {
-                    return function GetTemplate(name) { return this.Templates[name] ? this.Templates[name] : false; }
+                    return function GetTemplate(name) { console.log(name); return this.Templates[name] ? this.Templates[name] : false; };
                 }
             };
 
