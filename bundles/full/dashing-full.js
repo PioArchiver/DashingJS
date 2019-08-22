@@ -1742,7 +1742,7 @@ ____________________ **/
                         "book-menu": {
                             connected: true,
                             get: function GetBookMenu() {
-                                //
+                                return this.getAttribute("book-menu");
                             },
                             set: function SetBookMenu(val) {
                                 if (Dashing.typeOf(val) === "string") {
@@ -1762,7 +1762,7 @@ ____________________ **/
                                     }
                                     switch (val) {
                                         case "left":
-                                            this.xMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column;`)
+                                            this.xMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column;`);
                                             break;
                                         case "top":
                                             this.xMenu.setAttribute("style", `position: sticky; display: flex; flex-direction: column; top: 0px; left: 0px; min-width: 100%; `);
