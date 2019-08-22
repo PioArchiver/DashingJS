@@ -819,10 +819,11 @@ ____________________ **/
                                 _lc.created ? _lc.created.call(this) : false; 
                             }
                             connectedCallback() {
+                                _lc.inserted ? _lc.inserted.call(this) : false;
+
                                 for (let i = 0; i < _akeys.length; i++) {
                                     if (_akeys[i].connected !== false) { this[_akeys[i]] = this[_akeys[i]]; }
                                 }
-                                _lc.inserted ? _lc.inserted.call(this) : false;
 
                                 for (let em in _events) {
                                     let en = em.match(/^[aA-zZ]+/g)[0],
@@ -1589,9 +1590,9 @@ ____________________ **/
                     return {
                         created: function createdXPanel() {
                             this.extension = document.querySelector("x-extension");
-                            this.menu = this.menu;
                         },
                         inserted: function InsertedXPanel() {
+                            this.menu = this.menu;
                             this.cached = this.cached ? this.cached : {};
                             this.createCaches(this.xMenu.templateItems);
                         }
