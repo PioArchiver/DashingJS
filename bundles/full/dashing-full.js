@@ -1904,7 +1904,7 @@ ____________________ **/
                     return this.extension.icons.drawer;
                 }
                 get writer() { return Dashing.writer; }
-
+                get display() { return this.querySelector("x-page[active]"); }
             };
 
             elems.xPage = class xPage extends HTMLElement {
