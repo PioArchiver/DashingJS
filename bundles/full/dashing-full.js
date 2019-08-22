@@ -1594,28 +1594,13 @@ ____________________ **/
                         inserted: function InsertedXPanel() {
                             this.menu = this.menu;
                             this.cached = this.cached ? this.cached : {};
-                            this.createCaches(this.xMenu.templateItems);
                         }
                     };
                 }
                 static methods() {
                     return {
-                        getEditorJson: function GetEditorJson() {
-                            let _textEditor = this.xContent.firstElementChild.querySelector("textarea"),
-                                _jsn = null;
-                            try { _jsn = JSON.parse(_textEditor.value); }
-                            catch (e) { _jsn = JSON.parse('{"id": "Error"}'); }
-                            return _jsn;
-                        },
-                        isConentCached: function IsConentCached(content) {
-                            // In Work
-                        },
-                        createCaches: function CreateCaches(_items) {
-                            if (Dashing.typeOf(_items) === "array") {
-                                for (let i = 0; i < _items.length; i++) {
-                                    this.cached[_items[i]] = this.xDisplay.firstElementChild.caching || {};
-                                }
-                            }
+                        getEditorJson: function GetEditorJson(textarea) {
+                            // 
                         }
                     };
                 }
