@@ -2767,7 +2767,6 @@ ____________________ **/
                                 this.normalized = false; 
                             }
                             else if (val === false || val === "false") {
-                                console.log(this);
                                 this.removeAttribute("minimized");
                                 this.xMenu.display.removeAttribute("style");
 
@@ -2788,8 +2787,6 @@ ____________________ **/
                             }
                             else {
                                 this.setAttribute("normalized", "true");
-                                this.maximized = false;
-                                this.minimized = false;
                             }
                         }
                     },
