@@ -2356,6 +2356,7 @@ ____________________ **/
                         },
                         toggler: function _Toggle(btn) {
                             let n = document.getElementById(btn.getAttribute("toggler"));
+                            console.log(btn.getAttribute("toggler")); 
                             n.activeToggle(n);
                         }
                     };
@@ -2375,7 +2376,7 @@ ____________________ **/
                 static events() {
                     return {
                         click: function ChangePlatform(e) {
-                            if (e.target.hasAttribute("toggler")) { this.toggler(this); }
+                            if (e.target.hasAttribute("toggler")) { this.toggler(e.target); }
                         }
                     };
                 }
