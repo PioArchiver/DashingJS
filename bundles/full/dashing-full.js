@@ -2374,9 +2374,8 @@ ____________________ **/
 
                 static events() {
                     return {
-                        'click(button[toggler])': function ChangePlatform(e) {
-                            console.log(e);
-                            this.toggler(this);
+                        click: function ChangePlatform(e) {
+                            if (e.target.hasAttribute("toggler")) { this.toggler(this); }
                         }
                     };
                 }
