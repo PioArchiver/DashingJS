@@ -2368,9 +2368,6 @@ ____________________ **/
                         },
                         inserted: function InsertedModal() {
                             if (Dashing.BrowserInfo.oldiOS || Dashing.BrowserInfo.oldDroid) { setTop(this); }
-                        },
-                        removed: function RemoveModal() {
-                            //
                         }
                     };
                 }
@@ -2378,6 +2375,7 @@ ____________________ **/
                 static events() {
                     return {
                         'click(button[toggler])': function ChangePlatform(e) {
+                            console.log(e);
                             this.toggler(this);
                         }
                     };
