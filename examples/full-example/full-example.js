@@ -7,7 +7,7 @@ let Dashing = null;
 window.addEventListener("load", function LoadExample() {
     Dashing = document.querySelector("x-extension");
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-json-demo",
         template: function XTableDemo() {
             return `<x-form><form><textarea><x-table></x-table></textarea></form>
@@ -15,7 +15,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-extension-demo",
         template: function XFormDemo() {
             return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
@@ -23,7 +23,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-book-demo",
         template: function XMenuDemo() {
             return `<x-form><form><textarea><x-book></x-book></textarea></form>
@@ -31,7 +31,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-panel-demo",
         template: function XCanvasDemo() {
             return `<x-form><form><textarea><x-panel></x-panel></textarea></form>
@@ -39,7 +39,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-canvas-demo",
         template: function XCanvasDemo() {
             return `<x-form><form><textarea><x-canvas></x-canvas></textarea></form>
@@ -47,7 +47,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-form-demo",
         template: function XFormDemo() {
             return `<x-form><form><textarea><x-form></x-form></textarea></form>
@@ -55,7 +55,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-table-demo",
         template: function XCanvasDemo() {
             return `<x-form><form><textarea><x-table></x-table></textarea></form>
@@ -63,7 +63,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-menu-demo",
         template: function XCanvasDemo() {
             return `<x-form><form><textarea><x-menu></x-menu></textarea></form>
@@ -71,7 +71,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-page-demo",
         template: function XPageDemo() {
             return `<x-form><form><textarea><x-page></x-page></textarea></form>
@@ -79,7 +79,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-table-demo",
         template: function XTableDemo() {
             return `<x-form><form><textarea><x-table></x-table></textarea></form>
@@ -87,7 +87,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-header-demo",
         template: function XFormDemo() {
             return `<x-form><form><textarea><x-header></x-header></textarea></form>
@@ -95,7 +95,7 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
-    Dashing.querySelector("#dashingjs-builder-menu").template = {
+    Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-footer-demo",
         template: function XMenuDemo() {
             return `<x-form><form><textarea><x-footer></x-footer></textarea></form>
