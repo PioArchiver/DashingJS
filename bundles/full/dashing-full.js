@@ -1571,12 +1571,11 @@ ____________________ **/
                 set template(value) {
                     this.Templates ? true : this.Templates = {};
                     if (Dashing.typeOf(value) === "object" && value.id && value.template && !this.template[value.id]) {
-                        console.log(this.Templates);
                         this.Templates[value.id] = value.template;
                     }
                 }
                 get template() {
-                    return function GetTemplate(name) { return this.Templates[name] ? this.Templates[name] : false; };
+                    return function GetTemplate(name) { console.log(this.Templates[name]); return this.Templates[name] ? this.Templates[name] : false; };
                 }
             };
 
