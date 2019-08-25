@@ -102,7 +102,7 @@ window.addEventListener("load", function LoadExample() {
                             <button>Preview</button><x-form>`;
         }
     };
-    Dashing.querySelector("#demo-panel-menu").displayItems = Dashing.querySelector("#demo-panel-menu").displayItems;
+
     Dashing.querySelector("#demo-panel-menu").displayCurrent = Dashing.querySelector("#demo-panel-menu").displayCurrent;
 
 
