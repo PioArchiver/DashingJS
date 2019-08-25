@@ -1571,11 +1571,12 @@ ____________________ **/
                 set template(value) {
                     this.Templates ? true : this.Templates = {};
                     if (Dashing.typeOf(value) === "object" && value.id && value.template && !this.template[value.id]) {
+                        console.log(this.Templates);
                         this.Templates[value.id] = value.template;
                     }
                 }
                 get template() {
-                    return function GetTemplate(name) { console.log(name); return this.Templates[name] ? this.Templates[name] : false; };
+                    return function GetTemplate(name) { return this.Templates[name] ? this.Templates[name] : false; };
                 }
             };
 
@@ -2157,8 +2158,7 @@ ____________________ **/
                             fire: function FireSelectedIndex(e) {
                                 let _bitems = this.querySelectorAll("menu > button"),
                                     _litems = this.querySelectorAll("ul > li");
-                                console.log(_bitems);
-                                console.log(_litems);
+
                                 _bitems[Number(e.detail.value)].setAttribute("selected", "true");
                                 _litems[Number(e.detail.value)].setAttribute("selected", "true");
                                 _bitems[Number(e.detail.preValue)].removeAttribute("selected");
