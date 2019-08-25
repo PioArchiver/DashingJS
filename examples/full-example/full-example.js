@@ -17,7 +17,7 @@ window.addEventListener("load", function LoadExample() {
 
     Dashing.querySelector("#demo-panel-menu").template = {
         id: "x-extension-demo",
-        template: function XFormDemo() {
+        template: function XExtensionDemo() {
             return `<x-form><form><textarea><x-extension></x-extension></textarea></form>
                             <button>Preview</button><x-form>`;
         }
@@ -102,8 +102,6 @@ window.addEventListener("load", function LoadExample() {
                             <button>Preview</button><x-form>`;
         }
     };
-
-    Dashing.querySelector("#demo-panel-menu").displayCurrent = Dashing.querySelector("#demo-panel-menu").displayCurrent;
 
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
