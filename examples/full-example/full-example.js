@@ -103,6 +103,8 @@ window.addEventListener("load", function LoadExample() {
         }
     };
 
+    Dashing.querySelector("#demo-panel-menu").displayCurrent = Dashing.querySelector("#demo-panel-menu").displayCurrent;
+
 
     let qpromise = Dashing.queryJson("full-example", Dashing.jsonSchema, "#");
         qpromise.then(function SchemaDemoQuery(val) {
