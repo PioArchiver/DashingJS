@@ -48,6 +48,9 @@ ____________________ **/
         };
 
     // Helper Functions
+    function ValidateSVGColor() {
+
+    }
     function QueryArray(arr, val) {
         if (Dashing.typeOf(val) === "string") {
             for (let i = 0; i < arr.length; i++) {
@@ -213,13 +216,57 @@ ____________________ **/
                 });
             }
         }
-    };
+    }
 
     // Svg class
+    class SvgCmds {
+        constructor() {
+            this.color = "azure";
+            this.fill = "azure";
+            this.penTip = "point";
+        }
+        penUp() { }
+        penDown() { }
+    }
+    const scmds = null;
     class Svg {
         constructor() {
+            scmds = new SvgCmds();
             this.fragments = {};
+            this.abstractTree = {
+                firstChildren: function FirstChildren(node, deep) {
+                    node = Dashing.typeOf(node) === "htmlelement" ? node : Dashing.typeOf(this) === "htmlelement" ? this : false;
+                    if (node === false) { throw "SvgAbstractTypeError: 'node' or 'this' reference not set to 'type' => htmlelement"; }
+                    if (Dashing.typeOf(deep) === "function") { node.children.forEach(deep); return true; }
+                    else { return true; }
+                }, 
+                addCustomEventTree(node, e) {
+                    node = Dashing.typeOf(node) === "htmlelement" ? node : Dashing.typeOf(this) === "htmlelement" ? this : false;
+                    node.svg ? node.firstChildren.call(node, function (n, i) {
+                        n.addEventListener(e.type, e.fire);
+                    }) : false;
+                }
+
+            };
         }
+        path() {
+            //
+        }
+        calligraphy() {
+            //
+        }
+        pattern() {
+            //
+        }
+        colors(value) {
+            let c = ValidateSVGColor(value);
+            this.penFill = c;
+            return c;
+        } 
+        images() { }
+
+        set penFill(value) { value !== false ? scmds().fill = value : false; }
+        get penFill() { return scmds().fill; }
     }
 
     // Canvas class
