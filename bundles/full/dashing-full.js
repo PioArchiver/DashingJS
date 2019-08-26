@@ -1575,7 +1575,7 @@ ____________________ **/
                     }
                 }
                 get template() {
-                    return function GetTemplate(name) { console.log(name); console.log(this.Templates); return this.Templates[name] ? this.Templates[name] : false; };
+                    return function GetTemplate(name) { return this.Templates[name] ? this.Templates[name] : false; };
                 }
             };
 
