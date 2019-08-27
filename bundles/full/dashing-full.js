@@ -228,7 +228,7 @@ ____________________ **/
         penUp() { }
         penDown() { }
     }
-    const scmds = null;
+    let scmds = new SvgCmds();
     class Svg {
         constructor() {
             scmds = new SvgCmds();
@@ -243,7 +243,7 @@ ____________________ **/
                 addCustomEventTree(node, e) {
                     node = Dashing.typeOf(node) === "htmlelement" ? node : Dashing.typeOf(this) === "htmlelement" ? this : false;
                     node.svg ? node.firstChildren.call(node, function (n, i) {
-                        n.addEventListener(e.type, e.fire);
+                        n.setAttribute("data-icon", e.type);
                     }) : false;
                 }
 
@@ -367,7 +367,13 @@ ____________________ **/
                     opts.drawer !== false ? (this.drawer = opts.drawer, this.fireDrawer(ico.firstElementChild)) :
                         this.drawer !== false ? this.fireDrawer(ico.firstElementChild) : false;
                     opts.overwrite === true ? target.innerHTML = "" : null;
-                    target.elements[opts.insertIndex].insertAdjacentElement("afterend", ico.firstElementChild);
+                    let _doc = target.elements[opts.insertIndex].hasAttribute("icon");
+                    if (_doc === true) {
+                        ico.elements.forEach(function (n, i) {
+                            //
+                        });
+                    }
+                    target.elements[opts.insertIndex].insertAdjacentElement("afterend", _doc);
                     break;
             }
         }
@@ -904,7 +910,7 @@ ____________________ **/
                                     });
                             }
                         }
-                            Dashing.register(name, DashingElement);
+                            customElements.define(name, DashingElement, definition.isHTML ? { extends: definition.isHTML } : undefined);
                     }
                 }
             });
@@ -1068,9 +1074,6 @@ ____________________ **/
                 }
             };
         }
-        register(name, chlass) {
-            customElements.define(name, chlass);
-        } 
         get iconography() { return this.Iconography || false; }
         set iconography(value) {
             if (this.Iconography) { return true; }
@@ -1109,6 +1112,7 @@ ____________________ **/
         namespaces: [
             "x-json", 
             "x-extension",
+            "x-icon",
             "x-book",
             "x-panel",
             "x-page",
@@ -1179,8 +1183,6 @@ ____________________ **/
                 static assignedEventAttributes() {
                     return ['icos', `schema`];
                 }
-                // Mixins 
-                static mixins() { return ["dashed"]; }
                 // Methods 
                 static methods() {
                     return {
@@ -1378,6 +1380,7 @@ ____________________ **/
                             this.model = true;
                             this.stylesheet = Dashing.stylesheet;
                             this.icons = Dashing.iconography;
+                            this.svg = new Svg();
                         },
                         inserted: function InsertedXExtension() {
                             //
@@ -1512,6 +1515,41 @@ ____________________ **/
                 get book() { }
 
                 get writer() { return Dashing.writer; }
+            };
+
+            elems.xIcon = class xIcon extends HTMLButtonElement {
+                static get isHTML() { return "button"; }
+                static attrs() {
+                    return {
+                        dataIcon: {
+                            connected: true,
+                            get: function GetDataIcon() { return this.getAttribute("data-icon"); },
+                            set: function SetDataIcon(value) {
+                                this.type = this.type;
+                            }
+                        },
+                        type: {
+                            get: function GetDataIcon() { return this.getAttribute("data-type") || false; },
+                            set: function SetDataIcon(value) {
+                                console.log(this);
+                                if (value === false || value === "default" || value === null) {
+                                    //
+                                }
+                                else if (typeOf(value) === "string") {
+                                    //
+                                }
+                            }
+                        }
+                    };
+                }
+
+                static events() {
+                    return {
+                        "click([data-icon])": function DataIconClickEvent(e) {
+                            //
+                        }
+                    }
+                }
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
@@ -1841,11 +1879,12 @@ ____________________ **/
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
-                                            ctls.innerHTML = `<button book-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
+                                            ctls.innerHTML = `<button data-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                             this.pageControls = this.querySelector("[control-menu]");
                                             this.pageCounter = this.querySelector("[page-counter]");
-                                            this.pageControls.querySelector(`button[book-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
+                                            // Maybe move to the new event system for svg icons
+                                            this.pageControls.querySelector(`button[data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
                                                 console.log(this);
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
@@ -1863,7 +1902,7 @@ ____________________ **/
                                                 }
                                                 n.progressPageCounter();
                                             });
-                                            this.pageControls.querySelector(`button[book-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
+                                            this.pageControls.querySelector(`button[data-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
@@ -1899,9 +1938,9 @@ ____________________ **/
                                         function BookResizerNullfn(resizer) {
                                             let rzr = document.createElement("div");
                                                 rzr.setAttribute("resizer-menu", "true");
-                                            rzr.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
-                                                <button icon='normal' title="Normal">${"[]"}</button>
-                                                <button icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                            rzr.innerHTML = `<button data-icon="minimize" title="Minimize">${"_"}</button>
+                                                <button data-icon='normal' title="Normal">${"[]"}</button>
+                                                <button data-icon='maximize' title="Maximize">${"[-]"}</button>`;
                                             tar.appendChild(rzr);
                                         });
                                 }
@@ -2600,21 +2639,9 @@ ____________________ **/
                             default:
                                 return `${this.nodeName}#${this.id || "undefined"}.${this.className || "undefined"}, tried to add, [${name}] but the option didn't exist.`;
                         }
-                    },
-                    writeOptions: function WriteOptions(values) {
-                        let frag = document.createElement("select");
-                        for (let i = 0; i < values.length; i++) {
-                            let _opt = document.createElement("option");
-                            _opt.value = values[i];
-                            _opt.innerHTML = values[i];
-                            frag.appendChild(_opt);
-                            i === 0 ? frag.selected = _opt.selected = true : null;
-                        }
-                        frag.id = i.toString() + this.nodeName.toLowerCase() + "PioSelectables";
-                        return frag;
                     }
                 };
-            }
+            } 
             static attrs() {
                 return {
                     templates: {
@@ -2631,11 +2658,11 @@ ____________________ **/
                         get: function GetRender() { return true; }
                     }
                 };
-            }
-        },
-        'add(mixin=iconography)': class Drawing {
-            static methods() {
-                return {
+            } 
+        }, 
+        'add(mixin=iconography)': class Drawing { 
+            static methods() { 
+                return { 
                     addResizerIcons: function AddResizerIcons(opts) {
                         for (let i = 0; i < opts.snippets.length; i++) {
                             let icons = opts.snippets;
@@ -2649,7 +2676,7 @@ ____________________ **/
                                     drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                 });
                         }
-                    },
+                    }, 
                     addLogoIcon: function AddLogoIcon(opts) {
                         this.extension.icons.insertIcon(this.xMenu.querySelector("strong[logo]") || this.xMenu,
                             {
@@ -2660,7 +2687,7 @@ ____________________ **/
                                 insertIndex: opts.insertAt === "insertAt" ? opts.insertionIndex || 0 : false,
                                 drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                             });
-                    },
+                    }, 
                     addContentIcons: function AddContentIcons(opts) {
                         let _this = this;
                         this.xMenu.templateItems.forEach(function appendContentIcons(item, index) {
@@ -2674,7 +2701,7 @@ ____________________ **/
                                     drawer: Dashing.typeOf(opts.drawer) === "function" ? opts.drawer : false
                                 });
                         });
-                    },
+                    }, 
                     insertIcons: function InsertPanelIcon(type, opts) {
                         switch (type) {
                             case "content":
@@ -2746,11 +2773,11 @@ ____________________ **/
                                 });
                                 break;
                         }
-                    }
-                };
-            }
+                    } 
+                }; 
+            } 
             static attrs() {
-                return {
+                return { 
                     iconography: {
                         connected: true,
                         get: function GetIconography() { return this.hasAttribute("iconography"); },
