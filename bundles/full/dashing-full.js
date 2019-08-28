@@ -1884,7 +1884,7 @@ ____________________ **/
                                             this.pageControls = this.querySelector("[control-menu]");
                                             this.pageCounter = this.querySelector("[page-counter]");
                                             // Maybe move to the new event system for svg icons
-                                            this.pageControls.querySelector(`button[is="x-icon" data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
+                                            this.pageControls.querySelector(`button[is="x-icon"][data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
@@ -1901,7 +1901,7 @@ ____________________ **/
                                                 }
                                                 n.progressPageCounter();
                                             });
-                                            this.pageControls.querySelector(`button[is="x-icon" data-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
+                                            this.pageControls.querySelector(`button[is="x-icon"][data-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
