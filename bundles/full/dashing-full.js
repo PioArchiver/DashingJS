@@ -1545,7 +1545,7 @@ ____________________ **/
 
                 static events() {
                     return {
-                        "click([data-icon])": function DataIconClickEvent(e) {
+                        "click": function DataIconClickEvent(e) {
                             //
                         }
                     }
