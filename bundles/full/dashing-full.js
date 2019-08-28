@@ -888,7 +888,7 @@ ____________________ **/
                                     let _fire = Dashing.typeOf(_events[em]) === "object" ? _events[em].fire ? _events[em].fire : noop : Dashing.typeOf(_events[em]) === "function" ? _events[em] : noop,
                                         _opts = Dashing.typeOf(_events[em]) === "object" ? _events[em].detail ? _events[em].detail : false : false;
                                     if (context !== null) {
-                                        console.log(context);
+                                        console.log(delegate);
                                         (context.length ? context : [context]).forEach(function OnsLoop(node, i) {
                                             context === null ? false : Dashing.on(node, en, _fire, _opts);
                                         });
