@@ -1729,9 +1729,9 @@ ____________________ **/
                                         _panelresizer = document.createElement("div");
                                         _panelresizer.setAttribute("resizer-menu", "true");
 
-                                    _panelresizer.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
-                                            <button icon='normal' title="Normal">${"[]"}</button>
-                                            <button icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                    _panelresizer.innerHTML = `<button data-icon="minimize" title="Minimize">${"_"}</button>
+                                            <button data-icon='normal' title="Normal">${"[]"}</button>
+                                            <button data-icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     _container.insertAdjacentElement("afterbegin", _panelresizer);
                                 }
                                 else if (val === "true") {
@@ -1739,9 +1739,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
                                     _container.setAttribute("resizer-menu", val);
-                                    _container.innerHTML = `<button icon="minimize" title="Minimize">${"_"}</button>
-                                            <button icon='normal' title="Normal">${"[]"}</button>
-                                            <button icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                    _container.innerHTML = `<button data-icon="minimize" title="Minimize">${"_"}</button>
+                                            <button data-icon='normal' title="Normal">${"[]"}</button>
+                                            <button data-icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
                                 }
                             }
@@ -2666,7 +2666,6 @@ ____________________ **/
                     addResizerIcons: function AddResizerIcons(opts) {
                         for (let i = 0; i < opts.snippets.length; i++) {
                             let icons = opts.snippets;
-                            console.log(this);
                             this.extension.icons.insertIcon(this.xMenu.querySelector(`button[data-icon="${icons[i]}"]`),
                                 {
                                     snippet: icons[i],
