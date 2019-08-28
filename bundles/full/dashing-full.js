@@ -2440,8 +2440,7 @@ ____________________ **/
                                 n.active = false;
                         },
                         toggler: function _Toggle(btn) {
-                            let n = document.getElementById(btn.getAttribute("toggler"));
-                            console.log(btn.getAttribute("toggler")); 
+                            let n = document.getElementById(btn.getAttribute("toggler")); 
                             n.activeToggle(n);
                         }
                     };
