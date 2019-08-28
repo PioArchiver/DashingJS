@@ -1532,7 +1532,6 @@ ____________________ **/
                         type: {
                             get: function GetDataIcon() { return this.getAttribute("data-type") || false; },
                             set: function SetDataIcon(value) {
-                                console.log(this);
                                 if (value === false || value === "default" || value === null) {
                                     //
                                 }
