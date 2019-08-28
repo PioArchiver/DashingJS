@@ -1729,9 +1729,9 @@ ____________________ **/
                                         _panelresizer = document.createElement("div");
                                         _panelresizer.setAttribute("resizer-menu", "true");
 
-                                    _panelresizer.innerHTML = `<button data-icon="minimize" title="Minimize">${"_"}</button>
-                                            <button data-icon='normal' title="Normal">${"[]"}</button>
-                                            <button data-icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                    _panelresizer.innerHTML = `<button is="x-icon" data-icon="minimize" title="Minimize" is="x-icon">${"_"}</button>
+                                            <button is="x-icon" is="x-icon" data-icon='normal' title="Normal">${"[]"}</button>
+                                            <button is="x-icon" is="x-icon" data-icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     _container.insertAdjacentElement("afterbegin", _panelresizer);
                                 }
                                 else if (val === "true") {
@@ -1739,9 +1739,9 @@ ____________________ **/
                                     this.resizerBar = true;
                                     let _container = document.createElement(`div`);
                                     _container.setAttribute("resizer-menu", val);
-                                    _container.innerHTML = `<button data-icon="minimize" title="Minimize">${"_"}</button>
-                                            <button data-icon='normal' title="Normal">${"[]"}</button>
-                                            <button data-icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                    _container.innerHTML = `<button is="x-icon" is="x-icon" data-icon="minimize" title="Minimize">${"_"}</button>
+                                            <button is="x-icon" is="x-icon" data-icon='normal' title="Normal">${"[]"}</button>
+                                            <button is="x-icon" is="x-icon" data-icon='maximize' title="Maximize">${"[-]"}</button>`;
                                     this.insertAdjacentElement("beforeend", _container);
                                 }
                             }
@@ -1879,12 +1879,12 @@ ____________________ **/
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
-                                            ctls.innerHTML = `<button data-icon="page-decrement" for-book="#${this.id}">-</button><button data-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
+                                            ctls.innerHTML = `<button is="x-icon" is="x-icon" data-icon="page-decrement" for-book="#${this.id}">-</button><button is="x-icon" is="x-icon" data-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                             this.pageControls = this.querySelector("[control-menu]");
                                             this.pageCounter = this.querySelector("[page-counter]");
                                             // Maybe move to the new event system for svg icons
-                                            this.pageControls.querySelector(`button[data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
+                                            this.pageControls.querySelector(`button[is="x-icon" data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
@@ -1901,7 +1901,7 @@ ____________________ **/
                                                 }
                                                 n.progressPageCounter();
                                             });
-                                            this.pageControls.querySelector(`button[data-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
+                                            this.pageControls.querySelector(`button[is="x-icon" data-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
@@ -1937,9 +1937,9 @@ ____________________ **/
                                         function BookResizerNullfn(resizer) {
                                             let rzr = document.createElement("div");
                                                 rzr.setAttribute("resizer-menu", "true");
-                                            rzr.innerHTML = `<button data-icon="minimize" title="Minimize">${"_"}</button>
-                                                <button data-icon='normal' title="Normal">${"[]"}</button>
-                                                <button data-icon='maximize' title="Maximize">${"[-]"}</button>`;
+                                            rzr.innerHTML = `<button is="x-icon" data-icon="minimize" title="Minimize">${"_"}</button>
+                                                <button is="x-icon" data-icon='normal' title="Normal">${"[]"}</button>
+                                                <button is="x-icon" data-icon='maximize' title="Maximize">${"[-]"}</button>`;
                                             tar.appendChild(rzr);
                                         });
                                 }
