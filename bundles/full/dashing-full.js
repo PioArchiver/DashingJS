@@ -1885,7 +1885,6 @@ ____________________ **/
                                             this.pageCounter = this.querySelector("[page-counter]");
                                             // Maybe move to the new event system for svg icons
                                             this.pageControls.querySelector(`button[data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
-                                                console.log(this);
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
