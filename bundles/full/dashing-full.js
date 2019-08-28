@@ -2811,7 +2811,6 @@ ____________________ **/
             static events() {
                 return {
                     "click(x-menu > div[resizer-menu]": function ResizePanel(e) {
-                        console.log(this);
                         switch (e.target.getAttribute("icon")) {
                             case "minimize":
                                 this.minimized = true;
