@@ -1879,7 +1879,7 @@ ____________________ **/
                                     }, function BookControlsNullFn() {
                                             let ctls = document.createElement("div");
                                                 ctls.setAttribute("control-menu", val);
-                                            ctls.innerHTML = `<button data-icon="page-decrement" for-book="#${this.id}">-</button><button book-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
+                                            ctls.innerHTML = `<button data-icon="page-decrement" for-book="#${this.id}">-</button><button data-icon="page-increment" for-book="#${this.id}">+</button><aside page-counter="1">1/${this.pages}</aside>`;
                                             (this.xMenu || this).appendChild(ctls);
                                             this.pageControls = this.querySelector("[control-menu]");
                                             this.pageCounter = this.querySelector("[page-counter]");
