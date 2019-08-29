@@ -305,10 +305,10 @@ ____________________ **/
         add(name, snippet) {
             this.uploads[name] = this.uploads[name] ? this.uploads[name] : snippet;
         }
-        createIcon(type, snippet) {
+        createIcon(type, name) {
             let ico = document.createDocumentFragment(),
                 _doc = null;
-            snippet = this.uploads[snippet] ? this.uploads[snippet] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
+            let snippet = this.uploads[name] ? this.uploads[name] : "<text stroke='black' stroke-width='1'>Error: Icon not found.</text>";
             switch (type) {
                 case "png":
                 case "gif":
@@ -326,6 +326,7 @@ ____________________ **/
                     _doc = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
                     _doc.innerHTML = snippet;
+                    _doc.setAttribute("data-icon", name);
 
                     let css = _doc.firstElementChild.querySelector("style") || false,
                         vbox = null;
@@ -1518,14 +1519,35 @@ ____________________ **/
             };
 
             elems.xIcon = class xIcon extends HTMLButtonElement {
+                static mixins() { return []; }
                 static get isHTML() { return "button"; }
+
+                static lifecycle() {
+                    return {
+                        created: function CreateXIcon() {
+                            this.click = null;
+                            this.mousedown = null;
+                            this.mouseup = null;
+                            this.mouseover = null;
+                            this.mouseout = null;
+                            this.keypress = null;
+                            this.keydown = null;
+                            this.keyup = null;
+                            this.icon = null;
+                            this.show = null;
+                            this.hide = null;
+                        }
+                    };
+                }
+
                 static attrs() {
                     return {
                         dataIcon: {
                             connected: true,
                             get: function GetDataIcon() { return this.getAttribute("data-icon"); },
                             set: function SetDataIcon(value) {
-                                this.type = this.type;
+                                this.icon = this.querySelector(`[data-icon="${value}"]`);
+                                this.type ? this.type = this.type : false;
                             }
                         },
                         type: {
@@ -1535,20 +1557,67 @@ ____________________ **/
                                     //
                                 }
                                 else if (typeOf(value) === "string") {
-                                    //
+                                    switch (value) {
+                                        case "svg":
+
+                                            break;
+                                    }
                                 }
                             }
                         }
                     };
                 }
 
-                static events() {
-                    return {
-                        click: function DataIconClickEvent(e) {
-                            console.log(e);
-                        }
-                    }
+                get click() {
+                    return function GetClickEvent(name) { this.Click[name] ? this.Click[name] : false; };
                 }
+                set click(value) {
+                    this.Click = this.Click ? this.Click : {};
+                    if (typeOf(value) === "function" && this.action) {
+                        this.Click[this.action] = value;
+                    }
+                    else { this.Click = false; }
+                }
+
+                get mouseover() {
+                    return function GetClickEvent(name) {
+                        return this.Mouseover[name] ? this.Mouseover[name] : false;
+                    };
+                }
+                set mouseover(value) {
+                    this.Mouseover ? true : this.Mouseover = {};
+                    if (typeOf(value) === "function") {
+                        this.Mouseover[this.action] = value;
+                    }
+                    else { this.Mouseover = false; }
+                }
+
+                get mouseout() { }
+                set mouseout(value) { }
+
+                get keypress() { }
+                set keypress(value) { }
+
+                get keydown() { }
+                set keydown(value) { }
+
+                get keyup() { }
+                set keyup(value) { }
+
+                get icon() { }
+                set icon(value) { }
+
+                get hide() { }
+                set hide(value) { }
+
+                get show() { }
+                set show(value) { }
+
+                get active() { }
+                set active(value) { }
+
+                get inactive() { }
+                set inactive(value) { }
             };
 
             elems.xMenu = class xMenu extends HTMLElement {
@@ -1753,8 +1822,6 @@ ____________________ **/
                             let _panel = this.getAttribute("panel-content"),
                                 _menu = this.parentNode; 
                             if (_menu.displayCurrent !== _panel) {
-                                // Display's new content for the panel
-                                // Need to validate data for print before we set the current display.
                                 _menu.displayCurrent = _panel;
                             }
                         }
@@ -1883,7 +1950,7 @@ ____________________ **/
                                             this.pageControls = this.querySelector("[control-menu]");
                                             this.pageCounter = this.querySelector("[page-counter]");
                                             // Maybe move to the new event system for svg icons
-                                            this.pageControls.querySelector(`button[is="x-icon"][data-icon="page-decrement"]`).addEventListener("click", function PageLeft(e) {
+                                            Dashing.on(`button[is="x-icon"][data-icon="page-decrement"]`, "click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
@@ -1900,7 +1967,7 @@ ____________________ **/
                                                 }
                                                 n.progressPageCounter();
                                             });
-                                            this.pageControls.querySelector(`button[is="x-icon"][data-icon="page-increment"]`).addEventListener("click", function PageLeft(e) {
+                                            Dashing.on(`button[is="x-icon"][data-icon="page-increment"]`, "click", function PageLeft(e) {
                                                 let n = document.querySelector(this.getAttribute("for-book")),
                                                     index = n.page,
                                                     _nodes = n.querySelectorAll("x-page"),
@@ -2805,7 +2872,7 @@ ____________________ **/
                 };
             }
         },
-        'add(mixin=resizer)': class Themed {
+        'add(mixin=resizer)': class Resizer {
             static events() {
                 return {
                     "click(x-menu > div[resizer-menu]": function ResizePanel(e) {
